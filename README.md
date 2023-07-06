@@ -1,8 +1,8 @@
 # SDR_Tutorials
-Set of flowgraphs to introduce various SDR/GNURadio Concepts
+Set of flowgraphs to introduce various SDR/GNURadio Concepts.
 
 # Overview
-Describe Tutorial Series...
+This repository is intended to be used as a serial of tutorials videos for familiarization of GNURadio tooling and workflows. It contains complementary GNURadio GRC files and complementary code for the relevant modules. 
 
 # Directory Structure
 This repository includes documentation the basic functionality for each tutorials, along with the 
