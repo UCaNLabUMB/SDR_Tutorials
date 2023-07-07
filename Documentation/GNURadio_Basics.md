@@ -13,4 +13,7 @@ Variables are able to be used within existing GR Blocks.​
 Variables allows for easy management of multiple GR values used in different blocks
 QT Gui Range enables us to be able predefine ranges and default  values to utilize during a running flowgraph. ​
 Showcase that we can utilize QT GUI Blocks to manipulate both filter and frequency values during flowgraph runtime. 
+
+## Video Example
+
 ## References
