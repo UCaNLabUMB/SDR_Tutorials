@@ -1,8 +1,8 @@
 # Overview
 In this section we will cover how to utlize SDR's in GNURadio. It will showcase how to obtain the USB serial address of the USRP, and in addition show which relevant blocks are mandatory for USRP use in GNURadio.
+
 ## uhd_find_devices Command
 
-## Flowgraph Creation Example Utlizing Eltus USRB B200 Mini.
-
-
+## Flowgraph Creation Example Utlizing Eltus USRP B200 Mini.
+In this tutorial we are going to create an gnuradio flowgraph that utilizes the Eltus USRP B200 Mini. This builds up over from the GNURadio overview tutorial. The first thing we need to do is replace the signal source with a UHD: USRP Source block. This will read data from the USRP hardware instead of generating a simulated signal. We still need the float to complex block to convert the signal to complex numbers for processing. Since we are using real hardware, we no longer need the throttle block for simulation. It can be removed from the flowgraph. Instead of the QT GUI Waterfall Sink for visualization, we can use a UHD: USRP Sink block. This will send the processed signal to the USRP for transmission over the air.We can add blocks like analog filters and amplifiers to condition the signal between the USRP source and sink if you want for further signal manipulation. The flowgraph will now work with real RF signals.To receive the transmitted signal, we can create another flowgraph with a USRP Source connected to a QT GUI Waterfall Sink to visualize the received signal in the frequency domain. The main changes are replacing the simulated signal source and sink with USRP hardware blocks. We remove elements like the throttle that are only needed for simulation. This allows testing with real radios and antennas, or in our demo environment the B200mini's.
 ## References
