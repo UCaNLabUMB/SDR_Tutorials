@@ -22,7 +22,6 @@ Use QT GUI Range for on-the-fly adjustments in running flowgraphs.
 
 * Trottle Block
 
-
 * Signal Source
 
 * Qt GUI Waterfall Sink
@@ -35,9 +34,11 @@ QT Gui Range enables us to be able predefine ranges and default  values to utili
 Showcase that we can utilize QT GUI Blocks to manipulate both filter and frequency values during flowgraph runtime. 
 
 ## Video Example
+_Coming Soon_
 
 ## References
-
+_Coming Soon_
 
 
 ## Next Chapter
+_Coming Soon_
