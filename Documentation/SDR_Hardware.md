@@ -1,5 +1,15 @@
-# Overview
+# Simple GNURadio TX/RX
+## Overview
 In this section we will cover how to utlize SDR's in GNURadio. It will showcase how to obtain the USB serial address of the USRP, and in addition show which relevant blocks are mandatory for USRP use in GNURadio.
+
+### Key Learnings
+
+
+### GNURadio Blocks to be Introduced
+* Block 1
+* Block 2
+* ...
+
 ## Objectives 
 Use GNURadio for a simple TX/RX setup with Ettus B200 mini USRPs. 
 Learn how to use Linux terminal to get USRP Serial Address via UHD find devices.

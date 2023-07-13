@@ -15,12 +15,7 @@ The float to complex block converts the signal from floating point to complex ex
 The throttle block controls data flow during simulation.
 
 The QT GUI Waterfall Sink visualizes the waveform's spectrogram over time.
-
-### GNURadio Blocks to be Introduced
-* Block 1
-* Block 2
-* ...
-
+s
 
 
 ## Flowgraph Creation
