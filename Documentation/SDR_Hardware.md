@@ -6,8 +6,11 @@ In this section we will cover how to utlize SDR's in GNURadio. It will showcase 
 
 
 ### GNURadio Blocks to be Introduced
-* Block 1
-* Block 2
+* USRP SINK
+
+
+
+* USRP Source
 * ...
 
 ## Objectives 

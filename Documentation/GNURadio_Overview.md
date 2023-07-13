@@ -4,18 +4,32 @@ This is the overview of an simple introdcution to GNURadio. In this section we w
 The video will demonstrate the flowgraph creation from start to finish ending with a Flowgraph run.
 
 ### Key Learnings
-GNURadio is a software toolkit for building and executing signal processing systems.
+GNURadio is a versatile toolkit for constructing and operating signal processing systems.
+Signal Transmission and Receiving flowgraphs can be easily created in GNURadio.
+These flowgraphs feature a signal source block that produces simulated signal waveforms.
+The "Float to Complex" block is crucial for converting signal forms from floating point to complex exponential.
+The throttle block effectively manages data flow throughout simulation.
+The QT GUI Waterfall Sink enables real-time visualization of a waveform's spectrogram.
 
-A simple Signal Transmission and Receiving flowgraph is created in GNURadio.
+Practical Applications
+Use GNURadio to construct comprehensive and functional signal processing systems.
+Develop Signal Transmission and Receiving flowgraphs in GNURadio for diverse communication needs.
+Leverage the signal source block for generating custom simulated signal waveforms.
+Implement the "Float to Complex" block to transition signal data from floating point format to complex exponential format.
+Control the pace and volume of data flow during simulation with the throttle block.
+Employ QT GUI Waterfall Sink for real-time spectrogram visualization, aiding in signal analysis and troubleshooting.
 
-The flowgraph includes a signal source block, which generates a simulated signal waveform.
+### GNURadio Blocks to be Introduced
+* Signal Source
 
-The float to complex block converts the signal from floating point to complex exponential.
+* Trottle Block
 
-The throttle block controls data flow during simulation.
+* Band Pass Filter
 
-The QT GUI Waterfall Sink visualizes the waveform's spectrogram over time.
-s
+* Virtual Sink
+
+* Virtual Source 
+
 
 
 ## Flowgraph Creation

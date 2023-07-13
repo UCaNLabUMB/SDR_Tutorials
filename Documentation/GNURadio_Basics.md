@@ -2,34 +2,31 @@
 
 ## Overview
 This is an overview of GNURadio Flowgraph best practices. It will cover flowgraph creation in GNURadio, signal generation and utilizing the QT Gui Sink. It will cover how to use the throttle block for flowgraph creation as it is used for simulation purposes in GNURadio.
-### Key Learnings
--Flowgraph creation is simple once you understand the key guiding princibles. 
--Variables help improve the managability and help clean up the flowgraph. 
--Float to complex blocks is one of the GNURadio blocks that would be used frequently in a variery of flowgraph creations.
--In terms of visulization the QT GUI libary is the best tool for visulization in GNU Radio
 
+### Key Learnings
+Mastering flowgraph creation is straightforward once you grasp its essential principles.
+Leveraging variables significantly enhances flowgraph manageability and tidiness.
+"Float to complex" is a frequently used block in diverse GNURadio flowgraph projects.
+The QT GUI library emerges as the top choice for visualization in GNURadio.
+
+Practical Applications
+
+Build adaptable flowgraphs with variable parameters for easy customization.
+Incorporate "Float to Complex" blocks to optimize conversion processes in your flowgraphs.
+Manage your flowgraphs efficiently with Virtual Source & Sink.
+Employ variables for streamlined value management in your flowgraphs.
+Use QT GUI Range for on-the-fly adjustments in running flowgraphs.
 
 ### GNURadio Blocks to be Introduced
-* Block 1
-* Block 2
-* ...
+* Float to Complex block
+
+* Trottle Block
 
 
+* Signal Source
 
+* Qt GUI Waterfall Sink
 
-
-
-
-
-
-### Objectives
-Flowgraph creation and throttle blocks for simulation.​
-Create flowgraphs that are easy to adapt and change parameters​.
-Add variables to enable for more complex GR flowgraphs.​
-Utilize Conversion Blocks with Float to Complex block.​
-Flowgraph Management with Virtual Source & Sink​
-Utilize variables for more easier value management.​
-Utilize QT GUI Range to change values in a running flowgraph. 
 
 ### Flowgraph Creations
 Variables are able to be used within existing GR Blocks.​
