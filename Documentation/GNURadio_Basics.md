@@ -18,13 +18,21 @@ Employ variables for streamlined value management in your flowgraphs.
 Use QT GUI Range for on-the-fly adjustments in running flowgraphs.
 
 ### GNURadio Blocks to be Introduced
+
 * Float to Complex block
+The Float to Complex block in GNU Radio converts a stream of float (real) samples to complex samples by setting the imaginary part to zero.
 
 * Trottle Block
+The Throttle block in GNU Radio throttles the data rate of a flowgraph during simulations to avoid overloading the system.
 
 * Signal Source
 
+
+The Signal Source block in GNU Radio generates a simulated waveform to use as the input source for a flowgraph. It can produce different signal types like sinusoids, noise, analog waveforms, and data from files. The parameters of the signal can be adjusted as needed.
+
 * Qt GUI Waterfall Sink
+
+The Qt GUI Waterfall Sink in GNU Radio displays a spectrogram of the input signal data using a waterfall plot, enabling visualization of the signal in the frequency domain over time.
 
 
 ### Flowgraph Creations

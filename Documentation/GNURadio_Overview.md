@@ -20,15 +20,17 @@ Control the pace and volume of data flow during simulation with the throttle blo
 Employ QT GUI Waterfall Sink for real-time spectrogram visualization, aiding in signal analysis and troubleshooting.
 
 ### GNURadio Blocks to be Introduced
-* Signal Source
-
-* Trottle Block
 
 * Band Pass Filter
 
+The Band Pass Filter block in GNU Radio applies a bandpass filter to the input signal, passing frequencies within a specified range while rejecting frequencies outside that range. It is used to isolate or filter out certain frequency components of a signal
+
 * Virtual Sink
 
+The Virtual Sink block in GNU Radio acts as a dummy sink that discards samples instead of doing any real processing or output. It is useful for flowgraph optimization by avoiding unnecessary processing blocks. The Virtual Sink allows samples to be thrown away earlier in the flowgraph.
+
 * Virtual Source 
+The Virtual Source block in GNU Radio acts as a dummy source that generates a stream of zero samples or a give signal generation. It is primarily used for flowgraph optimization purposes. When connected to a Virtual Sink, it allows building conceptual flowgraphs without unnecessary real data streams. The Virtual Source and Sink avoid wasted CPU cycles and memory when actual data transfer is not needed
 
 
 

@@ -19,13 +19,18 @@ Leverage the QT GUI WaterFall Sink block for visualization of the receiver signa
 ### GNURadio Blocks to be Introduced
 * USRP SINK
 
+The USRP Sink block in GNU Radio streams samples to a connected USRP hardware device for transmission over the air. It takes in complex baseband samples from the flowgraph and handles modulation, interpolation, conversion to analog signals etc. needed for the USRP to transmit the signals wirelessly. The parameters like center frequency, gain, antennas can be configured. It is used to transmit signals generated and processed within GNU Radio over real hardware radios.
+
 
 
 * USRP Source
-* ...
+
+The USRP Source block in GNU Radio receives samples from a connected USRP hardware device after reception from its antennas. It handles decimation, demodulation, conversion to digital samples etc. to provide a stream of complex baseband samples into the GNU Radio flowgraph. The parameters like center frequency, gain, sample rate, antennas can be configured to correctly receive the wireless signals. It is used to transfer signals received by the USRP into GNU Radio for further processing and analysis.
 
 
-## Keypoints
+## Flowgraph Creation
+In this flowgraph we are going to make a couple of changes to one we created with the GNURadio basic flowgraph. In this flowgraph they are only two things that we need to change. We need to put a USRP Sink block place of the throttle block. This will send the singal generation into the B200 Mini. The next thing that we need to do is to imput a USRP Source block. This is responsible for recieving the collected signal from the USRP and then bringing it back into the flowgraph. Once we have this done all we need to do is reconnect the output into our QT GUI of Choice. For all of this to work we have to retrive the Serial Address from the computer terminal via the UHD_Find_Devices command. What this does is report the serial address of the usrp, and then we take this string unput and place it into the slot for serial addresses in both the USRP source and sink blocks. 
+
 UHD:USRP Sink allows us to send intended signal into USRPs.​
 UHD:USRP Source allows to retrieve intended signal from USRPs.
 Command: uhd_find_devices [For usrp serial id] in the Linux terminal allows us to receive our USRPs serial address for usage in both 
@@ -33,4 +38,7 @@ Command: uhd_find_devices [For usrp serial id] in the Linux terminal allows us t
 _Coming Soon_
 
 ## References
+_Coming Soon_
+
+## Next Chapter
 _Coming Soon_
