@@ -35,6 +35,9 @@ The Virtual Source block in GNU Radio acts as a dummy source that generates a st
 
 
 
+### FLowgraph Image
+
+
 ## Flowgraph Creation
 The first thing we need to do in order to setup our flowgraph is to create a signal source. The signal source block generates a simulated signal waveform within a GNU Radio flowgraph. It acts as the source of data entering the flowgraph. The next thing we will need to create is the float to complex block, this is responsible for converting the signal from traditional floating point number into a complex exponential. The next part of our flowgraph throttle block the throttle block is responsible only during simulation purposes, when we utilize the throttle block it is not needed. The next part of the flowgraph is the QT GUI Water fall Sink. This is responsible for visualizing the generated waveform in terms of the signal's spectrogram over time. The X-asis is frequency and Y-axsis shows time. 
 

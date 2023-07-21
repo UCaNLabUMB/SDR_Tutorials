@@ -1,4 +1,4 @@
-# Simple GNURadio TX/RX
+# Simple GNURadio Flowgraph
 
 ## Overview
 This is an overview of GNURadio Flowgraph best practices. It will cover flowgraph creation in GNURadio, signal generation and utilizing the QT Gui Sink. It will cover how to use the throttle block for flowgraph creation as it is used for simulation purposes in GNURadio.
@@ -22,18 +22,17 @@ Use QT GUI Range for on-the-fly adjustments in running flowgraphs.
 * Float to Complex block
 The Float to Complex block in GNU Radio converts a stream of float (real) samples to complex samples by setting the imaginary part to zero.
 
-* Trottle Block
+* Throttle Block
 The Throttle block in GNU Radio throttles the data rate of a flowgraph during simulations to avoid overloading the system.
 
 * Signal Source
-
-
 The Signal Source block in GNU Radio generates a simulated waveform to use as the input source for a flowgraph. It can produce different signal types like sinusoids, noise, analog waveforms, and data from files. The parameters of the signal can be adjusted as needed.
 
 * Qt GUI Waterfall Sink
 
 The Qt GUI Waterfall Sink in GNU Radio displays a spectrogram of the input signal data using a waterfall plot, enabling visualization of the signal in the frequency domain over time.
 
+### FLowgraph Image
 
 ### Flowgraph Creations
 Variables are able to be used within existing GR Blocks.​
