@@ -55,6 +55,9 @@ XMLRPC is a standard python module that is also utilize within GNURadio. In a si
 ## ZMQ
 ZMQ is part of the standard python libary. Our usable will only involve the ZMQ PUB Sink however there are more features and its flexible in its usage in a GNURadio flowgraph. For more information contact th GNURadio Wiki, for further explaination. 
 
+### FLowgraph Image
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNUCommand%26Controlpng.png)
+
 ## Combined Example - AGC FlowGraph & Code
 In this example we will be utilizing both XML_RPC and ZMQ in order to build an automatic gain controller in GNURadio. XML_RPC will be responsible for dispatching command to the respective server while ZMQ will be responsible for retriving the relevant information that would tie into the decision making for the amplitude controll.
 In terms of the flowgraph setup we will be utilizing 2x USRP B200 mini for this example. In our flowgrpah we start of with a signal source and a constant source both which flow into a FLoat to Complex block. From here we connect the output from this block into our USRP Sink block. This block should have the serial address of the connected USRP for this to work, as we learned from the previous tutorial. Next we add our USRP Source block again with its own respective serial address. We can then add the QT GUI sink for visualization.

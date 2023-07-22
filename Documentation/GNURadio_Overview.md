@@ -33,7 +33,7 @@ The Signal Source block in GNU Radio generates a simulated waveform to use as th
 The Qt GUI Waterfall Sink in GNU Radio displays a spectrogram of the input signal data using a waterfall plot, enabling visualization of the signal in the frequency domain over time.
 
 ### FLowgraph Image
-
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GROverview.png)
 ### Flowgraph Creations
 Variables are able to be used within existing GR Blocks.​
 Variables allows for easy management of multiple GR values used in different blocks

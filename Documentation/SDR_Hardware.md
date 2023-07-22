@@ -27,7 +27,8 @@ The USRP Sink block in GNU Radio streams samples to a connected USRP hardware de
 
 The USRP Source block in GNU Radio receives samples from a connected USRP hardware device after reception from its antennas. It handles decimation, demodulation, conversion to digital samples etc. to provide a stream of complex baseband samples into the GNU Radio flowgraph. The parameters like center frequency, gain, sample rate, antennas can be configured to correctly receive the wireless signals. It is used to transfer signals received by the USRP into GNU Radio for further processing and analysis.
 
-
+### FLowgraph Image
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/SDRHardware.png)
 ## Flowgraph Creation
 In this flowgraph we are going to make a couple of changes to one we created with the GNURadio basic flowgraph. In this flowgraph they are only two things that we need to change. We need to put a USRP Sink block place of the throttle block. This will send the singal generation into the B200 Mini. The next thing that we need to do is to imput a USRP Source block. This is responsible for recieving the collected signal from the USRP and then bringing it back into the flowgraph. Once we have this done all we need to do is reconnect the output into our QT GUI of Choice. For all of this to work we have to retrive the Serial Address from the computer terminal via the UHD_Find_Devices command. What this does is report the serial address of the usrp, and then we take this string unput and place it into the slot for serial addresses in both the USRP source and sink blocks. 
 

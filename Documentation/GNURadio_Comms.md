@@ -27,21 +27,28 @@ In summary, it takes a random data source, packets and modulates it, applies OFD
 ### GNURadio Blocks to be Introduced
 * Random Source
 
+Generates random data samples to act as a source signal.
+
 
 * Chunks to Symbols
 
+Converts streams of bytes or chunks to complex symbols based on a modulation scheme. Modulates data
+
 * OFDM Carrier Allocatior
+Divides an input signal into subcarriers to implement OFDM modulation.
 
 * FFT
-
+Performs an FFT to convert between frequency and time domain representations. Used in OFDM.
 * Stream to Tagged Stream
-
+Packetizes a stream by adding length tags. Used for creating packets.
 * OFDM Cyclic Prefixer 
-
+Adds a cyclic prefix to OFDM symbols to mitigate inter-symbol interference.
 * Selector Block
+Dynamically routes input streams to one of several outputs based on a control signal. Acts like a switch.
+### FLowgraph Image
+![Flowgraph Image](hhttps://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNUComms.png)
 
-
-## OFDM Loopback Simulation
+## OFDM Loopback Carrier Allocation 
 Random Source Block: Start by placing this block in your flowgraph. It's responsible for creating the random data samples that will act as the input source for the rest of the process.
 
 Chunks to Symbols Block: Next, connect the Random Source Block to this block. It takes the stream of random data and converts it into complex symbols. This is done through a modulation scheme like QPSK or QAM, which essentially reshapes the data for easier transmission.
