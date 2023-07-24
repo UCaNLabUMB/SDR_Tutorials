@@ -56,7 +56,7 @@ XMLRPC is a standard python module that is also utilize within GNURadio. In a si
 ZMQ is part of the standard python libary. Our usable will only involve the ZMQ PUB Sink however there are more features and its flexible in its usage in a GNURadio flowgraph. For more information contact th GNURadio Wiki, for further explaination. 
 
 ### FLowgraph Image
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNUCommand%26Controlpng.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GNUCommand%26Controlpng.png)
 
 ## Combined Example - AGC FlowGraph & Code
 In this example we will be utilizing both XML_RPC and ZMQ in order to build an automatic gain controller in GNURadio. XML_RPC will be responsible for dispatching command to the respective server while ZMQ will be responsible for retriving the relevant information that would tie into the decision making for the amplitude controll.

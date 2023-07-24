@@ -36,7 +36,7 @@ The Virtual Source block in GNU Radio acts as a dummy source that generates a st
 
 
 ### FLowgraph Image
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNU_Basics.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GNU_Basics.png)
 
 
 ## Flowgraph Creation

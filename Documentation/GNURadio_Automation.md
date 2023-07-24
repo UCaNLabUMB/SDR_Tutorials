@@ -30,7 +30,7 @@ Can control how often to write to file to limit size.
 Handles buffering samples and threading for optimized high-speed file writing.
 
 ### FLowgraph Image
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNUPertestingpng.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GNUPertestingpng.png)
 
 ## Flowgraph setup for cmd line start with parameters
 
