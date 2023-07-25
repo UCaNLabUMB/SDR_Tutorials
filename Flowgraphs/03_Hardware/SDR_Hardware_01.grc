@@ -10,7 +10,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: GR_Hardware
+    id: SDR_Hardware_01
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -36,7 +36,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: '5000000'
+    value: 2.5e6
   states:
     bus_sink: false
     bus_source: false
@@ -63,7 +63,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [104, 148.0]
+    coordinate: [104, 220.0]
     rotation: 0
     state: enabled
 - name: note_1_0
@@ -76,7 +76,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [416, 76.0]
+    coordinate: [464, 156.0]
     rotation: 0
     state: true
 - name: note_1_0_0
@@ -89,7 +89,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [840, 68.0]
+    coordinate: [784, 148.0]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -105,7 +105,7 @@ blocks:
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '"Rx Signal"'
-    plotconst: 'True'
+    plotconst: 'False'
     plotfreq: 'True'
     plottime: 'True'
     plotwaterfall: 'True'
@@ -118,7 +118,41 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1056, 140.0]
+    coordinate: [1056, 212.0]
+    rotation: 0
+    state: true
+- name: rx_addr
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: RX Address
+    short_id: r
+    type: str
+    value: '3279500'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [488, 20.0]
+    rotation: 0
+    state: true
+- name: tx_addr
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: TX Address
+    short_id: t
+    type: str
+    value: '3279417'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [376, 20.0]
     rotation: 0
     state: true
 - name: uhd_usrp_sink_0
@@ -232,7 +266,7 @@ blocks:
     clock_source6: ''
     clock_source7: ''
     comment: ''
-    dev_addr: '"serial=3279417"'
+    dev_addr: '"serial=" + tx_addr'
     dev_args: '""'
     gain0: '35'
     gain1: '0'
@@ -395,7 +429,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [392, 124.0]
+    coordinate: [392, 196.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -541,7 +575,7 @@ blocks:
     dc_offs_enb7: '""'
     dc_offs_enb8: '""'
     dc_offs_enb9: '""'
-    dev_addr: '"serial=3279500"'
+    dev_addr: '"serial=" + rx_addr'
     dev_args: '""'
     gain0: '40'
     gain1: '0'
@@ -767,7 +801,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [784, 116.0]
+    coordinate: [784, 188.0]
     rotation: 0
     state: true
 

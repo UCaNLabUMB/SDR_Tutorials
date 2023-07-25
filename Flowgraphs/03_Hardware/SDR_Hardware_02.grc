@@ -10,7 +10,7 @@ options:
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: GR_Hardware_02
+    id: SDR_Hardware_02
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -42,7 +42,7 @@ blocks:
     orient: Qt.Horizontal
     rangeType: float
     start: '910000000'
-    step: '1000000'
+    step: '500000'
     stop: '920000000'
     value: '915000000'
     widget: counter_slider
@@ -50,7 +50,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 12.0]
+    coordinate: [608, 12.0]
     rotation: 0
     state: true
 - name: fc_tx
@@ -63,7 +63,7 @@ blocks:
     orient: Qt.Horizontal
     rangeType: float
     start: '910000000'
-    step: '1000000'
+    step: '500000'
     stop: '920000000'
     value: '915000000'
     widget: counter_slider
@@ -74,73 +74,91 @@ blocks:
     coordinate: [440, 12.0]
     rotation: 0
     state: true
-- name: hcf
-  id: variable_qtgui_range
+- name: filter_select
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: ''
-    label: High Cut Filter
-    min_len: '200'
-    orient: Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: 1e6
-    stop: samp_rate/2
-    value: 3e6
-    widget: counter_slider
+    gui_hint: 0,3,1,1
+    label: Filter Selection
+    label0: Enable
+    label1: Bypass
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [912, 12.0]
+    coordinate: [944, 12.0]
     rotation: 0
     state: true
-- name: lcf
-  id: variable_qtgui_range
+- name: path_select
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: ''
-    label: Low Cut Filter
-    min_len: '200'
-    orient: Qt.Horizontal
-    rangeType: float
-    start: '0'
-    step: 1e6
-    stop: samp_rate/2
-    value: 2e6
-    widget: counter_slider
+    gui_hint: 0,2,1,1
+    label: Source Signal
+    label0: Real Sine
+    label1: Complex Sine
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [784, 12.0]
+    coordinate: [808, 12.0]
     rotation: 0
     state: true
 - name: samp_rate
   id: variable
   parameters:
     comment: ''
-    value: '10000000'
+    value: 2.5e6
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 12.0]
+    coordinate: [192, 44.0]
     rotation: 0
     state: enabled
 - name: sig_freq
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,0,1,2
     label: Signal Frequency
     min_len: '200'
     orient: Qt.Horizontal
     rangeType: float
-    start: '1000000'
-    step: '500000'
-    stop: '5000000'
-    value: '1000000'
+    start: 5e4
+    step: 5e4
+    stop: 5e5
+    value: 1e5
     widget: counter_slider
   states:
     bus_sink: false
@@ -149,7 +167,7 @@ blocks:
     coordinate: [296, 12.0]
     rotation: 0
     state: true
-- name: analog_const_source_x_0_0
+- name: analog_const_source_x_0
   id: analog_const_source_x
   parameters:
     affinity: ''
@@ -163,7 +181,29 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [200, 452.0]
+    coordinate: [304, 324.0]
+    rotation: 180
+    state: enabled
+- name: analog_sig_source_x_0
+  id: analog_sig_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    amp: '1'
+    comment: ''
+    freq: sig_freq
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    offset: '0'
+    phase: '0'
+    samp_rate: samp_rate
+    type: complex
+    waveform: analog.GR_COS_WAVE
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1000, 220.0]
     rotation: 0
     state: enabled
 - name: analog_sig_source_x_1_0
@@ -171,7 +211,7 @@ blocks:
   parameters:
     affinity: ''
     alias: ''
-    amp: '0.25'
+    amp: '1'
     comment: ''
     freq: sig_freq
     maxoutbuf: '0'
@@ -185,7 +225,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [40, 380.0]
+    coordinate: [64, 204.0]
     rotation: 0
     state: enabled
 - name: band_pass_filter_0
@@ -197,23 +237,23 @@ blocks:
     comment: ''
     decim: '1'
     gain: '1'
-    high_cutoff_freq: hcf
+    high_cutoff_freq: sig_freq + 25000
     interp: '1'
-    low_cutoff_freq: lcf
+    low_cutoff_freq: sig_freq - 25000
     maxoutbuf: '0'
     minoutbuf: '0'
     samp_rate: samp_rate
     type: fir_filter_ccf
-    width: 1e5
+    width: 5e3
     win: firdes.WIN_HAMMING
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [904, 172.0]
+    coordinate: [1056, 404.0]
     rotation: 0
     state: enabled
-- name: blocks_float_to_complex_0_0
+- name: blocks_float_to_complex_0
   id: blocks_float_to_complex
   parameters:
     affinity: ''
@@ -226,7 +266,53 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [432, 432.0]
+    coordinate: [304, 248.0]
+    rotation: 0
+    state: enabled
+- name: blocks_selector_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: path_select
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [272, 476.0]
+    rotation: 0
+    state: enabled
+- name: blocks_selector_0_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: filter_select
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1264, 500.0]
     rotation: 0
     state: enabled
 - name: note_1_0
@@ -234,12 +320,12 @@ blocks:
   parameters:
     alias: ''
     comment: ''
-    note: Real Sinusoid
+    note: Transmitter
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [328, 372.0]
+    coordinate: [584, 404.0]
     rotation: 0
     state: true
 - name: note_1_0_0
@@ -252,20 +338,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [648, 148.0]
-    rotation: 0
-    state: true
-- name: note_1_0_1
-  id: note
-  parameters:
-    alias: ''
-    comment: ''
-    note: Transmitter
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [296, 148.0]
+    coordinate: [816, 452.0]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -277,11 +350,11 @@ blocks:
     comment: ''
     fc: fc_rx
     fftsize: '1024'
-    gui_hint: ''
+    gui_hint: 1,0,1,4
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
-    plotconst: 'False'
+    plotconst: 'True'
     plotfreq: 'True'
     plottime: 'True'
     plotwaterfall: 'True'
@@ -294,7 +367,41 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1128, 196.0]
+    coordinate: [1464, 500.0]
+    rotation: 0
+    state: true
+- name: rx_addr
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: RX Address
+    short_id: r
+    type: str
+    value: '3279500'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1224, 12.0]
+    rotation: 0
+    state: true
+- name: tx_addr
+  id: parameter
+  parameters:
+    alias: ''
+    comment: ''
+    hide: none
+    label: TX Address
+    short_id: t
+    type: str
+    value: '3279417'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1112, 12.0]
     rotation: 0
     state: true
 - name: uhd_usrp_sink_0
@@ -408,7 +515,7 @@ blocks:
     clock_source6: ''
     clock_source7: ''
     comment: ''
-    dev_addr: '"serial=3279417"'
+    dev_addr: '"serial=" + tx_addr'
     dev_args: '""'
     gain0: '35'
     gain1: '0'
@@ -571,7 +678,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [264, 188.0]
+    coordinate: [512, 444.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -717,7 +824,7 @@ blocks:
     dc_offs_enb7: '""'
     dc_offs_enb8: '""'
     dc_offs_enb9: '""'
-    dev_addr: '"serial=3279500"'
+    dev_addr: '"serial=" + rx_addr'
     dev_args: '""'
     gain0: '40'
     gain1: '0'
@@ -943,43 +1050,74 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [616, 172.0]
+    coordinate: [816, 492.0]
     rotation: 0
     state: true
-- name: virtual_sink_0_0_0
+- name: virtual_sink_0
   id: virtual_sink
   parameters:
     alias: ''
     comment: ''
-    stream_id: TxSignal
+    stream_id: Real_Sine
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [640, 436.0]
+    coordinate: [512, 260.0]
     rotation: 0
     state: enabled
+- name: virtual_sink_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Complex_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1256, 260.0]
+    rotation: 0
+    state: true
 - name: virtual_source_0
   id: virtual_source
   parameters:
     alias: ''
     comment: ''
-    stream_id: TxSignal
+    stream_id: Real_Sine
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 244.0]
+    coordinate: [48, 492.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Complex_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [32, 540.0]
     rotation: 0
     state: true
 
 connections:
-- [analog_const_source_x_0_0, '0', blocks_float_to_complex_0_0, '1']
-- [analog_sig_source_x_1_0, '0', blocks_float_to_complex_0_0, '0']
-- [band_pass_filter_0, '0', qtgui_sink_x_0, '0']
-- [blocks_float_to_complex_0_0, '0', virtual_sink_0_0_0, '0']
+- [analog_const_source_x_0, '0', blocks_float_to_complex_0, '1']
+- [analog_sig_source_x_0, '0', virtual_sink_0_0, '0']
+- [analog_sig_source_x_1_0, '0', blocks_float_to_complex_0, '0']
+- [band_pass_filter_0, '0', blocks_selector_0_0, '0']
+- [blocks_float_to_complex_0, '0', virtual_sink_0, '0']
+- [blocks_selector_0, '0', uhd_usrp_sink_0, '0']
+- [blocks_selector_0_0, '0', qtgui_sink_x_0, '0']
 - [uhd_usrp_source_0, '0', band_pass_filter_0, '0']
-- [virtual_source_0, '0', uhd_usrp_sink_0, '0']
+- [uhd_usrp_source_0, '0', blocks_selector_0_0, '1']
+- [virtual_source_0, '0', blocks_selector_0, '0']
+- [virtual_source_0_0, '0', blocks_selector_0, '1']
 
 metadata:
   file_format: 1
