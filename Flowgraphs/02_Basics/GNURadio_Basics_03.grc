@@ -5,12 +5,12 @@ options:
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: Introducing options to Enable / Disable / Bypass blocks
+    description: Introduce virtual source/sink and selector blocks
     gen_cmake: 'On'
     gen_linking: dynamic
     generate_options: qt_gui
     hier_block_src_path: '.:'
-    id: GNURadio_Basics_01
+    id: GNURadio_Basics_03
     max_nouts: '0'
     output_language: python
     placement: (0,0)
@@ -32,6 +32,66 @@ options:
     state: enabled
 
 blocks:
+- name: filter_select
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 0,3,1,1
+    label: Filter Selection
+    label0: Enable
+    label1: Bypass
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [704, 12.0]
+    rotation: 0
+    state: true
+- name: path_select
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 0,2,1,1
+    label: Source Signal
+    label0: Real Sine
+    label1: Complex Sine
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [552, 12.0]
+    rotation: 0
+    state: true
 - name: samp_rate
   id: variable
   parameters:
@@ -45,17 +105,26 @@ blocks:
     rotation: 0
     state: enabled
 - name: sig_freq
-  id: variable
+  id: variable_qtgui_range
   parameters:
     comment: ''
-    value: 5e4
+    gui_hint: 0,0,1,2
+    label: Signal Frequency
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: 5e4
+    step: 5e4
+    stop: 5e5
+    value: 1e5
+    widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
     coordinate: [280, 12.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: analog_const_source_x_0
   id: analog_const_source_x
   parameters:
@@ -70,8 +139,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 156.0]
-    rotation: 180
+    coordinate: [280, 244.0]
+    rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
   id: analog_noise_source_x
@@ -89,7 +158,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [88, 372.0]
+    coordinate: [272, 500.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_0
@@ -111,9 +180,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 236.0]
+    coordinate: [1016, 180.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: analog_sig_source_x_1
   id: analog_sig_source_x
   parameters:
@@ -133,8 +202,8 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [712, 84.0]
-    rotation: 180
+    coordinate: [80, 172.0]
+    rotation: 0
     state: enabled
 - name: band_pass_filter_0
   id: band_pass_filter
@@ -158,9 +227,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [440, 236.0]
+    coordinate: [608, 348.0]
     rotation: 0
-    state: bypassed
+    state: enabled
 - name: blocks_add_xx_0
   id: blocks_add_xx
   parameters:
@@ -176,7 +245,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [312, 280.0]
+    coordinate: [496, 488.0]
     rotation: 0
     state: true
 - name: blocks_float_to_complex_0
@@ -192,8 +261,54 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 128.0]
-    rotation: 180
+    coordinate: [480, 216.0]
+    rotation: 0
+    state: enabled
+- name: blocks_selector_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: path_select
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [264, 364.0]
+    rotation: 0
+    state: enabled
+- name: blocks_selector_0_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: filter_select
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [824, 452.0]
+    rotation: 0
     state: enabled
 - name: blocks_throttle_0
   id: blocks_throttle
@@ -211,7 +326,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [648, 292.0]
+    coordinate: [1040, 484.0]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -223,7 +338,7 @@ blocks:
     comment: ''
     fc: '0'
     fftsize: '1024'
-    gui_hint: ''
+    gui_hint: 1,0,1,4
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
@@ -240,19 +355,76 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [832, 260.0]
+    coordinate: [1224, 452.0]
+    rotation: 0
+    state: true
+- name: virtual_sink_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Real_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [688, 228.0]
+    rotation: 0
+    state: enabled
+- name: virtual_sink_0_0
+  id: virtual_sink
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Complex_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1272, 220.0]
+    rotation: 0
+    state: true
+- name: virtual_source_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Real_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [40, 372.0]
+    rotation: 0
+    state: enabled
+- name: virtual_source_0_0
+  id: virtual_source
+  parameters:
+    alias: ''
+    comment: ''
+    stream_id: Complex_Sine
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [24, 420.0]
     rotation: 0
     state: true
 
 connections:
 - [analog_const_source_x_0, '0', blocks_float_to_complex_0, '1']
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '1']
-- [analog_sig_source_x_0, '0', blocks_add_xx_0, '0']
+- [analog_sig_source_x_0, '0', virtual_sink_0_0, '0']
 - [analog_sig_source_x_1, '0', blocks_float_to_complex_0, '0']
-- [band_pass_filter_0, '0', blocks_throttle_0, '0']
+- [band_pass_filter_0, '0', blocks_selector_0_0, '0']
 - [blocks_add_xx_0, '0', band_pass_filter_0, '0']
-- [blocks_float_to_complex_0, '0', blocks_add_xx_0, '0']
+- [blocks_add_xx_0, '0', blocks_selector_0_0, '1']
+- [blocks_float_to_complex_0, '0', virtual_sink_0, '0']
+- [blocks_selector_0, '0', blocks_add_xx_0, '0']
+- [blocks_selector_0_0, '0', blocks_throttle_0, '0']
 - [blocks_throttle_0, '0', qtgui_sink_x_0, '0']
+- [virtual_source_0, '0', blocks_selector_0, '0']
+- [virtual_source_0_0, '0', blocks_selector_0, '1']
 
 metadata:
   file_format: 1
