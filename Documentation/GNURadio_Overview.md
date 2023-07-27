@@ -1,18 +1,33 @@
 # GNURadio Overview
 
 ## Overview
-This is an overview of GNURadio and the GNURadio Companion (GRC). It covers flowgraph creation in GRC, and use of GNURadio for implementing simulated signal processing chains. The examples in this section introduce signal generation and use of the QT GUI tools for signal observation and analysis.
+This is an overview of GNURadio and the GNURadio Companion (GRC). It covers flowgraph creation in GRC, and use of GNURadio for implementing simulated signal processing chains. The examples in this section will introduce signal generation and use of the QT GUI tools for signal observation and analysis.
 
 **Tutorial Video:** _Coming Soon_
+
+
+### Objective
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GROverview_01.png)
+
+We will ultimately create the flowgraph shown above. This flowgraph generates three different signals: 
+* A complex-valued sinusoid
+* A real-valued sinusoid
+* A real-valued sinusoid represented as a complex-valued data type.
+
+The signals are then displayed using different graphical display tools from QT GUI (Graphical User Interface) library. We will discuss how to create and excute this flowgraph in GRC. The flowgraph is also available in the [flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/01_Overview) directory.
+
+
+
 
 ### Key Learnings
 In this tutorial, we will introduce the following concepts:
 * GNURadio and GNURadio Companion (GRC)
 * Flowgraph creation and execution in GRC
 * GNURadio blocks for signal generation
+* GNURadio data types and Real/Complex Sinusoids
 * The QT GUI library for signal observation and visualization
 * Organizing GUI layout with GUI Hints
-* GNURadio data types and Real/Complex Sinusoids
 
 
 ### GNURadio Blocks to be Introduced
@@ -27,9 +42,7 @@ This tutorial will introduce the following blocks from the core GNURadio library
   * QT GUI Frequency Sink Block
 * Float to Complex Block
 
-We will ultimately create the flowgraph shown below. This flowgraph is also available in the [flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/01_Overview) directory.
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GROverview_01.png)
 
 
 ## Flowgraph Creation
