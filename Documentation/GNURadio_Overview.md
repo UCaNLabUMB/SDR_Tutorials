@@ -1,51 +1,73 @@
-# Simple GNURadio Flowgraph
+# GNURadio Overview
 
 ## Overview
-This is an overview of GNURadio Flowgraph best practices. It will cover flowgraph creation in GNURadio, signal generation and utilizing the QT Gui Sink. It will cover how to use the throttle block for flowgraph creation as it is used for simulation purposes in GNURadio.
+This is an overview of GNURadio and the GNURadio Companion (GRC). It covers flowgraph creation in GRC, and use of GNURadio for implementing simulated signal processing chains. The examples in this section introduce signal generation and use of the QT GUI tools for signal observation and analysis.
+
+**Tutorial Video:** _Coming Soon_
 
 ### Key Learnings
-Mastering flowgraph creation is straightforward once you grasp its essential principles.
-Leveraging variables significantly enhances flowgraph manageability and tidiness.
-"Float to complex" is a frequently used block in diverse GNURadio flowgraph projects.
-The QT GUI library emerges as the top choice for visualization in GNURadio.
+In this tutorial, we will introduce the following concepts:
+* GNURadio and GNURadio Companion (GRC)
+* Flowgraph creation and execution in GRC
+* GNURadio blocks for signal generation
+* The QT GUI library for signal observation and visualization
+* Organizing GUI layout with GUI Hints
+* GNURadio data types and Real/Complex Sinusoids
 
-Practical Applications
-
-Build adaptable flowgraphs with variable parameters for easy customization.
-Incorporate "Float to Complex" blocks to optimize conversion processes in your flowgraphs.
-Manage your flowgraphs efficiently with Virtual Source & Sink.
-Employ variables for streamlined value management in your flowgraphs.
-Use QT GUI Range for on-the-fly adjustments in running flowgraphs.
 
 ### GNURadio Blocks to be Introduced
+This tutorial will introduce the following blocks from the core GNURadio library:
 
-* Float to Complex block
-The Float to Complex block in GNU Radio converts a stream of float (real) samples to complex samples by setting the imaginary part to zero.
-
+* Options Block 
+* Signal Source Block
 * Throttle Block
-The Throttle block in GNU Radio throttles the data rate of a flowgraph during simulations to avoid overloading the system.
+* Qt GUI Library
+  * QT GUI Sink Block
+  * QT GUI Time Sink Block
+  * QT GUI Frequency Sink Block
+* Float to Complex Block
 
-* Signal Source
-The Signal Source block in GNU Radio generates a simulated waveform to use as the input source for a flowgraph. It can produce different signal types like sinusoids, noise, analog waveforms, and data from files. The parameters of the signal can be adjusted as needed.
+We will ultimately create the flowgraph shown below. This flowgraph is also available in the [flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/01_Overview) directory.
 
-* Qt GUI Waterfall Sink
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GROverview_01.png)
 
-The Qt GUI Waterfall Sink in GNU Radio displays a spectrogram of the input signal data using a waterfall plot, enabling visualization of the signal in the frequency domain over time.
 
-### FLowgraph Image
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GROverview.png)
-### Flowgraph Creations
-Variables are able to be used within existing GR Blocks.​
-Variables allows for easy management of multiple GR values used in different blocks
-QT Gui Range enables us to be able predefine ranges and default  values to utilize during a running flowgraph. ​
-Showcase that we can utilize QT GUI Blocks to manipulate both filter and frequency values during flowgraph runtime. 
+## Flowgraph Creation
+We assume that you already have GNURadio [installed](https://wiki.gnuradio.org/index.php/InstallingGR). Historically, we have been using the PyBOMBs installation method; however, there are other suggested methods for installing newer versions of GNURadio (i.e., after V3.8). With a working installation of GNURadio, we can start creating our first flowgraph by following the steps below.
 
-## Video Example
-_Coming Soon_
+### Create Flowgraph in GRC: 
+_Discuss GNURadio vs. GRC_
+
+### Define Flowgraph Options: 
+_Discuss options block (ID/title/.etc) and ID as file name for python file to be generated_
+
+### Adding Blocks: 
+_sig source, throttle, QT Sink... discuss complex blocks and purpose of throttle_
+
+### Connecting Blocks: 
+
+### Setting Parameters: 
+_Discuss frequency in sig source, sample rate variable and change of values in all blocks (to revisit later)_
+
+## Flowgraph execution
+
+### Generating Python Code
+
+### Executing Flowgraph with Python
+
+### Executing Flowgraph within GRC
+
+
+## Flowgraph Additions and Observations
+_Add real sine example and real-sine with float-to-complex block_
+
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/GROverview_02.png)
 
 ## References
 _Coming Soon_
 
 
 ## Next Chapter
-_Coming Soon_
+[GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)
+
