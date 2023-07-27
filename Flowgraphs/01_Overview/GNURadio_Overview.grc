@@ -5,7 +5,7 @@ options:
     cmake_opt: ''
     comment: ''
     copyright: ''
-    description: ''
+    description: Flowgraph to generate and display simulated signals
     gen_cmake: 'On'
     gen_linking: dynamic
     generate_options: qt_gui
