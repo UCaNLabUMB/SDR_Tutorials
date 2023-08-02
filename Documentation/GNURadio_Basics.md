@@ -37,7 +37,7 @@ It can be beneficial to have a common signal processing chain where we can modif
 
 In the first flowgraph of this tutorial, [GNURadio_Basics_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) shown below, we start with two signal chains from our Overview tutorial (i.e., a complex- and real-valued signal source, both ultimately represented as a complex data type). We also include a noise source block that is set to generate an additive white Gaussian noise (AWGN) signal. The signal and noise are both combined in the addition block, and the resulting signal is passed through a band pass filter with the goal of isolating the desired signal and removing unwanted noise. After the filter, we have the throttle and QT GUI blocks that we have already seen.
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_01.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01.png)
 
 * **NOTE:** The portion of the signal chain that generates the real-valued signal is currently grayed out, meaning that it has been _disabled_. We will return to this shortly, but we note that the flowgraph would give an error if this was not disabled since it would lead to two different signals going into the same input port on the Add block. 
 
@@ -50,13 +50,13 @@ We first discuss the **Bandpass Filter** block and how we can use variables to m
 
 In the figure below, we can also see how this sig\_freq variable is used to set the frequency bounds of our filter in a way that keeps our desired signal at the center of the filter's pass band. With this configuration, the filter's low/high cutoff range will always be 25KHz below/above the signal source's frequency.
 
-![Filter Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_01_01.png)
+![Filter Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_01.png)
 
 When running the the flowgraph, we can observe the output below with the 50KHz default signal. We see that the peak signal power is at 5KHz and the initial additive noise is still present between 25KHz and 75KHz (i.e., the pass band for our band pass filter). When adjusting the sig\_freq variable to 200KHz and running again, we get the results in the second figure below. Here, the peak signal power shows up at 200KHz (as expected) and the filter's pass band has been updated to range from 175KHz to 225KHz. 
 
-![50KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_01_02.png)
+![50KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_02.png)
 
-![200KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_01_03.png)
+![200KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_03.png)
 
 * **NOTE:** The key takeaway here is that we only need to update the single value of the sig\_freq variable, as opposed to editing the Frequency parameter in the signal source block _and_ the Low/High Cutoff Frequency prameters in the filter block.
 
@@ -70,9 +70,9 @@ _Describe second path, and ability to enable/disable for switching paths_
 
 
 ## Dynamic Flowgraphs
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_02.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_02.png)
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_03.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03.png)
 
 _Describe range for signal frequency_
 
