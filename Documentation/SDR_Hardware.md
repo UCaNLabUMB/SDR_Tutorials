@@ -5,6 +5,7 @@ In this section we will cover how to utlize SDR's in GNURadio. It will showcase 
 ### Key Learnings
 
 GNURadio can be utilized for a straightforward TX/RX setup with Ettus B200 mini USRPs.
+It is important to be aware the we can utilize GNURadio for both traditional Radio Frequency applications and it can be also adapted for 
 The Linux terminal is a handy tool to obtain the USRP Serial Address via UHD find devices.
 GNU Radio Flowgraph allows the effective use of USRPs.
 
@@ -20,7 +21,6 @@ Leverage the QT GUI WaterFall Sink block for visualization of the receiver signa
 * USRP SINK
 
 The USRP Sink block in GNU Radio streams samples to a connected USRP hardware device for transmission over the air. It takes in complex baseband samples from the flowgraph and handles modulation, interpolation, conversion to analog signals etc. needed for the USRP to transmit the signals wirelessly. The parameters like center frequency, gain, antennas can be configured. It is used to transmit signals generated and processed within GNU Radio over real hardware radios.
-
 
 
 * USRP Source
