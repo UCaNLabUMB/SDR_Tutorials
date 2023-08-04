@@ -4,7 +4,18 @@
 In this tutorial we are going to cover more advanced GNURadio flowgraphs and topics. We will cover how to setup a command and control flowgraph. By the end of this tutorial you should be able utilize the XML-RPC Module for command and control  along with the ZMQ module which provides a feedback mechanism. In addition we will also cover the hardware setup in terms of network on how to get distributed nodes up and running and in addition, networking wiring for multiple flowgraph control.
 
 ### Key Learnings
-_Coming Soon_
+-Relize that GNU Radio has inbuilt powerfull tools.
+-XML_RPC is very usefully interms of command and controll in GNURadio, as it allows us to update any parameters on any running flowgraph in GNURadio with the 
+XML_RPC server block.
+-XML_RPC is able to scale up to to any ammount of running flowgraphs given the correct dispatching of commands to the relevant ip_address/server blocks. 
+-We know ZMQ is very usefull interms of getting feedback/ data points from the GNURadio flowgraph via a tcp ip_address connnection. 
+-We know that ZMQ in addition to getting feedback, we have the ability to send the singal processing of any running flowgraph to a desired tcp network address, for further continuation of the signal processing in
+another flowgraph in the same or different computer.
+-In addition we have the ability for distributed signal processing by utilizing ZMQ to share the signal processing, across different flowgraphs on different computers via the TCP ip_address network connection.
+-XML_RPC and ZMQ snergies very well together.
+-We are able to interface with both XML_RPC and ZMQ utilizing python scripting in order to establish a feedback mecanism for any relevant data point for the flowgraph.
+-As a result we can now utilize ZMQ for distributed signal processing accross multiple flowgraphs, on multiple different computers, while at the same utlize XML_RPC to update multiple different variable/parameters for any differet flowgraph running on different computers.
+- 
 
 ### GNURadio Blocks to be Introduced
 * XML_RPC Server Block
