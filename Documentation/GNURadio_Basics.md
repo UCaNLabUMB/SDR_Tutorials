@@ -45,13 +45,13 @@ In the first flowgraph of this tutorial, [GNURadio_Basics_01.grc](https://github
 
 
 ## Filters and Variables
-We first discuss the **Bandpass Filter** block and how we can use variables to make sure that the filter stays aligned with our desired signal. You can notice in the flowgraph above that we have also included a new **Variable block** to introduce a variable named sig\_freq. This variable has been used to assign the Frequency parameter in both of our **Signal Source** blocks. The benefit of using a variable here is that we have a single location where we can change the variable's value. In this way, we do not need to open both signal sources to change the signal frequencies separately. 
+We first discuss the **Bandpass Filter** block and how we can use variables to make sure that the filter stays aligned with our desired signal. You can notice in the flowgraph above that we have also included a new **Variable block** to introduce a variable named sig\_freq. This variable has been used to assign the Frequency property in both of our **Signal Source** blocks. The benefit of using a variable here is that we have a single location where we can change the variable's value. In this way, we do not need to open both signal sources to change the signal frequencies separately. 
 
 * **NOTE:** While this might not seem significant in this case, the value of variables becomes much more significant as the flowgraphs scale in complexity and common values are shared across many blocks (in the same way that we use variables in conventional coding projects to avoid hard coding). 
 
 In the figure below, we can also see how this sig\_freq variable is used to set the frequency bounds of our filter in a way that keeps our desired signal at the center of the filter's pass band. With this configuration, the filter's low/high cutoff range will always be 25KHz below/above the signal source's frequency.
 
-![Filter Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_01.png)
+![Filter Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_01.png)
 
 When running the the flowgraph, we can observe the output below with the 50KHz default signal. We see that the peak signal power is at 50KHz and the initial additive noise is still present between 25KHz and 75KHz (i.e., the pass band for our band pass filter). When adjusting the sig\_freq variable to 200KHz and running again, we get the results in the second figure below. Here, the peak signal power shows up at 200KHz (as expected) and the filter's pass band has been updated to range from 175KHz to 225KHz. 
 
@@ -59,7 +59,7 @@ When running the the flowgraph, we can observe the output below with the 50KHz d
 
 ![200KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_03.png)
 
-* **NOTE:** The key takeaway here is that we only need to update the single value of the sig\_freq variable, as opposed to editing the Frequency parameter in the signal source block _and_ the Low/High Cutoff Frequency prameters in the filter block.
+* **NOTE:** The key takeaway here is that we only need to update the single value of the sig\_freq variable, as opposed to editing the Frequency property in the signal source block _and_ the Low/High Cutoff Frequency prameters in the filter block.
 
 
 ## Block Status: Enable, Disable, Bypass
