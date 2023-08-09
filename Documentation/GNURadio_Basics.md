@@ -124,7 +124,7 @@ Similar to the **QT Range** block, the **QT GUI Chooser** block creates a variab
 
 Following a similar process, we have included a **Selector** block to optionally select between the output of the **Bandpass Filter** block or the output of the **Add** block. The input index property in this block is set to _filter\_select_ and we have created another **QT GUI Chooser** block that allows the user to choose between "Enable" or "Bypass" for the Filter Selection. This ultimatley allows the user to bypass the filter while the flowgraph is running. The image below shows the GUI that is created when this flowgraph is run. 
 
-![Flowgraph Running](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03_02.png)
+![Flowgraph Running](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03_03.png)
 
 * **NOTE:** In the waterfall plot above, we can see that we have started with a 100KHz real-valued sinusoid. After a few seconds, we changed the frequency to 150KHz and then changed the signal source to the complex sine. Shortly after, we selected the option to bypass the filter and then set the signal source back to a real sine. Finally, we increased the signal frequency to 200KHz and then, finally, to 350KHz.
 
