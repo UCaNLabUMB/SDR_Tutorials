@@ -9,19 +9,20 @@ In this tutorial, we will extend our knowledge of GNURadio and consider some bes
 
 ### Objective
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/Basics/GRBasics_03.png)
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03.png)
 
-This tutorial will work towards developing the [GNURadio_Basics flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) shown above. This flowgraph generates a noisy sinusoidal signal and creates a GUI with a single display. The GUI also includes an interactive interface that allows users to select the real- or complex-valued sinusoid, change the frequency of the signal, and enable/disable a band pass filter. From a signal perspective, this will provide a high-level demonstration of the benefits related to filtering out-of-band noise from a desired signal. We will also demonstrate the frequency characteristics of a square wave signal, and the associated impact of filtering a noise square wave.
+This tutorial will work towards developing the [GNURadio_Basics flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) shown above. This flowgraph generates a noisy sinusoidal signal and creates a GUI with a single display. The GUI also includes an interactive interface that allows users to select the real- or complex-valued sinusoid, change the frequency of the signal, and enable/disable a band pass filter. From a signal perspective, this will provide a high-level demonstration of the benefits related to filtering out-of-band noise from a desired signal. We will also demonstrate the frequency characteristics of a square wave signal, and the associated impact of filtering a noisy square wave.
 
 Along the way, we will discuss how to use GRC tools to modify flowgraphs without deleting blocks. This is a helpful process for debugging flowgraphs or creating multi-purpose flowgraphs. Specifically, we will show how GRC allows you to:
-* Enable and Disable blocks to remove them from the flowgraphing without deleting them completely.
+* Enable and Disable blocks to remove them from the flowgraph without deleting them completely.
 * Bypass Blocks without the need to create a new connection.
+* Use QT GUI blocks to manually change parameters and signal paths while a flowgraph is running.
 
 
 ### GNURadio Blocks to be Introduced
 This tutorial will introduce the following blocks from the core GNURadio library:
-* Noise Source Block:
-* Add Block:
+* Noise Source Block
+* Add Block
 * Band Pass Filter Block
 * Virtual Source/Sink Blocks
 * QT GUI Range Block
@@ -31,7 +32,7 @@ This tutorial will introduce the following blocks from the core GNURadio library
 
 
 # Modifying Flowgraphs Prior to Execution
-The high level goal of this tutorial relates observation of the impacts that come from changing a single parameter in a flowgraph (e.g., a variable, block used, presence or absence of a block, etc.). 
+This tutorial will demonstrate the value of observing impacts that come from changing a single parameter in a flowgraph (e.g., a variable, block used, presence or absence of a block, etc.). 
 We have already seen how to add and connect blocks to create a desired flowgraph. As such, we could conceivably create multiple copies of a flowgraph and make the desired changes within the copies while keeping the rest of the signal processing chain common across copies of the original flowgraph. However, multiple copies of a flowgraph can become a problem if we want to modify the section of the signal processing chain that is common across copies. 
 It can be beneficial to have a common signal processing chain where we can modify a small piece of the flowgraph for comparison, while keeping the rest of the flowgraph consistent. 
 
@@ -52,7 +53,7 @@ In the figure below, we can also see how this sig\_freq variable is used to set 
 
 ![Filter Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_01.png)
 
-When running the the flowgraph, we can observe the output below with the 50KHz default signal. We see that the peak signal power is at 5KHz and the initial additive noise is still present between 25KHz and 75KHz (i.e., the pass band for our band pass filter). When adjusting the sig\_freq variable to 200KHz and running again, we get the results in the second figure below. Here, the peak signal power shows up at 200KHz (as expected) and the filter's pass band has been updated to range from 175KHz to 225KHz. 
+When running the the flowgraph, we can observe the output below with the 50KHz default signal. We see that the peak signal power is at 50KHz and the initial additive noise is still present between 25KHz and 75KHz (i.e., the pass band for our band pass filter). When adjusting the sig\_freq variable to 200KHz and running again, we get the results in the second figure below. Here, the peak signal power shows up at 200KHz (as expected) and the filter's pass band has been updated to range from 175KHz to 225KHz. 
 
 ![50KHz Signal](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_02.png)
 
@@ -62,14 +63,31 @@ When running the the flowgraph, we can observe the output below with the 50KHz d
 
 
 ## Block Status: Enable, Disable, Bypass
-_Describe add block and noise source, and ability to bypass the filter_
+Continuing to observe the flowgraph in [GNURadio_Basics_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), we will now introduce GRC functionality for enabling/disabling blocks and bypassing blocks. Returning to the disabled signal path for the real-valued sinusoid, we can highlight the 3 blocks in this signal path and then select the enable icon in the menu bar. When we do this, the flowgraph will show an error since we now have two signals going into one port in the **Add** block. To resolve this, we select the complex Signal Source block and select the disable icon in the menu bar. If we run the flowgraph again, we should now see the presence of the signal at 50KHz and -50KHz (or at the positive and negative value of whatever frequency value you've set for _sig\_freq_). Recall that this is what we expect to see for a real-valued sinusoid (i.e., $cos(wt) = 0.5(e^{jwt} +e^{-jwt})$).
 
-_Describe second path, and ability to enable/disable for switching paths_
+![Enable Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_04.png)
+
+![Disable Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_05.png)
+
+![50KHz Signal Real](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_06.png)
+
+In addition to the option to enable/disable blocks, we can also bypass a block within GRC. To demonstrate the need for this, you can observe what happens when you disable the **Bandpass Filter** block. This creates an error in the flowgraph since the output of the **Add** block is no longer connected to anything, and there is no longer an input to the **Throttle** block. As an alternative, we can select the **Bandpass Filter** and then select the Disable icon in the menu bar. This will cause the flowgraph to appear as seen below. When running this flowgraph, the **Bandpass Filter** block will no longer function and the input to this block will be immediately placed set as the block's output. 
+
+![Bypass Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_07.png)
+
+![Bypass Flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_08.png)
+
+Running the flowgraph as shown above will now give the results below. In the absence of the filter, we still see the signal at the desired frequencies; but significantly more noise is present. This is more clearly seen when observing the signal in the time domain.
+
+![Waterfall](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_09.png)
+
+![Time Domain](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_10.png)
 
 
 
 
-## Dynamic Flowgraphs
+
+# Dynamic Flowgraphs
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_02.png)
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03.png)
