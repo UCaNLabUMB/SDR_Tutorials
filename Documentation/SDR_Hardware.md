@@ -64,11 +64,23 @@ In this flowgraph we are going to make a couple of changes to one we created wit
 UHD:USRP Sink allows us to send intended signal into USRPs.​
 UHD:USRP Source allows to retrieve intended signal from USRPs.
 Command: uhd_find_devices [For usrp serial id] in the Linux terminal allows us to receive our USRPs serial address for usage in both 
-## Video Example: Flowgraph Creation Example Utlizing Eltus USRB B200 Mini.
-_Coming Soon_
+
 
 ## References
 _Coming Soon_
 
-## Next Chapter
-_Coming Soon_
+## Tutorial Chapters
+
+* **Next Chapter:** [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md) 
+* **Previous Chapter:** [GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)
+
+| Chapter | Topic | Summary 
+| --- | --- | --- |
+|  1  | [GNURadio Overview](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Overview.md)                   | Introduction to Flowgraphs, source/sink blocks, and data types
+|  2  | [GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)                       | Introduce flowgraph best practices, variables, and dynamic control
+|  3  | SDR Hardware                                                                                                                    | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
+|  4  | [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md)      | Introduce multi-node systems with XMLRPC and ZMQ
+|  5  | [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md)                    | Introduce simulation and over-the-air data transmission
+|  6  | [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)         | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+
+
