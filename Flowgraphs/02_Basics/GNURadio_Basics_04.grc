@@ -32,6 +32,36 @@ options:
     state: enabled
 
 blocks:
+- name: Sig_Type
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 0,4,1,1
+    label: Waveform
+    label0: Cosine
+    label1: Square
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: analog.GR_COS_WAVE
+    option1: analog.GR_SQR_WAVE
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: analog.GR_COS_WAVE
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [856, 12.0]
+    rotation: 0
+    state: true
 - name: filter_select
   id: variable_qtgui_chooser
   parameters:
@@ -175,7 +205,7 @@ blocks:
     phase: '0'
     samp_rate: samp_rate
     type: complex
-    waveform: analog.GR_COS_WAVE
+    waveform: Sig_Type
   states:
     bus_sink: false
     bus_source: false
@@ -197,7 +227,7 @@ blocks:
     phase: '0'
     samp_rate: samp_rate
     type: float
-    waveform: analog.GR_COS_WAVE
+    waveform: Sig_Type
   states:
     bus_sink: false
     bus_source: false
@@ -338,7 +368,7 @@ blocks:
     comment: ''
     fc: '0'
     fftsize: '1024'
-    gui_hint: 1,0,1,4
+    gui_hint: 1,0,1,5
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
