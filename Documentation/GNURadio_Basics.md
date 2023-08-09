@@ -63,15 +63,17 @@ When running the the flowgraph, we can observe the output below with the 50KHz d
 
 
 ## Block Status: Enable, Disable, Bypass
-Continuing to observe the flowgraph in [GNURadio_Basics_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), we will now introduce GRC functionality for enabling/disabling blocks and bypassing blocks. Returning to the disabled signal path for the real-valued sinusoid, we can highlight the 3 blocks in this signal path and then select the enable icon in the menu bar. When we do this, the flowgraph will show an error since we now have two signals going into one port in the **Add** block. To resolve this, we select the complex Signal Source block and select the disable icon in the menu bar. If we run the flowgraph again, we should now see the presence of the signal at 50KHz and -50KHz (or at the positive and negative value of whatever frequency value you've set for _sig\_freq_). Recall that this is what we expect to see for a real-valued sinusoid (i.e., $cos(wt) = 0.5(e^{jwt} +e^{-jwt})$).
+Continuing to observe the flowgraph in [GNURadio_Basics_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), we will now introduce GRC functionality for enabling/disabling blocks and bypassing blocks. Returning to the disabled signal path for the real-valued sinusoid, we can highlight the 3 blocks in this signal path and then select the enable icon in the menu bar. When we do this, the flowgraph will show an error since we now have two signals going into one port in the **Add** block. To resolve this, we select the complex Signal Source block and select the disable icon in the menu bar. 
 
 ![Enable Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_04.png)
 
 ![Disable Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_05.png)
 
+If we run the flowgraph again, we should now see the presence of the signal at 50KHz and -50KHz (or at the positive and negative value of whatever frequency value you've set for _sig\_freq_). Recall that this is what we expect to see for a real-valued sinusoid: $cos(wt) = 0.5(e^{jwt} +e^{-jwt})$.
+
 ![50KHz Signal Real](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_06.png)
 
-In addition to the option to enable/disable blocks, we can also bypass a block within GRC. To demonstrate the need for this, you can observe what happens when you disable the **Bandpass Filter** block. This creates an error in the flowgraph since the output of the **Add** block is no longer connected to anything, and there is no longer an input to the **Throttle** block. As an alternative, we can select the **Bandpass Filter** and then select the Disable icon in the menu bar. This will cause the flowgraph to appear as seen below. When running this flowgraph, the **Bandpass Filter** block will no longer function and the input to this block will be immediately placed set as the block's output. 
+In addition to the option to enable/disable blocks, we can also bypass a block within GRC. To demonstrate the need for this, you can observe what happens when you disable the **Bandpass Filter** block. This creates an error in the flowgraph since the output of the **Add** block is no longer connected to anything, and there is no longer an input to the **Throttle** block. As an alternative, we can select the **Bandpass Filter** and then select the Bypass icon in the menu bar. This will cause the flowgraph to appear as seen below. When running this flowgraph, the **Bandpass Filter** block will no longer function and the input to this block will be immediately placed set as the block's output. 
 
 ![Bypass Block](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_01_07.png)
 
