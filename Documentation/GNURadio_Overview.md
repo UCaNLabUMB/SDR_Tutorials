@@ -92,8 +92,10 @@ Or, alternatively (and more commonly), you can execute the flowgraph directly in
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/01_Overview/GROverview_09.png)
 
 
-## Flowgraph Additions and Observations
+# Flowgraph Additions and Observations
 Now that we've created a simple flowgraph to generate and display a signal, we can extend the idea for some similar signals. We will use this opportunity to discuss a few different data types in GNURadio, and discuss some basic signal characteristics of real-valued and complex-valued sinusoids. The image below has three repetitions of the signal source and sink from our original flowgraph, with a few differences in each version. The first thing to notice is the difference in color of the various in and out ports for different blocks. The color represents different data types for the samples that flow out of or into the different blocks. There are many different data types in GNURadio, but this example shows `complex` data types in blue and `float` data types in orange. 
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/01_Overview/GROverview_01.png)
 
 Many blocks in GNURadio can be set for use with different data types. Beginning with our original flowgraph, you can copy/paste the **Signal Source** block to create a new block. If you open the new block's parameter list, we can find a drop down list for "output type" and change this value to "float". If you apply the changes, you will notice that the out port on the new block has changed color! 
 
@@ -102,9 +104,6 @@ Many blocks in GNURadio can be set for use with different data types. Beginning 
 This addresses the differences between the top two signal chains. Namely, the top left signal chain is generating and observing a complex-valued sinusoid where the samples are all `complex` data types, whereas the top right signal chain is generating a real-valued sinusoid where the samples are all `float` data types. If you are new to signal processing, it is important to note that these are different signals!! We will see this in shortly when observing the flowgraph's output.
 
 It is also important to note that a `complex` data type in GNURadio is essentially the combination of two real-valued `float` types. Specifically, the real and imaginary components of the `complex` value are essentially two different `float` values that are stored together. This is seen in the bottom signal chain where we combine the real valued sinusoid with another real-valued signal (in this case, a constant value of 0) using the **Float to Complex** block. The complex output of this block is a real-valued sinusoid stored in the form of a `complex` data type. In other words, the complex signal coming out of this block has a real component equal to the input real-valued sinusoid and an imaginary component equal to 0.
-
-
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/01_Overview/GROverview_01.png)
 
 When executing this flowgraph, we can see the results below. The left figure has our original output of the QT GUI Sink where we can observe the signal in a few different domains. The middle figures show the time domain representations of our two real-valued sinusoids. And the right figures show the frequency domain representations of the two real-valued sinusoids. 
 
