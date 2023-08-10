@@ -40,7 +40,7 @@ We first aim to create a simple flowgraph, shown below, that allows GNURadio to 
 ## USRP Hardware Driver (UHD)
 Now that we are moving from simulation to observation of signals in the physical world, we need to add SDR hardware into our setup. In the image below, we see our Linux computer running GRC and two B200 mini USRPs connected via USB. 
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_01.jpg)
+![Hardware Setup](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_01.jpg)
 
 * **NOTE:** The USRP on the right has a VERT900 antenna attached the TRX connection, and the USRP on the left has a VERT900 antenna attached to the RX2 connection. This is relevant as we will be sending our signals in the 900MHz ISM band, and these antennas are optimized for that frequency range. 
 
@@ -48,7 +48,7 @@ When using the B200 mini USRPs, our ability to communicate with the devices shou
 
 To confirm that we can communicate with the connected USPRs, we will use the `uhd_find_devices` command to search for connected USRPs and determine the address(es) of any USRPs that are found. Along with most installations of GNURadio, you will have also installed the UHD library. **UHD**, or USRP Hardware Driver, is how GNURadio communicates with USRPs. From the Linux terminal, you can type `uhd_find_devices`, as shown below. In this case, the two USRPs are found and the Serial addresses are reported. We will need these addresses when defining which USRPs we are using in the GNURadio flowgraph.
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_02.png)
+![UHD Find Devices](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_02.png)
 
 * **NOTE:** You can notice in the image above that firmware is first loaded to each of the USRPs before they return their address information. Whenever the B200 mini USRPs are powered up the firmware must be loaded onto the hardware so that they know how to function. If you call `uhd_find_devices` a second time, you will notice that the response comes back quicker and you will not see the INFO message stating "_Loading Firmware Image_ ..." since the firmware has already been loaded to the USRPs. If you power cycle the USRPs (i.e., unplug the USB cables) the firmware will be loaded again the next time your computer attempts to communicate with the USRPs.
 
@@ -58,16 +58,25 @@ To confirm that we can communicate with the connected USPRs, we will use the `uh
 
 
 ## Adding USRP Source and Sink Blocks
-In this flowgraph we are going to make a couple of changes to one we created with the GNURadio basic flowgraph. We need to put a USRP Sink block place of the throttle block. This will send the singal generation into the B200 Mini. The next thing that we need to do is to imput a USRP Source block. This is responsible for recieving the collected signal from the USRP and then bringing it back into the flowgraph. Once we have this done all we need to do is reconnect the output into our QT GUI of Choice. For all of this to work we have to retrive the Serial Address from the computer terminal via the UHD_Find_Devices command. What this does is report the serial address of the usrp, and then we take this string unput and place it into the slot for serial addresses in both the USRP source and sink blocks. 
+Once we have confirmed that our computer can communicate with the connected USRPs, we can create the GNURadio flowgraph below to actually send/receive signals to/from the USRPs.
 
-* UHD:USRP Sink allows us to send intended signal into USRPs.​ The USRP Sink block in GNU Radio streams samples to a connected USRP hardware device for transmission over the air. It takes in complex baseband samples from the flowgraph and handles modulation, interpolation, conversion to analog signals etc. needed for the USRP to transmit the signals wirelessly. The parameters like center frequency, gain, antennas can be configured. It is used to transmit signals generated and processed within GNU Radio over real hardware radios.
-* UHD:USRP Source allows to retrieve intended signal from USRPs. The USRP Source block in GNU Radio receives samples from a connected USRP hardware device after reception from its antennas. It handles decimation, demodulation, conversion to digital samples etc. to provide a stream of complex baseband samples into the GNU Radio flowgraph. The parameters like center frequency, gain, sample rate, antennas can be configured to correctly receive the wireless signals. It is used to transfer signals received by the USRP into GNU Radio for further processing and analysis.
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01.png)
+
+* **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to managing the flow rate of samples passing through our flowgraph. 
+
+The signal path in this flowgraph connects the **Signal Source** and **QT GUI Sink** blocks that we've already seen to two new blocks, namely the **UHD: USRP Sink** and **UHD: USRP Source** blocks. Once these blocks are added, you can connect the Signal Source to the USRP Sink and the USRP Source to the QT GUI Sink.
+* USRP Sink blocks use the UHD library to send signals to the USRPs.​ By default, USRP Sink blocks accept complex baseband samples from the flowgraph and handle the interpolation, digital to analog conversion, and carrier modulation so that the RF signal can be sent over the air with a user-defined center frequency.
+* USRP Source blocks use the UHD library to receive signals from the USRPs. The USRP handles carrier demodulation, conversion to digital samples, and decimation to provide a digital stream of complex samples to the GNU Radio flowgraph. These samples relate to the complex-baseband representation of the RF signal received at the user-defined center frequency.
+
+* **NOTE:** In the context of these UHD blocks, _Sink_ and _Source_ refer to the direction of data flow in GNURadio. In other words, the Sink block is accepting data from GNURadio (even though it is in fact for signal transmission) and the Source block is generating data within GNURadio (even though it is actually associated with the USRP that is receiving the physical signal).
 
 
 
-_add and connect blocks... Mention no need for throttle_
 
 _Setting Address and Sync properties_
+
+![UHD Source and Sink Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_03.png)
+
 
 _Note the signal range (-1 to 1)_
 
