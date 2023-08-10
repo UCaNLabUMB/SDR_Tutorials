@@ -164,10 +164,10 @@ When we re-enable the filter, we see the noise reduce as desired, but we have al
 
 
 
-## References
+# References
 * [GNURadio Tutorials](https://wiki.gnuradio.org/index.php?title=Tutorials): General tutorials on building flowgraphs in GNU Radio.
 
-## Tutorial Chapters
+# Tutorial Chapters
 
 * **Next Chapter:** [SDR Hardware](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/SDR_Hardware.md) 
 * **Previous Chapter:** [GNURadio Overview](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Overview.md)
