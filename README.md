@@ -1,20 +1,23 @@
 # SDR_Tutorials
-Set of flowgraphs to introduce various SDR/GNURadio Concepts.
+This tutorial series introduces concepts related to software defined radio (**SDR**) and the **GNURadio** software toolkit for signal processing. 
 
-# Overview
-This repository is intended to be used as a serial of tutorials videos for familiarization of GNURadio tooling and workflows. It contains complementary GNURadio GRC files and complementary code for the relevant modules. 
+## Overview
+In this repository, you will find tutorial documents and a set of example **flowgraphs** to introduce the GNURadio software toolkit. The tutorial documentation, and the associated tutorial videos, are intended to familiarize the reader with GNURadio tools and workflows while simultaneously reviewing some fundamental concepts related to basic signal analysis. The complementary GNURadio Companion (**GRC**) files and relevant Python code are included in order to work through the tutorial exactly as described; however, it is strongly suggested that you first follow the tutorial discussion and attempt to build the flowgraphs on your own. This will be beneficial to your understanding of the tools available within GNURadio and GRC. 
 
-# Directory Structure
-This repository includes documentation the basic functionality for each tutorials, along with the 
-* The `Documentation` folder includes detailed information describing 
+Within the set tutorials, we will introduce basic flowgraph creation, the GNURadio Companion (GRC) tool, GNURadio's interaction with universal software radio peripheral (**USRP**) SDR hardware, basic communication tools for over-the-air (**OTA**) data transmission, and GNURadio tools that allow flowgraphs to be read from and controlled remotely (i.e., **XMLRPC** and **ZMQ**). Ultimately, the tutorial will work towards the creation of an automated data collection system for evaluation of a point-to-point wireless communication link based on orthogonal frequency division multiplexing (**OFDM**).
+
+
+## Directory Structure
+This repository is structured as follows:
+* The `Documentation` folder includes the tutorial descriptions and discussion 
 * The `Flowgraphs` folder contains completed flowgraphs for each of the tutorials
 
-# Chapters
+## Chapters
 | Chapter | Topic | Image | Summary 
 | --- | --- | --- | --- |
-|  1  | [GNURadio Overview](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Overview.md)                   | (_Add Image_) | Introduction to Flowgraphs, source/sink blocks, and data types
-|  2  | [GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)                       | (_Add Image_) | Introduce flowgraph best practices, variables, and dynamic control
-|  3  | [SDR Hardware](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/SDR_Hardware.md)                             | (_Add Image_) | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
-|  4  | [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md)      | (_Add Image_) | Introduce multi-node systems with XMLRPC and ZMQ
-|  5  | [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md)                    | (_Add Image_) | Introduce simulation and over-the-air data transmission
-|  6  | [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)         | (_Add Image_) | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  1  | [GNURadio Overview](Documentation/GNURadio_Overview.md)               | (_Add Image_) | Introduction to Flowgraphs, source/sink blocks, and data types
+|  2  | [GNURadio Basics](Documentation/GNURadio_Basics.md)                   | (_Add Image_) | Introduce flowgraph best practices, variables, and dynamic control
+|  3  | [SDR Hardware](Documentation/SDR_Hardware.md)                         | (_Add Image_) | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
+|  4  | [GNURadio Remote Command and Control](Documentation/GNURadio_CaC.md)  | (_Add Image_) | Introduce multi-node systems with XMLRPC and ZMQ
+|  5  | [Basic Communicatons](Documentation/GNURadio_Comms.md)                | (_Add Image_) | Introduce simulation and over-the-air data transmission
+|  6  | [Automated Data Collection](Documentation/GNURadio_Automation.md)     | (_Add Image_) | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing

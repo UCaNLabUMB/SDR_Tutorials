@@ -72,8 +72,8 @@ QT GUI Sink: Finally, connect the output from the Cyclic Prefixer to the QT GUI 
 
 ## Tutorial Chapters
 
-* **Next Chapter:** [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md)
-* **Previous Chapter:** [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)
+* **Next Chapter:** [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)
+* **Previous Chapter:** [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md)
 
 | Chapter | Topic | Summary 
 | --- | --- | --- |
