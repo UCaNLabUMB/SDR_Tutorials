@@ -68,10 +68,16 @@ The signal path in this flowgraph connects the **Signal Source** and **QT GUI Si
 * **NOTE:** In the context of these UHD blocks, _Sink_ and _Source_ refer to the direction of data flow in GNURadio. In other words, the Sink block is accepting data from GNURadio (even though it is in fact for signal transmission) and the Source block is generating data within GNURadio (even though it is actually associated with the USRP that is receiving the physical signal).
 
 Once we have added and connected the relevant blocks, we will set properties for each block. 
-* First, set your parameters in the **Options** block as we have done previous (e.g. ID for the name of the Python script that will be generated, title, author, documentation, etc.)
-* Next, set the value of _samp\_rate_ in the **Variable** block. By default, this variable should be already used in the blocks that you added. We have set this to 2.5e6.
-* In your **Signal Source** block, set the signal's _frequency_ to a value below 1.25MHz (we have it set to 1e6) and set the signal's _amplitude_ to a value less than or equal to 1 (we have it at 0.25). This is important as the UHD source expects values in the range of -1 to 1.
-* Set the center frequency in the **QT GUI Sink** block to 915e6 (i.e., 915MHz). It is important to note that this is for _display purposes only_ when displaying frequency plots in terms of the RF Frequencies. The actual Tx and Rx carrier frequency values will be set in the UHD blocks. 
+* First, set your parameters in the **Options** block as we have done previous 
+  * e.g. ID for the name of the Python script that will be generated, title, author, documentation, etc.
+* Next, set the value of _samp\_rate_ in the **Variable** block. 
+  * By default, this variable should be already used in the blocks that you added. We have set this to 2.5e6.
+* In your **Signal Source** block, set the signal's _frequency_ to a value below 1.25MHz and _amplitude_ to a value less than or equal to 1. 
+  * We have it set the Frequency as 1e6 and the amplitude as 0.25.
+  * The amplitude value is important as the UHD source expects values in the range of -1 to 1.
+* Set the center frequency in the **QT GUI Sink** block to 915e6 (i.e., 915MHz). 
+  * It is important to note that this is for _display purposes only_ when displaying frequency plots in terms of the RF Frequencies. 
+  * The actual Tx and Rx carrier frequency values will be set in the UHD blocks. 
   * You can select to show RF frequencies in the GUI while the flowgraph is running, but we have set this to the default by setting the _Show RF Freq_ property to _Yes_.
 * When opening the **UHD: USRP Sink** and **UHD: USRP Source** blocks, there is not much that needs to be changed in the General settings. In this tab, you will only need to set the _Device Address_ property to the serial address that was determined from the _uhd\_find\_devices_ call. We also set the _Sync_ property to _No Sync_. The _samp\_rate_ variable should already be assigned to the Samp Rate property. 
   * Make sure to include quotes and use the format shown below for the address property (i.e., "serial=\[address number\]"). 
@@ -83,6 +89,8 @@ Once we have added and connected the relevant blocks, we will set properties for
 ![UHD Source and Sink RF Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_04.png)
 
 * **NOTE:** Make sure that you are clear about which serial address corresponds to which USRP! If you are unsure, you can unplug one of the devices and rerun the _uhd\_find\_devices_ command to determine the address of the device that is still connected.
+
+At this point, you should be able to build and execute the flowgraph in GRC if you followed the steps above. However, if you attempt to run the completed [SDR_Hardware_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph from this repository you will get an error since the address should not be the same as your USRPs' addresses. We will first discuss how we've included parameter blocks to allow for user specification of the address, then we will discuss some observations about the running OTA transmission.
 
 
 ## Parameter Blocks and Command Line Execution
