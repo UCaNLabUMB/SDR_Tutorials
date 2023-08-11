@@ -59,28 +59,31 @@ To confirm that we can communicate with the connected USPRs, we will use the `uh
 
 ## Adding USRP Source and Sink Blocks
 Once we have confirmed that our computer can communicate with the connected USRPs, we can create the GNURadio flowgraph below to actually send/receive signals to/from the USRPs.
+* **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to managing the flow rate of samples passing through our flowgraph. 
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01.png)
 
-* **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to managing the flow rate of samples passing through our flowgraph. 
-
-The signal path in this flowgraph connects the **Signal Source** and **QT GUI Sink** blocks that we've already seen to two new blocks, namely the **UHD: USRP Sink** and **UHD: USRP Source** blocks. Once these blocks are added, you can connect the Signal Source to the USRP Sink and the USRP Source to the QT GUI Sink.
-* USRP Sink blocks use the UHD library to send signals to the USRPs.​ By default, USRP Sink blocks accept complex baseband samples from the flowgraph and handle the interpolation, digital to analog conversion, and carrier modulation so that the RF signal can be sent over the air with a user-defined center frequency.
-* USRP Source blocks use the UHD library to receive signals from the USRPs. The USRP handles carrier demodulation, conversion to digital samples, and decimation to provide a digital stream of complex samples to the GNU Radio flowgraph. These samples relate to the complex-baseband representation of the RF signal received at the user-defined center frequency.
+The signal path in this flowgraph connects the **Signal Source** and **QT GUI Sink** blocks that we've already seen to two new blocks, namely the **UHD: USRP Sink** and **UHD: USRP Source** blocks. Once these blocks are added, you can connect the Signal Source to the USRP Sink and the USRP Source to the QT GUI Sink. USRP Sink blocks use the UHD library to send signals to the USRPs.​ By default, USRP Sink blocks accept complex baseband samples from the flowgraph and handle the interpolation, digital to analog conversion, and carrier modulation so that the RF signal can be sent over the air with a user-defined center frequency. USRP Source blocks use the UHD library to receive signals from the USRPs. The USRP handles carrier demodulation, conversion to digital samples, and decimation to provide a digital stream of complex samples to the GNU Radio flowgraph. These samples relate to the complex-baseband representation of the RF signal received at the user-defined center frequency.
 
 * **NOTE:** In the context of these UHD blocks, _Sink_ and _Source_ refer to the direction of data flow in GNURadio. In other words, the Sink block is accepting data from GNURadio (even though it is in fact for signal transmission) and the Source block is generating data within GNURadio (even though it is actually associated with the USRP that is receiving the physical signal).
 
-
-
-
-_Setting Address and Sync properties_
+Once we have added and connected the relevant blocks, we will set properties for each block. 
+* First, set your parameters in the **Options** block as we have done previous (e.g. ID for the name of the Python script that will be generated, title, author, documentation, etc.)
+* Next, set the value of _samp\_rate_ in the **Variable** block. By default, this variable should be already used in the blocks that you added. We have set this to 2.5e6.
+* In your **Signal Source** block, set the signal's _frequency_ to a value below 1.25MHz (we have it set to 1e6) and set the signal's _amplitude_ to a value less than or equal to 1 (we have it at 0.25). This is important as the UHD source expects values in the range of -1 to 1.
+* Set the center frequency in the **QT GUI Sink** block to 915e6 (i.e., 915MHz). It is important to note that this is for _display purposes only_ when displaying frequency plots in terms of the RF Frequencies. The actual Tx and Rx carrier frequency values will be set in the UHD blocks. 
+  * You can select to show RF frequencies in the GUI while the flowgraph is running, but we have set this to the default by setting the _Show RF Freq_ property to _Yes_.
+* When opening the **UHD: USRP Sink** and **UHD: USRP Source** blocks, there is not much that needs to be changed in the General settings. In this tab, you will only need to set the _Device Address_ property to the serial address that was determined from the _uhd\_find\_devices_ call. We also set the _Sync_ property to _No Sync_. The _samp\_rate_ variable should already be assigned to the Samp Rate property. 
+  * Make sure to include quotes and use the format shown below for the address property (i.e., "serial=\[address number\]"). 
+  * For USRP devices connected via Ethernet, _serial_ would be replaced with _addr_ and the value would be the USRP's IP address.
+* The second image below shows the _RF Options_ properties for the USRP source and Sink blocks. Here, we have set both _Center Frequency_ values to 915MHz so that our transmitter and receiver are aligned. We have also defined _Channel Gain_ settings and the _Antenna_ location (recall the physical antenna connections shown in the earlier image of the hardware setup.)
 
 ![UHD Source and Sink Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_03.png)
 
+![UHD Source and Sink RF Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_04.png)
 
-_Note the signal range (-1 to 1)_
+* **NOTE:** Make sure that you are clear about which serial address corresponds to which USRP! If you are unsure, you can unplug one of the devices and rerun the _uhd\_find\_devices_ command to determine the address of the device that is still connected.
 
-_Discuss RF Options: Antenna and carrier frequency properties_
 
 ## Parameter Blocks and Command Line Execution
 
