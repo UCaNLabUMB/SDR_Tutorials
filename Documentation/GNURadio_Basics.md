@@ -92,6 +92,7 @@ Running the flowgraph as shown above will now give the results below. In the abs
 # Dynamic Flowgraphs
 The ability to enable/disable/bypass blocks allows for realtively quick changes to a flowgraph in an offline manner. However, we also look to modify flowgraph parameters and characteristics while the flowgraph is running. In this section, we will observe the [GNURadio_Basics_02.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), [GNURadio_Basics_03.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), and [GNURadio_Basics_04.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) flowgraphs to demonstrate how we can incorporate GUI tools that allow users to manually control the flowgraph while the flowgraph is running.
 
+## Dynamic Variable Modifications
 Beginning with [GNURadio_Basics_02.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), shown below, we can notice that the only significant change in this flowgraph is that we've removed the **Variable** block where _sig\_source_ was set previously, and replaced it with a **GT GUI Range** block. 
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_02.png)
@@ -106,6 +107,8 @@ When this flowgraph is run, we can see the slider bar and counter labeled "Signa
 
 * **NOTE:** The variable _sig\_freq_ is still associated with the signal frequency in the Signal Source block AND the high/low frequencies of the Band Pass filter block, so the filter is moving along with the signal in this scenario.
 
+
+## Dynamic Path Selection
 The final additions for this section, in [GNURadio_Basics_03.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) and [GNURadio_Basics_04.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), give an additional GUI option to include manual selection of configuration parameters from a list of options. In particular, we introduce the ability to dynamically make the changes that we had previously done by enabling/disabling/bypassing blocks in the offline manner. 
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/02_Basics/GRBasics_03.png)
