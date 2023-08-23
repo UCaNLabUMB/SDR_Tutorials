@@ -80,9 +80,10 @@ Once we have added and connected the relevant blocks, we will set properties for
   * The actual Tx and Rx carrier frequency values will be set in the UHD blocks. 
   * You can select to show RF frequencies in the GUI while the flowgraph is running, but we have set this to the default by setting the _Show RF Freq_ property to _Yes_.
 * When opening the **UHD: USRP Sink** and **UHD: USRP Source** blocks, there is not much that needs to be changed in the General settings. In this tab, you will only need to set the _Device Address_ property to the serial address that was determined from the _uhd\_find\_devices_ call. We also set the _Sync_ property to _No Sync_. The _samp\_rate_ variable should already be assigned to the Samp Rate property. 
-  * Make sure to include quotes and use the format shown below for the address property (i.e., "serial=\[address number\]"). 
+  * Make sure to include quotes and use the format shown below for the address property (i.e., `"serial=<address number>"`). 
   * For USRP devices connected via Ethernet, _serial_ would be replaced with _addr_ and the value would be the USRP's IP address.
-* The second image below shows the _RF Options_ properties for the USRP source and Sink blocks. Here, we have set both _Center Frequency_ values to 915MHz so that our transmitter and receiver are aligned. We have also defined _Channel Gain_ settings and the _Antenna_ location (recall the physical antenna connections shown in the earlier image of the hardware setup.)
+* The second image below shows the _RF Options_ properties for the USRP source and Sink blocks. Here, we have set both _Center Frequency_ values to 915MHz so that our transmitter and receiver are aligned. We have also defined _Channel Gain_ settings and the _Antenna_ location.
+  * Recall the physical antenna connections shown in the earlier image of the hardware setup.
 
 ![UHD Source and Sink Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_03.png)
 
@@ -90,7 +91,7 @@ Once we have added and connected the relevant blocks, we will set properties for
 
 * **NOTE:** Make sure that you are clear about which serial address corresponds to which USRP! If you are unsure, you can unplug one of the devices and rerun the _uhd\_find\_devices_ command to determine the address of the device that is still connected.
 
-At this point, you should be able to build and execute the flowgraph in GRC if you followed the steps above. However, if you attempt to run the completed [SDR_Hardware_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph from this repository you will get an error since the address should not be the same as your USRPs' addresses. We will first discuss how we've included parameter blocks to allow for user specification of the address, then we will discuss some observations about the running OTA transmission.
+At this point, you should be able to build and execute the flowgraph in GRC if you followed the steps above. However, if you attempt to run the completed [SDR_Hardware_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph from this repository you will get an error since the defined addresses should not be the same as your USRPs' addresses. We will first discuss how we've included parameter blocks to allow for user specification of the address, then we will discuss some observations about the running OTA transmission.
 
 
 ## Parameter Blocks and Command Line Execution

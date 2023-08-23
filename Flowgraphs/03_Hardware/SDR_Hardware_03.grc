@@ -50,7 +50,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1712, 244.0]
+    coordinate: [1600, 244.0]
     rotation: 0
     state: enabled
 - name: IF2
@@ -71,7 +71,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1712, 372.0]
+    coordinate: [1600, 372.0]
     rotation: 0
     state: enabled
 - name: Rx_Gain
@@ -92,7 +92,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1592, 372.0]
+    coordinate: [1480, 372.0]
     rotation: 0
     state: enabled
 - name: Tx_Gain
@@ -113,7 +113,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1592, 244.0]
+    coordinate: [1480, 244.0]
     rotation: 0
     state: enabled
 - name: fc_rx
@@ -134,7 +134,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1424, 372.0]
+    coordinate: [1312, 372.0]
     rotation: 0
     state: true
 - name: fc_tx
@@ -155,7 +155,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1424, 244.0]
+    coordinate: [1312, 244.0]
     rotation: 0
     state: true
 - name: interp
@@ -167,7 +167,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1536, 580.0]
+    coordinate: [1472, 580.0]
     rotation: 0
     state: enabled
 - name: path_select
@@ -197,7 +197,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1280, 212.0]
+    coordinate: [1168, 212.0]
     rotation: 0
     state: true
 - name: samp_rate
@@ -221,7 +221,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1608, 580.0]
+    coordinate: [1544, 580.0]
     rotation: 0
     state: enabled
 - name: sig_freq
@@ -242,7 +242,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1280, 372.0]
+    coordinate: [1168, 372.0]
     rotation: 0
     state: enabled
 - name: analog_const_source_x_0_0
@@ -813,7 +813,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1584, 748.0]
+    coordinate: [1520, 748.0]
     rotation: 0
     state: enabled
 - name: qtgui_sink_x_0
@@ -939,7 +939,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1584, 668.0]
+    coordinate: [1520, 668.0]
     rotation: 0
     state: enabled
 - name: rx_addr
@@ -956,7 +956,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1424, 532.0]
+    coordinate: [1360, 532.0]
     rotation: 0
     state: true
 - name: tx_addr
@@ -973,7 +973,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1312, 532.0]
+    coordinate: [1248, 532.0]
     rotation: 0
     state: true
 - name: uhd_usrp_sink_0
@@ -1687,7 +1687,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1320, 780.0]
+    coordinate: [1256, 780.0]
     rotation: 0
     state: enabled
 - name: virtual_source_0_1
@@ -1700,7 +1700,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1312, 732.0]
+    coordinate: [1248, 732.0]
     rotation: 0
     state: enabled
 
