@@ -14,7 +14,7 @@ First, add variable blocks and define our anchor locations on the XY plane as sh
 
 Next, we define our tag coordinates. We need the beacon coordinates moveable. Add two QT GUI range blocks and define the limit of the tag coordinates.
 
-![ref_point](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_ref_point.png)
+![ref_point](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_refpoint.png)
 
 When the area is defined, to observe how the environment we made looks like, we use QT GUI Constellation Sink. 
 
