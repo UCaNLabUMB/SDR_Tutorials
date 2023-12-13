@@ -3,7 +3,7 @@
 ## Overview
 In this tutorial, we will use SDR to find the location of an object within a defined area in a stimulated environment then compare the results in practical settings. We will use the beacon-based locations method to find the approximate location of a point of interest. In this method, there will be four beacons/anchors set up as limit of the defined area. These anchors are signal transmitters which transmit 4 different signal frequencies. The point of interest/tag represents the location we are determining, and it is a signal receiver. The tag should have a bandwidth in which to cover all four signal frequencies from four beacons. As the tag approaches close to any beacon, the magnitude of that beacon’s frequency should increase and will be the peak in the observation. Based on where is the peak observed, we can approximate locates where is the tag in the designated area.
 
-## Creating a stimulated multi-node environment
+## Creating a simulated multi-node environment
 To stimulate the model, we will use GNU Radio to set up a virtual defined area with two coordinates, X and Y.
 
 Four anchors will be at a stationary position with fixed coordinates while the tag coordinates can be changed so we can observe the difference in stimulation and compare with real life situations when we move the tag around the room.
