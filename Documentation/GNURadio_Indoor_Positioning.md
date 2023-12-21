@@ -3,7 +3,16 @@
 ## Overview
 In this tutorial, we will use SDR to find the location of an object within a defined area in a stimulated environment then compare the results in practical settings. We will use the beacon-based locations method to find the approximate location of a point of interest. In this method, there will be four beacons/anchors set up as limit of the defined area. These anchors are signal transmitters which transmit 4 different signal frequencies. The point of interest/tag represents the location we are determining, and it is a signal receiver. The tag should have a bandwidth in which to cover all four signal frequencies from four beacons. As the tag approaches close to any beacon, the magnitude of that beacon’s frequency should increase and will be the peak in the observation. Based on where is the peak observed, we can approximate locates where is the tag in the designated area.
 
-## Creating a simulated multi-node environment
+## Objective
+This tutorial will work toward making multiple flowghaps ![flowgraps](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning). These flowgraphs will be used as a stimulated model to calculate distance between points in space and observe the result in a GUI display. From the calculated distance, we can use it to predict where is the point of interest is located. With the theory stimulated model, we can use to compare with practical test later. Along the way of making these flowgraphs, we will use Hierachy technique to reduce the complexity of the graph as well.
+
+## GNURadio Blocks to be introduced
+With basic blocks were introduced previously in other documentation in this tutorial, we will need some new blocks from the GNURadio library to create the flowgraph. The blocks are:
+* Complex to Mag^2
+* Transcendental
+* Import
+
+## Creating a stimulated multi-node environment
 To stimulate the model, we will use GNU Radio to set up a virtual defined area with two coordinates, X and Y.
 
 Four anchors will be at a stationary position with fixed coordinates while the tag coordinates can be changed so we can observe the difference in stimulation and compare with real life situations when we move the tag around the room.
@@ -78,7 +87,7 @@ Data streaming method is when you send a variable through different blocks in se
 From distance formular, we need to perform 3 calculations to get the distance between two distinct points.
 First, we find the difference between x coordinates and y coordinates between two points. We can do it by using a constant source.
 
-![constantx](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant_source_x.png)
+![constantx](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant source_x.png)
 
 ![constanty](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant_source_y.png)
 
@@ -148,9 +157,9 @@ Calulating distance
 
 Calculating distance square
 
-![distancesq_var](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distance_variablesq_block.png)
+![distancesq_var](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distancesq_variable_block.png)
 
-![distancesq_prop](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distance_variablesq_prop.png)
+![distancesq_prop](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distancesq_variable_prop.png)
 
 #### Signal obsevation 
 
@@ -225,7 +234,7 @@ Next, in another variable block, convert the power gain into dB.
 
 Finally, in another variable block, calculate the voltage gain.
 
-![GV](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPoistioning/GR_position_GV.png)
+![GV](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_GV.png)
 
 ![GV_prop](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_GV_prop.png)
 
