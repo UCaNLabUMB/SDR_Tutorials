@@ -4,10 +4,11 @@
 In this tutorial, we will use SDR to find the location of an object within a defined area in a stimulated environment then compare the results in practical settings. We will use the beacon-based locations method to find the approximate location of a point of interest. In this method, there will be four beacons/anchors set up as limit of the defined area. These anchors are signal transmitters which transmit 4 different signal frequencies. The point of interest/tag represents the location we are determining, and it is a signal receiver. The tag should have a bandwidth in which to cover all four signal frequencies from four beacons. As the tag approaches close to any beacon, the magnitude of that beacon’s frequency should increase and will be the peak in the observation. Based on where is the peak observed, we can approximate locates where is the tag in the designated area.
 
 ## Objective
-This tutorial will work toward making multiple flowghaps ![flowgraps](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning). These flowgraphs will be used as a stimulated model to calculate distance between points in space and observe the result in a GUI display. From the calculated distance, we can use it to predict where is the point of interest is located. With the theory stimulated model, we can use to compare with practical test later. Along the way of making these flowgraphs, we will use Hierachy technique to reduce the complexity of the graph as well.
+This tutorial will work toward making multiple flowghaps [Positioning_flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning). These flowgraphs will be used as a stimulated model to calculate distance between points in space and observe the result in a GUI display. From the calculated distance, we can use it to predict where is the point of interest is located. With the theory stimulated model, we can use to compare with practical test later. Along the way of making these flowgraphs, we will use Hierachy technique to reduce the complexity of the graph as well.
 
 ## GNURadio Blocks to be introduced
 With basic blocks were introduced previously in other documentation in this tutorial, we will need some new blocks from the GNURadio library to create the flowgraph. The blocks are:
+* QT GUI Constellation Sink
 * Complex to Mag^2
 * Transcendental
 * Import
@@ -83,11 +84,13 @@ In GNU Radio, there are many ways to calculate distance between points. In this 
 
 ![data_steam_flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distance_stream_flowgraph.png)
 
+The flowgraph shown can be found here [Positioning_flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning)
+
 Data streaming method is when you send a variable through different blocks in sequence to perform a calculation. In this case, we are calculating distance between two points.
 From distance formular, we need to perform 3 calculations to get the distance between two distinct points.
 First, we find the difference between x coordinates and y coordinates between two points. We can do it by using a constant source.
 
-![constantx](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant source_x.png)
+![constantx](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant_source_x.png)
 
 ![constanty](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_constant_source_y.png)
 
@@ -106,7 +109,7 @@ The result as well as any other calculation in the sequence will be put into a s
 
 ![distance_steam](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distance_stream.png)
 
-* **HIER:** Create a hier for distance square calculation to make flowgraph look better as follow.
+* **HIER:** Create a hier for distance square calculation to make flowgraph look better as follow. Hier flowgraph can be found here. [Positioning_flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning)
 
 ![devide_dsq_stream](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_devide_dsq_stream.png)
 
@@ -125,7 +128,7 @@ With all the flowgraphs component set up, put all of them into a QT GUI sink wit
 
 ![QTGUI](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_qtguisink_stream.png)
 
-* **NOTE:** create another hier for this observation as previously discussed to reduce the "complexity" of the flowgraph and to look like shown flowgraph as the beginning.
+* **NOTE:** create another hier for this observation as previously discussed to reduce the "complexity" of the flowgraph and to look like shown flowgraph as the beginning. The hier flowgraph can be found here [Positioning_flowgraphs](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning)
 
 The result is presented below. By default, the reference point is at the center, in which case the distance to all points is equal. As we can see, all four peaks are at the same rate as shown. If we change the coordinate of the reference point, there will be a change in peaks, which we will use to determine where the reference point is closer to. 
 
@@ -134,6 +137,8 @@ The result is presented below. By default, the reference point is at the center,
 ### Variable block method
 
 ![variable_flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_distance_variable_flowgraph_with_hier.png)
+
+The flowgraph can be found here [Positioning_flowgraphs] (https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning)
 
 In this method, we are not required to use multiple blocks to calculate distance as in the previous method. We simply need a variable block to perform such mentioned calculations.
 We need to import math modules from python into GNU Radio, even though GNU Radio is a python-based environment. To do so, we use import block.
@@ -239,6 +244,7 @@ Finally, in another variable block, calculate the voltage gain.
 ![GV_prop](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_GV_prop.png)
 
 * **HIER:** FSPL Hier
+Create a hier for calculating the FSPL of the model. The flowgraph can be found here [Positioning_flowgraphs] (https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/07_Positioning)
 
 ![FSPL_hier](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/07_IndoorPositioning/GR_position_FSPL_hier.png)
 
