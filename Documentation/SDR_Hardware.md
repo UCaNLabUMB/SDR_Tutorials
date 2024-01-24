@@ -102,11 +102,11 @@ Going back to the flowgraph, our first step is to add the parameter blocks and u
 
 ![Parameter Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_05.png)
 
-In the figure below, we can see the process of running the flowgraph on the command line. Note that you must first build the flowgraph in GRC to create the python file. Now, if you open a terminal and move to the directory where your flowgraph is stored there should be a python file with the name defined by your flowgraph's ID (set earlier in the **Options** block). When you run the python file with the _-h_ flag, as shown below, you should get a help menu that shows the available parameters for this flowgraph and the corresponding flags.
+In the figure below, we can see the process of running the flowgraph on the command line. Note that you must first build the flowgraph in GRC to create the python file. Now, if you open a terminal and move to the directory where your flowgraph is stored there should be a python file with the name defined by your flowgraph's ID (set earlier in the **Options** block). When you run the python file with the `-h` flag, as shown below, you should get a help menu that shows the available parameters for this flowgraph and the corresponding flags.
 
 ![Command Line Call with Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_06.png)
 
-The last line in the example above is the call to execute the flowgraph with newly specified addresses for the Tx and Rx USRPs. Running this command with the addresses found from your specific _uhd\_find\_devices_ call should start the flowgraph discussed in the following.
+The last line in the example above is the call to execute the flowgraph with newly specified addresses for the Tx and Rx USRPs. Running this command with the addresses found from your specific `uhd_find_devices` call should start the flowgraph discussed in the following.
 
 ## Over-the-Air Transmission with GNURadio and USRPs
 
@@ -137,20 +137,20 @@ In the [SDR_Hardware_02](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/F
 The main structure of this flowgraph is similar to the GNURadio\_Basics\_04 flowgraph discussed in the last chapter. The main change is that we've replaced the simulated noise channel (i.e., the **Noise Source** and **Add** blocks) with an actual transmission using the **UHD: USRP Sink** and **UHD: USRP Source blocks**. As we've done above, we also added parameter blocks for the Tx and Rx USRP addresses to allow for user-specified addresses based on the connected USRPs when running the flowgraph. Lastly, we've included 4 **QT GUI Range** blocks for the Tx/Rx center frequency and gain. the ID for each of these adjustable variables is then assigned to the corresponding setting in the USRP Sink and Source blocks' RF Options tabs. This is done so that we can modify these parameter with the running flowgraph to observe the impact on the received signal characteristics.
 
 To run the flowgraph, make sure to first build the flowgraph in GRC (to generate the python file) and then run the file in a terminal with the command:
-* _python3 SDR\_Hardware\_02.py -t <tx\_address> -r <rx\_address>_
+* `python3 SDR\_Hardware\_02.py -t <tx\_address> -r <rx\_address>`
 
 ## Observations
+Once we've run the flowgraph, we can first observe some of the same characteristics from the simulated tone generator example in the last chapter. The image below shows the waterfall plot as we vary some of the signal characteristics. From the discussion in the previous chapter, we can recognize that we started with a 100KHz real-valued sinusoid, with the key difference here being that the signal components show up at 914.9MHz and 915.1MHz, rather than +/- 0.1MHz. This again relates to the displayed RF Frequencies and the fact that our carrier frequency is set as 915MHz. Following the discussion from the previous chapter, we can also recognize the signal modifications in time as first converting to a complex-valued sinusoid (leaving only the tone at 915.1MHz), then bypassing the filter (increasing the noise floor outside the filter's range), and then increasing the signal frequency to 250KHz before switching back to a real-valued sinusoidal signal (observable through the reintroduction of the lower frequency component, now at 914.75MHz or, similarly, at fc-250KHz).
 
-_Revisit real and complex sine with RF frequencies displayed_
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_02_01.png)
 
-_Change signal frequency_
+Another important consideration for over-the-air transmission is the appropriate alignment of the Tx and Rx center frequencies (or carrier frequencies). In the figure below, we again start with the default 100KHz real-valued sinusoid with both Tx and Rx center frequency assigned to 915MHz. We then increase and decrease the Tx center frequency to recognize how this impacts the received signal. You can see that the frequency components associated with 100KHz signal are moved up and down together as we increase the Tx center frequency to 915.5MHz and then reduce to 914Mz. The key observation here is that the actual signal transmitted over the air is changing to different frequencies. In other words, the signal's components always show up at fc_tx +/- 100KHz. Since the Rx center frequency is assigned separately and associated with the USRP Source and the QT Sink, the observed frequency range remains consistent. Furthermore, the baseband implementation of the Rx filter does not account for the change in the Tx carrier, so the filtered range does not adjust. As a final observation in this figure, we should be able to recognize that the signal was changed to a complex sinusoid in the last 5 seconds before adjusting the Tx carrier back to 915MHz.
 
-_Change Tx and Rx center frequency_
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_02_02.png)
 
-_Disable Filter_
+As a final observation from this flowgraph, we can also observe the relative impact of Tx and Rx gain on the received signal. The outcome below is achieved by starting with the default settings, and then first increasing the Tx Gain value and then increasing the Rx Gain setting. The key takeaway is the relative impact on the signal and noise. While both gain settings can increase the received signal power, it's important to observe that increasing the gain at the receiver also increases the noise floor! This becomes relevant when considering signal-to-noise ratio (SNR) and the impact on communication signals - both in point-to-point settings and also in multi-user settings. At a high level, the Rx Gain setting is essential for making sure that your signal is strong enough to avoid significant impacts of sampling and quantization when converting to a digital signal, but the impact on SNR is negligible. Increasing the Tx Gain ultimately leads to increased signal power AND improved SNR in most cases, but emitting higher power signals will have a more significant impact on other nearby transmissions in the same band. These tradeoffs are important to consider when designing and optimizing a wireless communications system.
 
-_Change Tx and Rx gain_
-
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_02_03.png)
 
 
 
