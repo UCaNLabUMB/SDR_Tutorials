@@ -96,11 +96,17 @@ At this point, you should be able to build and execute the flowgraph in GRC if y
 
 ## Parameter Blocks and Command Line Execution
 
-_Discuss parameter blocks_
+To resolve the issue mentioned above, an easy solution is to open the flowgraph in GRC and change the address values in the USRP Source and Sink blocks. However, this process of manually changing the flowgraph can be unnecessarily tedious in situations where you might want to change a certain parameter value when running the flowgraph. With this in mind, GNURadio offers **parameter** blocks that behave similar to variables, but also allow for the value to be set when the flowgraph is started. In this example, we'll use parameter blocks for the USRP addresses so that these can be assigned when starting a flowgraph through the command line interface.
 
-_Describe string concatenation in USRP source/sink blocks_
+Going back to the flowgraph, our first step is to add the parameter blocks and update block settings. The figure below shows the settings assigned to the parameter, and how the parameter is used with string concatenation in the USRP Sink block. In this way, the address for the Tx USRP is defaulted as originally configured, but the parameter block also allows the address to be specified as a parameter when running the python code on the command line.
 
-_Command line call with help and then to start flowgraph_
+![Parameter Properties](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_05.png)
+
+In the figure below, we can see the process of running the flowgraph on the command line. Note that you must first build the flowgraph in GRC to create the python file. Now, if you open a terminal and move to the directory where your flowgraph is stored there should be a python file with the name defined by your flowgraph's ID (set earlier in the **Options** block). When you run the python file with the _-h_ flag, as shown below, you should get a help menu that shows the available parameters for this flowgraph and the corresponding flags.
+
+![Command Line Call with Parameters](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_06.png)
+
+The last line in the example above is the call to execute the flowgraph with newly specified addresses for the Tx and Rx USRPs. Running this command with the addresses found from your specific _uhd\_find\_devices_ call should start the flowgraph discussed in the following.
 
 ## Over-the-Air Transmission with GNURadio and USRPs
 
