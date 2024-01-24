@@ -110,15 +110,22 @@ The last line in the example above is the call to execute the flowgraph with new
 
 ## Over-the-Air Transmission with GNURadio and USRPs
 
-_Discuss observations from physical changes_
+Once the flowgraph is running, you should see a GUI visualization similar to what is shown in the figure below. 
 
-_Discuss sampling rate and gain settings_
+![over the air transmission results](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_07.png)
 
-_Discuss Overruns and Underruns_
+This basic flowgraph highlights some basic (but very important) signal processing concepts, and it is a good starting point to make sure you can recognize the impact of changing various parameters, as discussed below.
 
+* Since the option is set to "Show RF Frequencies" you should see the **center frequency (fc)** at 915MHz based on the setting in our QT Sink block, defined earlier. You should also notice the **tone** at 916MHz in our Frequency display since our initial signal was defined as a 1MHz complex sinuisoid and our carrier modulation ultimately shifted this from being centered at 0 to being centered at fc.
+  * Keep in mind that the displayed center frequency is based on what you define in the QT sink block, and is not directly related to the true carrier frequency associated with the receiver USRP. With this in mind, it is a good practice to use a variable to assign your carrier frequency, and then use this variable in both the USRP Source and the QT GUI. We will follow this in future flowgraphs.
+* Notice that the observable range of frequencies is 913.75MHz to 916.25MHz. As expected, this bandwidth is equal to the **sample rate (fs)** defined in the flowgraph (i.e., 2.5MHz).
+  * If you close the flowgraph and rerun it with a different sample rate, you should notice the difference in the observable frequencies where the range will always be fc-fs/2 to fc+fs/2. 
+  * As you increase the sample rate, you will see this range increase; but be aware of the fact that your computer must generate and/or process samples faster when the sample rate increases. At some point, your computer will not be able to keep up and you will see repetitions of "O" or "U" in the terminal. This is an indicator that you are running into overruns or underruns where your computer can not keep up with the demands of the hardware.
+* You will also notice that the default frequency resolution is not as high as shown in the image above. This is because the **FFT Size** has been increased to 4096, implying that there are 4096 dicsrete observation points across the observable frequency range. 
+  * As a recall from basic signals, increasing the FFT size and maintaining the same fs requires that we observe the signal for a longer period in time, and doing so increases the _resolution_ in frequency.
+* If you revisit the flowgraph and modify the **Tx and Rx Gain** settings in your USRP Source and Sink blocks, you can also observe the impacts on the observed power of the tone and of the noise.
 
-
-
+In addition to the changes above, you can also observe the physical channel's impact on the signal by observing what happens to the magnitude of the frequncy component associated with the 1MHz tone when you block the path between the Tx and Rx USRPs, or when you move the USRPs closer or further apart.
 
 
 # Dynamic Flowgraphs with USRP Hardware
