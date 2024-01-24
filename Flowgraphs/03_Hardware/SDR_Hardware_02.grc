@@ -36,7 +36,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 3,2,1,2
     label: Center Frequency - Rx
     min_len: '200'
     orient: Qt.Horizontal
@@ -57,7 +57,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 3,0,1,2
     label: Center Frequency - Tx
     min_len: '200'
     orient: Qt.Horizontal
@@ -102,6 +102,48 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [944, 12.0]
+    rotation: 0
+    state: true
+- name: gain_rx
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 2,2,1,2
+    label: Gain - Rx
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '5'
+    stop: '60'
+    value: '30'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [608, 140.0]
+    rotation: 0
+    state: true
+- name: gain_tx
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 2,0,1,2
+    label: Gain - Tx
+    min_len: '200'
+    orient: Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '5'
+    stop: '60'
+    value: '40'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [440, 140.0]
     rotation: 0
     state: true
 - name: path_select
@@ -181,7 +223,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 324.0]
+    coordinate: [304, 348.0]
     rotation: 180
     state: enabled
 - name: analog_sig_source_x_0
@@ -225,7 +267,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 204.0]
+    coordinate: [64, 228.0]
     rotation: 0
     state: enabled
 - name: band_pass_filter_0
@@ -266,7 +308,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 248.0]
+    coordinate: [304, 272.0]
     rotation: 0
     state: enabled
 - name: blocks_selector_0
@@ -517,7 +559,7 @@ blocks:
     comment: ''
     dev_addr: '"serial=" + tx_addr'
     dev_args: '""'
-    gain0: '40'
+    gain0: gain_tx
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -826,7 +868,7 @@ blocks:
     dc_offs_enb9: '""'
     dev_addr: '"serial=" + rx_addr'
     dev_args: '""'
-    gain0: '30'
+    gain0: gain_rx
     gain1: '0'
     gain10: '0'
     gain11: '0'
@@ -1063,7 +1105,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 260.0]
+    coordinate: [512, 284.0]
     rotation: 0
     state: enabled
 - name: virtual_sink_0_0

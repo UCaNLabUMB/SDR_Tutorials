@@ -129,12 +129,15 @@ In addition to the changes above, you can also observe the physical channel's im
 
 
 # Dynamic Flowgraphs with USRP Hardware
+In the [SDR_Hardware_02](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below, we merge the dynamically configurable tone generation example from the previous chapter with the hardware integration discussed above. This allows for observation of the basic tone characteristics discussed previously while considering the impact of carrier modulation / demodulation and over-the-air transmission.
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_02.png)
 
 ## Flowgraph Generation
-_Discuss merging with earlier flowgraphs_
+The main structure of this flowgraph is similar to the GNURadio\_Basics\_04 flowgraph discussed in the last chapter. The main change is that we've replaced the simulated noise channel (i.e., the **Noise Source** and **Add** blocks) with an actual transmission using the **UHD: USRP Sink** and **UHD: USRP Source blocks**. As we've done above, we also added parameter blocks for the Tx and Rx USRP addresses to allow for user-specified addresses based on the connected USRPs when running the flowgraph. Lastly, we've included 4 **QT GUI Range** blocks for the Tx/Rx center frequency and gain. the ID for each of these adjustable variables is then assigned to the corresponding setting in the USRP Sink and Source blocks' RF Options tabs. This is done so that we can modify these parameter with the running flowgraph to observe the impact on the received signal characteristics.
 
+To run the flowgraph, make sure to first build the flowgraph in GRC (to generate the python file) and then run the file in a terminal with the command:
+* _python3 SDR\_Hardware\_02.py -t <tx\_address> -r <rx\_address>_
 
 ## Observations
 
@@ -144,6 +147,9 @@ _Change signal frequency_
 
 _Change Tx and Rx center frequency_
 
+_Disable Filter_
+
+_Change Tx and Rx gain_
 
 
 
