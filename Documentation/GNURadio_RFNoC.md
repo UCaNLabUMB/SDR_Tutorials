@@ -178,6 +178,77 @@ it something descriptive. This file will be edited to include an FFT block.
 
 I recommend naming it with a description of the blocks added. Avoid
 changing the original .yaml file so that all your custom images start
-with the default blocks and connections.
+with the default blocks and connections. Open the copy of the .yml so that we can start making changes to the image.
 
-The next step is to change the buffer size for some SEPs. We do this to 
+The first step is to change the buffer size for some SEPs. We do this to make sure there is enough memory buffer space for the new blocks. The buff parameter can be reduced by half. The following image shows a comparison of the edited buffer size (left) and the original buffer size (right).
+
+![buffer comparison](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/sep_changes_fft.png)
+
+Next, we include the new blocks under the stream endpoints. You can follow the format that the other SEPs have. Your resulting SEP definition should look something like this:
+
+![fft sep](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/ep_fft.png)
+
+Creating an SEP for the FFT block allows us to configure the connections at runtime. The SEP name is used later in the tutorial to determine the static connections of the SEP to the FFT block. Given that all SEPs are connected to the CHDR crossbar, this new block can communicate with anything on the RFNoC network without having to create a new image and connections. 
+
+After creating an SEP for the block, we instantiate our FFT block. The following image shows how the block declaration looks.
+
+![fft block instantiation](https://github.com/UCaNLabUMB/SDR_Tutorials/blobl/main/Documentation/Images/08_RFNoC/int_fft_block.png)
+
+The following steps are crucial for proper block functionality and instantiation inside the image. The block connections, input and output, must be declared. This is where the name of the SEP comes into play. Any data that reaches the SEP must be sent to the input of the FFT block and any data leaving the FFT block must be sent again to the SEP. Make sure all connections begin and end on an SEP, otherwise the block might not be properly connected to the rest of the RFNoC blocks. 
+
+![fft connections](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/fft_connections.png)
+
+* This block also requires a clock input to work properly. The X300 has a clock called 'clock engine' or 'ce'. This clock is 214.286 MHz and should be sufficiently fast.
+
+![fft clock](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/clock_connections)
+
+## Running RFNoC Image Builder
+
+If UHD was installed in the default location, we need to run some commands before running RFNoC image builder. The following image shows the commands needed to run RFNoC image builder.
+
+* Note: This terminal window is opened inside the X300 directory.
+
+![rfnoc image builder](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/config_python_path_proper.png)
+
+* If these commands are not ran before trying to use the builder tool, the command line might not find the image builder tool. The Getting Started tutorial has a section on how to fix this issue at the beginning of the Setting Up section. 
+
+The command for building the image is as follow: 
+
+'rfnoc_image_builder -y x300_with_fft.yml -t X300_HG'
+
+This specifies the tool the source .yml file to build with and the target image to build. After the image is done, this should show up in the terminal window:
+
+![rfnoc image builder](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/built_image.png)
+* Note: FPGA image building takes time even with a capable computer. This specific image took me 1.5 hour to build. 
+
+### New Image Validation
+
+Now that we have our custom image, we follow the previous steps used in the default image to check the RFNoC blocks. The 'uhd_usrp_probe' command should show the new FFT block and the new SEP connections of the block. The following images show the output of this command.
+
+![new image blocks](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/image_fft_probe.png)
+
+![new image seps](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/fft_SEP_connections.png)
+
+Now our image is ready for usage with GNU Radio.
+
+# RFNoC with GNU Radio
+
+Using RFNoC with a GNU Radio flowgraph is simple, just find the blocks that you want to use and connect them. For the specific image that was built with this tutorial, no proper results were recorded due to issues with the way RFNoC deals with streaming data. However, another image was built that included a FIR filter. This image was built following the steps found in this tutorial and the goal was to verify the performance of the hardware FIR filter versus a software FIR filter. 
+
+* To connect RFNoC blocks properly, always follow the order of the static connections. In this flowgraph you do not have to worry about the connection of the FIR filter because it is a dynamic connection. However, the connections from the RX Radio block and the DDC block are always required as these are static hardware connections.
+
+* To use the data for further processing inside a flowgraph, we must use a streamer block to send data from the RFNoC network to GNU Radio. Inside any flowgraph we can go from hardware to software and viceversa. This is one of the benefits of RFNoC because we can connect and disconnect blocks to our discretion.
+
+## RFNoC Flowgraph Inside GNU Radio Companion
+
+The flowgraph that was created to validate the performance of the hardware FIR filter looks as follow. This flowgraph receives data from the RFNoC RX Radio block and sends it to the DDC block. The connection between radio and DDC is required to make the sample rate of the incoming data stream to match the sample rate of the flowgraph. After the data stream is converted to the proper sample rate, it gets filtered in the FIR filter block. The coefficients of the filter were designed to make a moving average filter. This filtered data is then streamed to the software part of the flowgraph to be visualized via a QT GUI Sink.
+
+![FIR RFNoC Flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/hw_FIR_filter.png)
+
+To test the performance of offloading processing to the hardware inside the USRP, I ran the flowgraph for 10 seconds using a software sample rate of 5 MSamp/s. The following image shows the average CPU usage of the flowgraph process during the 10 seconds.
+
+![cpu performance](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/cpu_perf_chart.png) 
+
+From the image we can see that running the hardware accelerated flowgraph utilizes the CPU less than the full software flowgraph. This is intuitive as the CPU has to process less data in the hardware flowgraph than the software flowgraph. One theory why the CPU utilization is still high in the hardware flowgraph is because the QT GUI sink block was being used. 
+
+This verifies proper RFNoC functionality for a FIR filter.
