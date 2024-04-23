@@ -96,14 +96,18 @@ the FPGA of each generation 3 USRP and the required application.
 Before installing Vivado, we need to
 install additional libraries. Use the following command in the terminal:
 
-'sudo apt-get install libtinfo5'
+```bash
+sudo apt-get install libtinfo5
+```
 
 After installing the additional libraries, we can install Vivado 2021.1.
 Going to the Xilinx Vivado website, look for the download page and go to
 the Vivado Archive. Find the 2021.1 version and download the unified
 installer. To run the installer, run:
 
-'sudo ./"name_of_installer.bin"'
+```bash
+sudo ./"name_of_installer.bin"
+```
 
 Ignore the version update and install **ONLY** the Kintex-7 files. This will
 reduce the install size and speed up the process.
@@ -114,10 +118,10 @@ To use the Vivado tools a patch needs to be installed for usage with Linux. Foll
 
 Verify the Vivado installation by running the following commands in a terminal window: 
 
-'''
+```bash
 Source /tools/Xilinx/Vivado/2021.1/settings64.sh 
 vivado 
-'''
+```
 
 After successful verification, run the Vivado License Manager to authenticate Vivado. To run the license manager, open Vivado and from the Project Navigator select help -> Manage License. Select the Obtain License tab from the left menu and choose the 30 day trial. This will send you to a Xilinx website and you can follow the instructions to obtain and download the license file for Vivado. Without this license you will be unable to build FPGA images. 
 
@@ -132,14 +136,15 @@ required, but will make it easier to find inside the terminal. Inside your folde
 
 Run:
 
-'git clone https://github.com/EttusResearch/uhd/tree/UHD-4.6'
-
+```bash
+git clone https://github.com/EttusResearch/uhd/tree/UHD-4.6
+```
 
 ### Checking USRP image
 
 Before we start customizing our FPGA images, we need to check the image
 in the USRP. This will help us identify the model and connection type.
-This is important because 3^rd^ generation USRPs have different images
+This is important because 3<sup>rd</sup> generation USRPs have different images
 depending on the type of connection you use.
 
 * 1.  Depending on the type of connection (USB or Ethernet) the USRP will use a different communication port. For the X300 USRP, I used Gigabit Ethernet. This means that our image is going to be the 'HG' version.
@@ -150,8 +155,8 @@ depending on the type of connection you use.
 
 Now that we can interface with the USRP, we check the current image to
 see if it has RFNoC blocks installed. To do this, we use the command
-'uhd_usrp_probe'. This command outputs a detailed description of everything on the
-USRP. Given that the USRP is a 3^rd^ Generation, it is compatible with
+```uhd_usrp_probe```. This command outputs a detailed description of everything on the
+USRP. Given that the USRP is a 3<sup>rd</sup>Generation, it is compatible with
 RFNoC but the previous command also confirms the compatibility.
 
 ![uhd_usrp_probe](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/uhd_usrp_probe_x300.png)
@@ -161,20 +166,22 @@ RFNoC blocks on the device. The output looks like this.
 
 ![default image RFNoC blocks](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/default_rfnoc_on_image.png)
 
-This is the default image that I got from 'uhd_images_downloader'. This
+This is the default image that I got from ```uhd_images_downloader```. This
 image includes 2 DDCs, 2 DUCs, 1 TX, 1 RX, and a replay block. To
 include more blocks we need create a custom FPGA image with the blocks
 that we want to include.
 
 ## Customizing RFNoC image
 
-This part of the tutorial is identical to the provided tutorial from Ettus Research. If there is anything that is not clear, please read through the tutorial.
+This part of the tutorial is identical to the provided tutorial from Ettus Research. If there is anything that is not clear, please read through the Ettus Research tutorial.
 
-After building UHD from source, we can build the custom FPGA image. Our working directory is going to be the inside the fpga folder inside the UHD repo built from source (e.g., inside '/<repo>/fpga/usrp3/top/x300').
-To add blocks into the image, copy the 'x300_rfnoc_image_core.yml' and name
+After building UHD from source, we can build the custom FPGA image. Our working directory is going to be the inside the fpga folder inside the UHD repo built from source (e.g., inside ```/<repo>/fpga/usrp3/top/x300```).
+To add blocks into the image, copy the ```x300_rfnoc_image_core.yml``` and name
 it something descriptive. This file will be edited to include an FFT block.
 
-'cp x300_rfnoc_image_core.yml x300_with_fft.yml'
+```bash
+cp x300_rfnoc_image_core.yml x300_with_fft.yml
+```
 
 I recommend naming it with a description of the blocks added. Avoid
 changing the original .yaml file so that all your custom images start
@@ -198,7 +205,7 @@ The following steps are crucial for proper block functionality and instantiation
 
 ![fft connections](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/fft_connections.png)
 
-* This block also requires a clock input to work properly. The X300 has a clock called 'clock engine' or 'ce'. This clock is 214.286 MHz and should be sufficiently fast.
+* This block also requires a clock input to work properly. The X300 has a clock called ```clock engine``` or ```ce```. This clock is 214.286 MHz and should be sufficiently fast.
 
 ![fft clock](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/clock_connections)
 
@@ -214,7 +221,9 @@ If UHD was installed in the default location, we need to run some commands befor
 
 The command for building the image is as follow: 
 
-'rfnoc_image_builder -y x300_with_fft.yml -t X300_HG'
+```bash
+rfnoc_image_builder -y x300_with_fft.yml -t X300_HG
+```
 
 This specifies the tool the source .yml file to build with and the target image to build. After the image is done, this should show up in the terminal window:
 
@@ -223,7 +232,7 @@ This specifies the tool the source .yml file to build with and the target image 
 
 ### New Image Validation
 
-Now that we have our custom image, we follow the previous steps used in the default image to check the RFNoC blocks. The 'uhd_usrp_probe' command should show the new FFT block and the new SEP connections of the block. The following images show the output of this command.
+Now that we have our custom image, we follow the previous steps used in the default image to check the RFNoC blocks. The ```uhd_usrp_probe``` command should show the new FFT block and the new SEP connections of the block. The following images show the output of this command.
 
 ![new image blocks](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/08_RFNoC/image_fft_probe.png)
 
@@ -252,3 +261,29 @@ To test the performance of offloading processing to the hardware inside the USRP
 From the image we can see that running the hardware accelerated flowgraph utilizes the CPU less than the full software flowgraph. This is intuitive as the CPU has to process less data in the hardware flowgraph than the software flowgraph. One theory why the CPU utilization is still high in the hardware flowgraph is because the QT GUI sink block was being used. 
 
 This verifies proper RFNoC functionality for a FIR filter.
+
+# References
+
+| Number | Reference 
+| --- | --- | 
+| 1. | [*Ettus Research RFNoC Documentation*](https://kb.ettus.com/Getting_Started_with_RFNoC_in_UHD_4.0)
+| 2. | [*Ettus Reseach UHD 4.6 Repository*](https://github.com/EttusResearch/uhd/tree/UHD-4.6)
+| 3. | [*Building UHD from source*](https://files.ettus.com/manual/page_build_guide.html)
+| 4. | [*RFNoC Block Properties*](https://files.ettus.com/manual/page_properties.html)
+| 5. | [*RFNoC Specification*](https://files.ettus.com/app_notes/RFNoC_Specification.pdf)
+| 6. | [*RFNoC Workshop 4 Part 1*](https://kb.ettus.com/images/5/5b/rfnoc4_workshop_slides_2020_part_1.pdf)
+
+# Tutorial Chapters
+
+* **Previous Chapter:** [GNURadio Indoor Positioning](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Indoor_Positioning.md)
+
+| Chapter | Topic | Summary 
+| --- | --- | --- |
+|  1  | [GNURadio Overview](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Overview.md)                   | Introduction to Flowgraphs, source/sink blocks, and data types
+|  2  | [GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)                       | Introduce flowgraph best practices, variables, and dynamic control
+|  3  | SDR Hardware                                                                                                                    | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
+|  4  | [GNURadio Remote Command and Control](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_CaC.md)      | Introduce multi-node systems with XMLRPC and ZMQ
+|  5  | [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md)                    | Introduce simulation and over-the-air data transmission
+|  6  | [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)         | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  7  | [Indoor Positioning](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Indoor_Positioning.md)
+|  8  | RFNoC Tutorial                                                                                                                    | Introduce RFNoC, RFNoC customization, and RFNoC testing
