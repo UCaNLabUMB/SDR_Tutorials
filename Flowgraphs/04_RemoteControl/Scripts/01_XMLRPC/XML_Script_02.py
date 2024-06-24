@@ -7,6 +7,9 @@ import time
 
 def main(argv):
 
+   ############################
+   # Initial Settings
+   ############################
    address       = 'localhost'
    port          = '8080'
    carrier_freq  = ''
@@ -20,6 +23,9 @@ def main(argv):
    b_set = 0
    debug = 0
    
+   ############################
+   # Parse Arguments
+   ############################
    try:
       opts, args = getopt.getopt(argv,"hc:f:s:b:d",["carrier_freq=","tone_freq=","sig_select=","bypass_filter="])
    except getopt.GetoptError:
@@ -44,6 +50,9 @@ def main(argv):
       elif opt in ("-d", "--debug"):
          debug = 1
          
+   ############################
+   # Debug message
+   ############################
    if debug == 1:
       if c_set == 1:
          print ('Carrier Frequency: ', carrier_freq)
@@ -54,21 +63,26 @@ def main(argv):
       if b_set == 1:
          print ('Bypass Filter:     ', bypass_filter)
    
-   xmlrpc_control_client = ServerProxy('http://' + address + ':' + port)
+   ############################
+   # Initialize Client Object #
+   ############################
+   xmlrpc_client = ServerProxy('http://' + address + ':' + port)
 
-
+   ############################
+   # Remote Parameter Control
+   ############################
    if c_set == 1:
-      xmlrpc_control_client.set_fc_tx(int(carrier_freq))
-      xmlrpc_control_client.set_fc_rx(int(carrier_freq))
+      xmlrpc_client.set_fc_tx(int(carrier_freq))
+      xmlrpc_client.set_fc_rx(int(carrier_freq))
 
    if f_set == 1:
-      xmlrpc_control_client.set_sig_freq(int(tone_freq))
+      xmlrpc_client.set_sig_freq(int(tone_freq))
    
    if s_set == 1:
-      xmlrpc_control_client.set_path_select(int(sig_select))
+      xmlrpc_client.set_path_select(int(sig_select))
 
    if b_set == 1:
-      xmlrpc_control_client.set_filter_select(int(bypass_filter))
+      xmlrpc_client.set_filter_select(int(bypass_filter))
    
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import xmlrpc.client
 from xmlrpc.client import ServerProxy
 import time
 
-# Setup Server Object
+# Setup Client Object
 xmlrpc_control = ServerProxy('http://'+'localhost'+':8080')
 
 # Modify Signal Frequency
