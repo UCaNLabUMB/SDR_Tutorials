@@ -57,7 +57,9 @@ To confirm that we can communicate with the connected USPRs, we will use the `uh
 
 * **NOTE:** The first time you try to connect to a USRP, you may need to download the relevant USRP firmware images and/or set appropriate privileges. If you receive an error related to either of these issues, you can review the UHD and USRP Manual for instructions related to the [UHD images downloader](https://files.ettus.com/manual/page_images.html) tool or [setting Udev rules](https://files.ettus.com/manual/page_transport.html).
 
-In addition to the `uhd_find_devices` command, the UHD library has some other functionality that is readily available. If you type `uhd` in the terminal and use the linux terminal's autocomplete feature (i.e., the tab key) you should see a list of 10-20 uhd commands that can directly be run in the terminal. If you are not familiar with the terminal autocomplete functionality, this is an incredibly useful trait of the terminal (and will greatly speed up the process of working with the command line). In this instance, hitting tab after typing `uhd` should show `uhd_` since there are multiple commands that start with `uhd`. Quickly hitting tab twice will provide the list of commands that can be run (with `uhd_find_devices` as one of the options). If you type `uhd_fi` and hit tab again, this will autocomplete `uhd_find_devices` since it is the only command that starts with that sequence of letters.
+In addition to the `uhd_find_devices` command, the UHD library has some other functionality that is readily available. If you type `uhd` in the terminal and use the linux terminal's autocomplete feature (i.e., the tab key) you should see a list of 10-20 uhd commands that can directly be run in the terminal. 
+
+* If you are not familiar with the terminal autocomplete functionality, this is an incredibly useful trait of the terminal (and will greatly speed up the process of working with the command line). In this instance, hitting tab after typing `uhd` should show `uhd_` since there are multiple commands that start with `uhd`. Quickly hitting tab twice will provide the list of commands that can be run (with `uhd_find_devices` as one of the options). If you type `uhd_fi` and hit tab again, this will autocomplete `uhd_find_devices` since it is the only command that starts with that sequence of letters.
 
 Another useful built-in uhd command is `uhd_fft`. Running `uhd_fft -h` in the terminal will display a short help menu that indicates the command line arguments that can be used. As a simple example, you can run the command below using the address for your receiving USRP in place of `<address>`. The `-a` flag indicates the address of your USRP, and the `-f` flag is to specify the center frequency that will be set on the hardware.
 
@@ -71,7 +73,7 @@ This should open up the GUI shown below. This offers a simple way to observe the
 
 ## Adding USRP Source and Sink Blocks
 Once we have confirmed that our computer can communicate with the connected USRPs, we can create the GNURadio flowgraph below to actually send/receive signals to/from the USRPs.
-* **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to managing the flow rate of samples passing through our flowgraph. 
+* **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to manage the flow rate of samples passing through our flowgraph. 
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01.png)
 
@@ -89,11 +91,11 @@ Once we have added and connected the relevant blocks, we will set properties for
   * The amplitude value is important as the UHD source expects values in the range of -1 to 1.
 * Set the center frequency in the **QT GUI Sink** block to 915e6 (i.e., 915MHz). 
   * It is important to note that this is for _display purposes only_ when displaying frequency plots in terms of the RF Frequencies. 
-  * The actual Tx and Rx carrier frequency values will be set in the UHD blocks. 
-  * You can select to show RF frequencies in the GUI while the flowgraph is running, but we have set this to the default by setting the _Show RF Freq_ property to _Yes_.
+  * The actual Tx and Rx carrier frequency values for the over-the-air signal will be set in the UHD blocks. 
+  * You can select to show RF frequencies in the GUI while the flowgraph is running, but we have set this to the default by setting the QT GUI Sink's _Show RF Freq_ property to _Yes_.
 * When opening the **UHD: USRP Sink** and **UHD: USRP Source** blocks, there is not much that needs to be changed in the General settings. In this tab, you will only need to set the _Device Address_ property to the serial address that was determined from the _uhd\_find\_devices_ call. We also set the _Sync_ property to _No Sync_. The _samp\_rate_ variable should already be assigned to the Samp Rate property. 
   * Make sure to include quotes and use the format shown below for the address property (i.e., `"serial=<address number>"`). 
-  * For USRP devices connected via Ethernet, _serial_ would be replaced with _addr_ and the value would be the USRP's IP address.
+  * For USRP devices connected via Ethernet, _serial_ would be replaced with _addr_ and the value would be the USRP's IP address (i.e., `"addr=<IP address>"`).
 * The second image below shows the _RF Options_ properties for the USRP source and Sink blocks. Here, we have set both _Center Frequency_ values to 915MHz so that our transmitter and receiver are aligned. We have also defined _Channel Gain_ settings and the _Antenna_ location.
   * Recall the physical antenna connections shown in the earlier image of the hardware setup.
 
@@ -108,7 +110,7 @@ At this point, you should be able to build and execute the flowgraph in GRC if y
 
 ## Parameter Blocks and Command Line Execution
 
-To resolve the issue mentioned above, an easy solution is to open the flowgraph in GRC and change the address values in the USRP Source and Sink blocks. However, this process of manually changing the flowgraph can be unnecessarily tedious in situations where you might want to change a certain parameter value when running the flowgraph. With this in mind, GNURadio offers **parameter** blocks that behave similar to variables, but also allow for the value to be set when the flowgraph is started. In this example, we'll use parameter blocks for the USRP addresses so that these can be assigned when starting a flowgraph through the command line interface.
+To resolve the issue mentioned above, an easy solution is to open the flowgraph in GRC and change the address values in the USRP Source and Sink blocks. However, this process of manually changing the flowgraph can be unnecessarily tedious in situations where you want to specify a certain parameter value each time you run the flowgraph. With this in mind, GNURadio offers **parameter** blocks that behave similar to variables, but also allow for the value to be set when the flowgraph is started. In this example, we'll use parameter blocks for the USRP addresses so that these can be assigned when starting a flowgraph through the command line interface.
 
 Going back to the flowgraph, our first step is to add the parameter blocks and update block settings. The figure below shows the settings assigned to the parameter, and how the parameter is used with string concatenation in the USRP Sink block. In this way, the address for the Tx USRP is defaulted as originally configured, but the parameter block also allows the address to be specified as a parameter when running the python code on the command line.
 
@@ -137,7 +139,10 @@ This basic flowgraph highlights some basic (but very important) signal processin
   * As a recall from basic signals, increasing the FFT size and maintaining the same fs requires that we observe the signal for a longer period in time, and doing so increases the _resolution_ in frequency.
 * If you revisit the flowgraph and modify the **Tx and Rx Gain** settings in your USRP Source and Sink blocks, you can also observe the impacts on the observed power of the tone and of the noise.
 
-In addition to the changes above, you can also observe the physical channel's impact on the signal by observing what happens to the magnitude of the frequncy component associated with the 1MHz tone when you block the path between the Tx and Rx USRPs, or when you move the USRPs closer or further apart.
+In addition to the changes above, you can also observe the physical channel's impact on the signal by observing what happens to the magnitude of the frequncy component associated with the 1MHz tone when you:
+* block the path between the Tx and Rx USRPs, 
+* rotate one of the USRPs, or 
+* move the USRPs closer or further apart.
 
 
 # Dynamic Flowgraphs with USRP Hardware
@@ -146,7 +151,7 @@ In the [SDR_Hardware_02](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/F
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_02.png)
 
 ## Flowgraph Generation
-The main structure of this flowgraph is similar to the GNURadio\_Basics\_04 flowgraph discussed in the last chapter. The main change is that we've replaced the simulated noise channel (i.e., the **Noise Source** and **Add** blocks) with an actual transmission using the **UHD: USRP Sink** and **UHD: USRP Source blocks**. As we've done above, we also added parameter blocks for the Tx and Rx USRP addresses to allow for user-specified addresses based on the connected USRPs when running the flowgraph. Lastly, we've included 4 **QT GUI Range** blocks for the Tx/Rx center frequency and gain. the ID for each of these adjustable variables is then assigned to the corresponding setting in the USRP Sink and Source blocks' RF Options tabs. This is done so that we can modify these parameter with the running flowgraph to observe the impact on the received signal characteristics.
+The main structure of this flowgraph is similar to the GNURadio\_Basics\_04 flowgraph discussed in the last chapter. The main change is that we've replaced the simulated noise channel (i.e., the **Noise Source** and **Add** blocks) with an actual transmission using the **UHD: USRP Sink** and **UHD: USRP Source blocks**. As we've done above, we also added parameter blocks for the Tx and Rx USRP addresses to allow for user-specified addresses based on the connected USRPs when running the flowgraph. Lastly, we've included 4 **QT GUI Range** blocks for the Tx/Rx center frequency and gain. The ID for each of these adjustable variables is then assigned to the corresponding setting in the USRP Sink and Source blocks' RF Options tabs. This is done so that we can modify these parameter with the running flowgraph to observe the impact on the received signal characteristics.
 
 To run the flowgraph, make sure to first build the flowgraph in GRC (to generate the python file) and then run the file in a terminal with the command:
 * `python3 SDR_Hardware_02.py -t <tx_address> -r <rx_address>`
@@ -168,12 +173,21 @@ As a final observation from this flowgraph, we can also observe the relative imp
 
 
 # Observing OTA Waveforms
+In this section, we introduce the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below. This extends our observed signals beyond the simple tones that we've been observing. More specifically, we will first look at a very basic communications signal implementing binary phase shift keying (BPSK). We will then extend the concept to a multiplexed transmit signal implementing frequency division multiplexing (FDM) in order to combine multiple BPSK signals in a single transmission. The flowgraph uses the previously introduced **Chooser** and **Selector** blocks to allow for dynamic changing of the transmitted signal while the flowgraph is running.
+
+* **NOTE:** Keep in mind that this example is purely to demonstrate basic _signal-level characteristics_ of modulated data transmissions. For practical over-the-air data transmission, additional overhead is needed in order to account for channel impairments before you can demodulate/decode the transmitted bits.
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03.png)
 
+There are two Tx signal paths in this flowgraph. Specifically, these signal paths generate the _TxSignal_BPSK_ and _TxSignal_FDM_ virtual signals that are passed into the selector block before the signal is sent to the transmitting USRP. The signal from the receiving USRP is simply passed into a QT GUI Sink for observation.
+
+* **NOTE:** Both potential Tx signals are also passed into the **QT GUI Time Sink** and **QT GUI Frequency Sink** blocks (in the bottom right of the image above). These blocks have a more specific focus than the QT GUI Sink block, but they allow for multiple signals to be plotted in the same figure for comparison.
+
+
+
 ## BPSK Modulator
 
-_Discuss basic modulators and relationship between signal bandwidth and parameters_
+_Discuss basic modulators, relationship between signal bandwidth and parameters, constellation diagram view at Tx and Rx_
 
 ## Frequency Division Multiplexing
 
