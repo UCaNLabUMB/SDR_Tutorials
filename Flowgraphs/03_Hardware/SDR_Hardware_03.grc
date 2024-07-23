@@ -710,7 +710,7 @@ blocks:
     alias: ''
     bw: samp_rate
     comment: ''
-    fc: fc_rx
+    fc: fc_tx
     fftsize: '1024'
     gui_hint: 2,0,1,2
     maxoutbuf: '0'
