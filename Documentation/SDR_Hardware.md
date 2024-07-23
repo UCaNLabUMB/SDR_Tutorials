@@ -173,15 +173,21 @@ As a final observation from this flowgraph, we can also observe the relative imp
 
 
 # Observing OTA Waveforms
-In the last section of this chapter, we introduce the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below. This extends our observed signals beyond the simple tones that we've been observing. More specifically, we will first look at a very basic communications signal implementing binary phase shift keying (BPSK) and then extend the concept to a multiplexed transmit signal implementing frequency division multiplexing (FDM) in order to combine multiple BPSK signals in a single transmission. The flowgraph uses the previously introced **Chooser** and **Selector** blocks to allow for dynamic changing of the transmitted signal while the flowgraph is running.
+In this section, we introduce the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below. This extends our observed signals beyond the simple tones that we've been observing. More specifically, we will first look at a very basic communications signal implementing binary phase shift keying (BPSK). We will then extend the concept to a multiplexed transmit signal implementing frequency division multiplexing (FDM) in order to combine multiple BPSK signals in a single transmission. The flowgraph uses the previously introduced **Chooser** and **Selector** blocks to allow for dynamic changing of the transmitted signal while the flowgraph is running.
 
-* **NOTE:** Keep in mind that this example is purely to demonstrate basic _signal-level characteristics_ of modulated data transmissions.
+* **NOTE:** Keep in mind that this example is purely to demonstrate basic _signal-level characteristics_ of modulated data transmissions. For practical over-the-air data transmission, additional overhead is needed in order to account for channel impairments before you can demodulate/decode the transmitted bits.
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03.png)
 
+There are two Tx signal paths in this flowgraph. Specifically, these signal paths generate the _TxSignal_BPSK_ and _TxSignal_FDM_ virtual signals that are passed into the selector block before the signal is sent to the transmitting USRP. The signal from the receiving USRP is simply passed into a QT GUI Sink for observation.
+
+* **NOTE:** Both potential Tx signals are also passed into the **QT GUI Time Sink** and **QT GUI Frequency Sink** blocks (in the bottom right of the image above). These blocks have a more specific focus than the QT GUI Sink block, but they allow for multiple signals to be plotted in the same figure for comparison.
+
+
+
 ## BPSK Modulator
 
-_Discuss basic modulators and relationship between signal bandwidth and parameters_
+_Discuss basic modulators, relationship between signal bandwidth and parameters, constellation diagram view at Tx and Rx_
 
 ## Frequency Division Multiplexing
 
