@@ -12,10 +12,11 @@ In this section we will cover how to use GNURadio to interact with USRP SDR hard
 In this tutorial, we will develop the [SDR_Hardware flowgraph](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) shown above. The primary intention of this tutorial is to introduce the methods for communicating with USRP hardware. In particular, we will focus on an instance using two **B200 mini** USRPs which connect to your computer via USB. We will also introduce methods for command line flowgraph execution where parameter values are defined in the Python call, and we will begin to observe some signal properties related to modulated waveforms with random data.
 
 As key learnings for this tutorial, we will cover
-* Signal transmission and reception using B200 mini USRPs and GNURadio.
-* USRP connections and use of the Linux terminal to acquire the USRP Address(es)
-* Use of parameters to enable command line specification of values associated with flowgraph variables
-* Considerations related to sample rate, hardware, flowgraph complexity, and processing power
+* Signal transmission and reception using B200 mini USRPs and GNURadio,
+* USRP connections and use of the Linux terminal to acquire the USRP Address(es),
+* An introduction to the USRP hardware driver (UHD),
+* Use of parameters to enable command line specification of values associated with flowgraph variables,
+* Considerations related to sample rate, hardware, flowgraph complexity, and processing power,
 * Signal bandwidth and a basic understanding of multiplexing, and multiple access
 
 
@@ -48,12 +49,23 @@ When using the B200 mini USRPs, our ability to communicate with the devices shou
 
 To confirm that we can communicate with the connected USPRs, we will use the `uhd_find_devices` command to search for connected USRPs and determine the address(es) of any USRPs that are found. Along with most installations of GNURadio, you will have also installed the UHD library. **UHD**, or USRP Hardware Driver, is how GNURadio communicates with USRPs. From the Linux terminal, you can type `uhd_find_devices`, as shown below. In this case, the two USRPs are found and the Serial addresses are reported. We will need these addresses when defining which USRPs we are using in the GNURadio flowgraph.
 
+* **NOTE:** The reported serial address is NOT the same as the USRP serial number on the USRP's label! The USRPs serial number is associated with the USRP hardware, whereas the serial address that we find with `uhd_find_devices` is the serial address of the USB hardware (i.e., how we are communicating with the device).
+
 ![UHD Find Devices](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_02.png)
 
 * **NOTE:** You can notice in the image above that firmware is first loaded to each of the USRPs before they return their address information. Whenever the B200 mini USRPs are powered up the firmware must be loaded onto the hardware so that they know how to function. If you call `uhd_find_devices` a second time, you will notice that the response comes back quicker and you will not see the INFO message stating "_Loading Firmware Image_ ..." since the firmware has already been loaded to the USRPs. If you power cycle the USRPs (i.e., unplug the USB cables) the firmware will be loaded again the next time your computer attempts to communicate with the USRPs.
 
 * **NOTE:** The first time you try to connect to a USRP, you may need to download the relevant USRP firmware images and/or set appropriate privileges. If you receive an error related to either of these issues, you can review the UHD and USRP Manual for instructions related to the [UHD images downloader](https://files.ettus.com/manual/page_images.html) tool or [setting Udev rules](https://files.ettus.com/manual/page_transport.html).
 
+In addition to the `uhd_find_devices` command, the UHD library has some other functionality that is readily available. If you type `uhd` in the terminal and use the linux terminal's autocomplete feature (i.e., the tab key) you should see a list of 10-20 uhd commands that can directly be run in the terminal. If you are not familiar with the terminal autocomplete functionality, this is an incredibly useful trait of the terminal (and will greatly speed up the process of working with the command line). In this instance, hitting tab after typing `uhd` should show `uhd_` since there are multiple commands that start with `uhd`. Quickly hitting tab twice will provide the list of commands that can be run (with `uhd_find_devices` as one of the options). If you type `uhd_fi` and hit tab again, this will autocomplete `uhd_find_devices` since it is the only command that starts with that sequence of letters.
+
+Another useful built-in uhd command is `uhd_fft`. Running `uhd_fft -h` in the terminal will display a short help menu that indicates the command line arguments that can be used. As a simple example, you can run the command below using the address for your receiving USRP in place of `<address>`. The `-a` flag indicates the address of your USRP, and the `-f` flag is to specify the center frequency that will be set on the hardware.
+
+* `uhd_fft -a serial=<address> -f 915000000`
+
+This should open up the GUI shown below. This offers a simple way to observe the received RF signal in time or frequency domain (or in a waterfall plot) and allows you to manipulate various configuration settings in a graphical interface.
+
+![UHD FFT](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_01_08.png)
 
 
 
