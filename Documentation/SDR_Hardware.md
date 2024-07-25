@@ -188,13 +188,13 @@ There are two Tx signal paths in this flowgraph. Specifically, these signal path
 
 ## BPSK Modulator
 
-The signal chain for the basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). This is implemented using the **Random Source** block with minimum set to $0$ and maximum set to $24.
+The signal chain for the basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). This is implemented using the **Random Source** block with minimum set to $0$ and maximum set to $2$.
 
 * **NOTE:** The **Random Source** block generates values in the range $[min, max)$ such that it is NOT inclusive of the max value! This is an important nuance of this blocks implementation that can lead to unexpected outcomes (and frustration!) if not used appropriately.
 
 After the **Random Source** block, the stream of integers is passed through the **Chunks to Symbols** block. This block maps the integer values to specified complex values representing the actual symbol corresponding to the symbol number. In the case of BPSK, we are mapping to the real values $\pm 0.25$, but representing these values in a complex value stream (i.e., $\pm 0.25 + j0$). The output is then passed into a **Repeat** block which interpolates the signal with a specified number of repetitions. We have set a variable that defines the interpolation equal to sample rate divided by the signal frequency (i.e., symbol rate). This can be thought of as
 
-$$ \frac{samples}{symbol} = \frac{\frac{samples}{second}}{\frac{symbols}{second}} $$
+$$ \frac{samples}{symbol} = \frac{\frac{samples}{second}}{\frac{symbols}{second}} = \frac{sample rate}{symbol rate}$$
 
 * **NOTE:** For demonstration, we have a sample rate of 20MHz such that the desired symbol rates of 1MHz, 2MHz, 4MHz, or 5MHz all work out to integer interpolation values.
 
@@ -216,6 +216,14 @@ Adjusting the Tx/Rx center frequency and gain settings should reiterate some of 
 * Increasing the Tx gain should start to raise the signal above the noise floor in the Rx frequency display, likely making more of the side lobes observable.
 * Increasing the Rx gain should increase the power of the signal and noise, so the relative gain should increase across all frequencies in the Rx frequency display.
 
+The carrier adjustment observations can be seen in the image below. With the Tx center frequency set to 910MHz, we can observe the Tx frequency display shows the range from 900MHz to 920MHz with the main lobe of the signal at 910MHz, as expected. Since the Rx center frequency is set to 920MHz, the Rx frequency display shows the received spectrum from 910MHz to 930MHz with our transmitted signal clearly observable in the range from 910MHz to 920MHz.
+
+![BPSK adjusted carriers](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_06.png)
+
+* **NOTE:** Notice that there aren't any observable side lobes beyond 920MHz in the Rx frequency display. This is related to the hardware filters in the transmitting USRP. These are implemented after upsampling to the transmitting hardware's DAC rate and before the DAC and analog upconversion. The purpose is to mitigate out-of-band interference. Similar filters are also implemented in the receiver to avoid aliasing of unwanted out-of-band received signals.
+
+* **NOTE:** Notice the additional signal in the Rx frequency display near 930MHz. This is not something we are sending! Since the 900MHz ISM band operates from 902MHz through 928MHz, we are seeing an active transmission in the licensed band above 928MHz (assumedly [this](https://www.fcc.gov/wireless/bureau-divisions/mobility-division/narrowband-personal-communications-service-pcs) ).
+
 Another observation to make with the single BPSK signal is the impact of the signal frequency (i.e., symbol rate). As you increase the signal frequency value, the size of the main lobe and side lobes should increase accordingly. You can observe this in the frequency display as you adjust the signal frequency, but we also include the image below showing the waterfall plot of the Tx and Rx signals as the signal frequency is adjusted from 1MHz to 2Mhz and then to 4MHz. Observing the time axis in the waterfall plot, we can recognize that the switch from 2MHz to 4MHz occurred around 7.5 seconds in the past and the change from 1MHz to 2MHz occurred approximately 7.5 seconds before that.
 
 ![BPSK in Waterfall](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_02.png)
@@ -234,9 +242,15 @@ The final observation for our basic BPSK signal will be made using the constella
 
 ## Frequency Division Multiplexing
 
-_Discuss multiplexing and multiple access_
+_Discuss multiplexing and multiple access, along with FDM implementation in flowgraph above_
+
+![BPSK adjusted carriers](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_04.png)
 
 _Discuss variability of cos(o) when returning to IF=0 with current implementation_
+
+_Discuss waterfall depiction with changing IF values and signal bandwidth_
+
+![BPSK adjusted carriers](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_05.png)
 
 
 
