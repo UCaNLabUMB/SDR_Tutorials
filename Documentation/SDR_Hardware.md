@@ -26,6 +26,7 @@ This tutorial will introduce the following GNURadio blocks:
 * UHD: USRP Sink Block
 * Parameter Block
 * Random Source Block
+* Chunks to Symbols Block
 * Repeat Block
 
 
@@ -187,13 +188,45 @@ There are two Tx signal paths in this flowgraph. Specifically, these signal path
 
 ## BPSK Modulator
 
-_Discuss basic modulators, relationship between signal bandwidth and parameters, constellation diagram view at Tx and Rx_
+The basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). The stream of integers is passed through the _Chunks to Symbols_ block which maps the integer to a complex value representing the actual symbol for the specified symbol number. In the case of BPSK, we are mapping to the real values $\pm 0.25$, but representing these values in a complex value stream (i.e., $\pm 0.25 + j0$). The output is then passed into a _Repeat_ block which interpolates the signal with a specified number of repetitions. We have set a variable that defines the interpolation equal to sample rate divided by the signal frequency. This can be thought of as
+
+$$ \frac{samples}{symbol} = \left(\frac{samples}{second} / \frac{symbols}{sec}$$
+
+* **NOTE:** For demonstration, we have a sample rate of 20MHz such that the desired symbol rates of 1MHz, 2MHz, 4MHz, or 5MHz all work out to integer interpolation values.
+
+When running the SDR_Hardware_03 flowgraph (via command line with appropriate address parameters for your USRPs), you should see the interface below. 
+
+![BPSK in FFT(https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_01.png)
+
+The configuration settings are at the top. The QT GUI Sinks for the Tx and Rx signals are shown in the middle on the left and right, respectively. The only non-default configuration in the image below is that the average setting for the FFT is set to 10 in order to clean up the image and show a less variable result (i.e., compared to what you see when observing the FFT without averaging). The bottom two figures show the selectable Tx signals (i.e., baseline BPSK or two BPSK signals with FDM) in time domain and frequency domain.
+
+In the figure above, we have set the source signal (i.e., the signal that is being sent over-the-air) is set as the single BPSK signal, and the Tx/Rx QT GUI sinks are set to observe the frequency display. The observable frequency range is from 905MHz to 925MHz since we are using a sample rate of 20MHz and a center frequency of 915MHz. We can see that the received signal has lower peak power and is more noisy across the observable spectrum range. 
+
+Regarding the signal characteristics, we see that the main lobe of our signal (i.e., between the nulls at 914MHz and 916Mhz) has a bandwidth of 2MHz, or twice the 1MHz signal frequency (i.e., symbol rate). Each of the side lobes have a width of 1MHz, and the power of each side lobe decreases as we look further away from the main lobe.
+
+Adjusting the Tx/Rx center frequency and gain settings should reiterate some of our observations from the previous section of this chapter. More specificall:
+* Changing the Tx center frequency should move the location of the signal's main lobe in the RX frequency display, but the range in the Rx frequency display should remain consistent.
+* Changing the Rx center frequency should change the observable range of frequencies in the Rx frequency display, but the main lobe of your signal should always be at the Tx center frequency.
+* Increasing the Tx gain should start to raise the signal above the noise floor in the Rx frequency display, likely making more of the side lobes observable.
+* Increasing the Rx gain should increase the power of the signal and noise, so the relative gain should increase across all frequencies in the Rx frequency display.
+
+The last observation to make with the single BPSK signal is the impact of the signal frequency (i.e., symbol rate). As you increase the signal frequency value, the size of the main lobe and side lobes should increase accordingly. You can observe this in the frequency display as you adjust the signal frequency, but we also include the image below showing the waterfall plot of the Tx and Rx signals as the signal frequency is adjusted from 1MHz to 2Mhz and then to 4MHz.
+
+![BPSK in Waterfall(https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_02.png)
+
+* **NOTE:** The deep nulls between side lobes are clearly observable in the transmit signal since there isn't any additive noise, but the nulls in the receive signal are harder to see as you move away from the main lobe since signal power associated with frequencies further away from the Tx center frequency approaches the noise floor.
+
+_discuss time domain BPSK and the constellation diagram view at Tx and Rx_
+
+![BPSK in Constellation](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_03.png)
+
 
 ## Frequency Division Multiplexing
 
 _Discuss multiplexing and multiple access_
 
-## Observations
+_Discuss variability of cos(o) when returning to IF=0 with current implementation_
+
 
 
 
