@@ -188,9 +188,13 @@ There are two Tx signal paths in this flowgraph. Specifically, these signal path
 
 ## BPSK Modulator
 
-The signal chain for the basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). The stream of integers is passed through the **Chunks to Symbols** block which maps the integer to a complex value representing the actual symbol for the specified symbol number. In the case of BPSK, we are mapping to the real values $\pm 0.25$, but representing these values in a complex value stream (i.e., $\pm 0.25 + j0$). The output is then passed into a **Repeat** block which interpolates the signal with a specified number of repetitions. We have set a variable that defines the interpolation equal to sample rate divided by the signal frequency (i.e., symbol rate). This can be thought of as
+The signal chain for the basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). This is implemented using the **Random Source** block with minimum set to $0$ and maximum set to $24.
 
-$$ \frac{samples}{symbol} = \left(\frac{samples}{second} / \frac{symbols}{sec} \right)$$
+* **NOTE:** The **Random Source** block generates values in the range $[min, max)$ such that it is NOT inclusive of the max value! This is an important nuance of this blocks implementation that can lead to unexpected outcomes (and frustration!) if not used appropriately.
+
+After the **Random Source** block, the stream of integers is passed through the **Chunks to Symbols** block. This block maps the integer values to specified complex values representing the actual symbol corresponding to the symbol number. In the case of BPSK, we are mapping to the real values $\pm 0.25$, but representing these values in a complex value stream (i.e., $\pm 0.25 + j0$). The output is then passed into a **Repeat** block which interpolates the signal with a specified number of repetitions. We have set a variable that defines the interpolation equal to sample rate divided by the signal frequency (i.e., symbol rate). This can be thought of as
+
+$$ \frac{samples}{symbol} = \frac{\frac{samples}{second}}{\frac{symbols}{second}} $$
 
 * **NOTE:** For demonstration, we have a sample rate of 20MHz such that the desired symbol rates of 1MHz, 2MHz, 4MHz, or 5MHz all work out to integer interpolation values.
 
@@ -200,11 +204,11 @@ When running the flowgraph (via command line with appropriate address parameters
 
 The configuration settings are at the top. The QT GUI Sinks for the Tx and Rx signals are shown in the middle on the left and right, respectively. The only non-default configuration in the image above is that the average setting for the FFT is set to 10 in order to clean up the image and show a less variable result (i.e., compared to what you see when observing the FFT without averaging). The bottom two figures show the selectable Tx signals (i.e., baseline BPSK or two BPSK signals with FDM) in time domain and frequency domain.
 
-In the figure above, the source signal (i.e., the signal that is being sent over-the-air) is set as the single BPSK signal, and the Tx/Rx QT GUI sinks are set to observe the frequency display. From this static observation, we can make the following observations:
+In the figure above, the source signal (i.e., the signal that is being sent over-the-air) is set as the single BPSK signal, and the Tx/Rx QT GUI sinks are set to observe the frequency display. From this fixed configuration, we can make the following observations:
 * The observable frequency range is from 905MHz to 925MHz since we are using a sample rate of 20MHz and a center frequency of 915MHz. 
 * The received signal has lower peak power and is more noisy across the observable spectrum range. 
 * The main lobe of our signal (i.e., between the nulls at 914MHz and 916Mhz) has a bandwidth of 2MHz, or twice the 1MHz signal frequency (i.e., symbol rate). 
-* Each of the side lobes have a width of 1MHz, and the power of each side lobe decreases as we look further away from the main lobe.
+* Each of the side lobes have a width of 1MHz (equal to the symbol rate), and the power of each side lobe decreases as we look further away from the main lobe.
 
 Adjusting the Tx/Rx center frequency and gain settings should reiterate some of our observations from the previous section of this chapter. More specifically:
 * Changing the Tx center frequency should move the location of the signal's main lobe in the RX frequency display, but the range in the Rx frequency display should remain consistent.
@@ -212,13 +216,18 @@ Adjusting the Tx/Rx center frequency and gain settings should reiterate some of 
 * Increasing the Tx gain should start to raise the signal above the noise floor in the Rx frequency display, likely making more of the side lobes observable.
 * Increasing the Rx gain should increase the power of the signal and noise, so the relative gain should increase across all frequencies in the Rx frequency display.
 
-The last observation to make with the single BPSK signal is the impact of the signal frequency (i.e., symbol rate). As you increase the signal frequency value, the size of the main lobe and side lobes should increase accordingly. You can observe this in the frequency display as you adjust the signal frequency, but we also include the image below showing the waterfall plot of the Tx and Rx signals as the signal frequency is adjusted from 1MHz to 2Mhz and then to 4MHz. Observing the time axis in the waterfall plot, we can recognize that the switch from 2MHz to 4MHz occurred around 7.5 seconds in the past and the change from 1MHz to 2MHz occurred approximately 7.5 seconds before that.
+Another observation to make with the single BPSK signal is the impact of the signal frequency (i.e., symbol rate). As you increase the signal frequency value, the size of the main lobe and side lobes should increase accordingly. You can observe this in the frequency display as you adjust the signal frequency, but we also include the image below showing the waterfall plot of the Tx and Rx signals as the signal frequency is adjusted from 1MHz to 2Mhz and then to 4MHz. Observing the time axis in the waterfall plot, we can recognize that the switch from 2MHz to 4MHz occurred around 7.5 seconds in the past and the change from 1MHz to 2MHz occurred approximately 7.5 seconds before that.
 
 ![BPSK in Waterfall](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_02.png)
 
 * **NOTE:** The deep nulls between side lobes are clearly observable in the transmit signal since there isn't any additive noise, but the nulls in the receive signal are harder to see as you move away from the main lobe since signal power associated with frequencies further away from the Tx center frequency approaches the noise floor.
 
-_discuss time domain BPSK and the constellation diagram view at Tx and Rx_
+* **NOTE:** Observing the time domain characteristics of the transmitted signal in the lower left figure within the image obove, you see the baseband time domain signal for the BPSK signal with 4MHz symbol rate. 
+  * The FDM signals have been deselected in the legend to look strictly at the BPSK signal.
+  * The signal's Real component is set as either $\pm 0.25$ as expected, and the Imaginary component is always 0.
+  * By center-clicking on the figure in your running flowgraph, you can bring up a display menu. Selecting "stem plot" from this menu will change the view to allow you to look at individual samples For any signal frequency (i.e., symbol rate) setting, the minimum number of samples between points where the value changes should be equal to the corresponding number of repetitions (i.e., interpolation). In other words, the samples per symbol value calculated in the equation above.
+
+The final observation for our basic BPSK signal will be made using the constellation display in the Tx and Rx QT GUI Sinks. A screenshot of this output is shown below. At the Tx side, we see an idealized BPSK constellation as expected. In other words, the symbol values always show up on the real axis at either $0.25$ or $-0.25$. However, the Rx view shows a much more complicated picture that includes the channel impairments like attenuation, phase shift, frequency misalignment, and synchronization. Since we haven't accounted for any of these impairments, it is not feasible to decode this signal and get back our transmitted bits! We will discuss these impairments more in a future chapter when implementing a full system with modulation and demodulation.
 
 ![BPSK in Constellation](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/03_Hardware/GRHardware_03_03.png)
 
