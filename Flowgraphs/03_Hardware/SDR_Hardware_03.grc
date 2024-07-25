@@ -45,13 +45,13 @@ blocks:
     start: '-5000000'
     step: '1000000'
     stop: '5000000'
-    value: '1000000'
+    value: '0'
     widget: counter_slider
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1464, 220.0]
+    coordinate: [1464, 204.0]
     rotation: 0
     state: enabled
 - name: IF2
@@ -72,7 +72,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1464, 348.0]
+    coordinate: [1464, 332.0]
     rotation: 0
     state: enabled
 - name: Rx_Gain
@@ -93,7 +93,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1344, 348.0]
+    coordinate: [1344, 332.0]
     rotation: 0
     state: enabled
 - name: Tx_Gain
@@ -114,7 +114,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1344, 220.0]
+    coordinate: [1344, 204.0]
     rotation: 0
     state: enabled
 - name: fc_rx
@@ -135,7 +135,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1176, 348.0]
+    coordinate: [1176, 332.0]
     rotation: 0
     state: true
 - name: fc_tx
@@ -156,7 +156,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1176, 220.0]
+    coordinate: [1176, 204.0]
     rotation: 0
     state: true
 - name: interp
@@ -198,7 +198,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1032, 188.0]
+    coordinate: [888, 268.0]
     rotation: 0
     state: true
 - name: samp_rate
@@ -226,26 +226,35 @@ blocks:
     rotation: 0
     state: enabled
 - name: sig_freq
-  id: variable_qtgui_range
+  id: variable_qtgui_chooser
   parameters:
     comment: ''
     gui_hint: 1,0,1,1
     label: Signal Frequency
-    min_len: '200'
-    orient: QtCore.Qt.Horizontal
-    rangeType: float
-    start: '1000000'
-    step: '1000000'
-    stop: '5000000'
+    label0: 1MHz
+    label1: 2MHz
+    label2: 4MHz
+    label3: 5MHz
+    label4: ''
+    labels: '[]'
+    num_opts: '4'
+    option0: '1000000'
+    option1: '2000000'
+    option2: '4000000'
+    option3: '5000000'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
     value: '1000000'
-    widget: counter_slider
+    widget: combo_box
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1032, 348.0]
+    coordinate: [1032, 204.0]
     rotation: 0
-    state: enabled
+    state: true
 - name: analog_random_source_x_0
   id: analog_random_source_x
   parameters:
