@@ -244,14 +244,17 @@ The final observation for our basic BPSK signal will be made using the constella
 
 The alternative signal path in the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph demonstrates a simplistic FDM implementation where two separate BPSK signals are multiplexed in the digital domain before being upconverted in the hardware and transmitted over the air. FDM is a multiplexing method for sharing the available bandwidth across multiple data streams. Frequency division multiple access (FDMA) is one application of FDM where different frequency ranges are assigned to different users. The basic idea is that multiple signals with bandwidth much less than the sample rate can be merged at the transmit end and then filtered and decoupled at the receive end. 
 
-Functionally, the FDM implementation in the flowgraph multiplies each baseband BPSK signal by a complex sinusoid with different frequencies. These are defined as the intermediate frequencies (IF). The two signals are then added together. Revisiting basic concepts from signals, can conceptualize the impact by considering the following principles:
+Functionally, the FDM implementation in the flowgraph multiplies each baseband BPSK signal by a complex sinusoid with different frequencies. These are defined as the intermediate frequencies (IF). The two signals are then added together. Revisiting basic concepts from signals, we can conceptualize the impact by considering the following principles:
 * Multiplication in time domain is convolution in frequency domain
-* The Fourier Transform of a complex sinusoid (i.e., $e^{j \omega t}) is a unit impulse at $\omega$
+* The Fourier Transform of a complex sinusoid (i.e., $e^{j \omega t}$) is a unit impulse at $\omega$
 * Convolution with a unit impulse is equivalent to a shift of the signal
 
 Mathematically, these concepts are highlighted below. For simplicity, we introduce the concepts within a continuous time framework; but the outcome is comparable with our digital (i.e., discrete time) implementation.
+
 $$ y\left(t\right) = x\left(t\right) e^{j \omega_{IF} t} \Rightarrow Y\left(f\right) = \frac{1}{2\pi} X\left(\omega\right) * \mathcal{F} \left{e^{j \omega_{IF} t}\right} $$
+
 $$ \mathcal{F} \left{e^{j \omega_{IF} t}\right} = 2\pi \delta\left(\omega - \omega_{IF}\right) $$
+
 $$ Y\left(f\right) = X\left(\omega\right) *  \delta\left(\omega - \omega_{IF}\right) = X\left(\omega - \omega_{IF}\right)
 
 This is seen in the default configuration when running the flowgraph and switching the source signal to the 2 BPSK w/ FDM selection. As seen below, the outcome in frequency domain shows the superposition of two BPSK signals - one centered at the Tx carrier frequency (i.e., at 915MHz) and one at 3MHz above the Tx carrier frequency (i.e., at 918MHz). This corresponds to the IF settings of 0 and 3MHz!
@@ -260,7 +263,7 @@ This is seen in the default configuration when running the flowgraph and switchi
 
 In this flowgraph's simplistic FDM implementation, the side lobes of each signal would still impact the other signal (even with the most optimal filtering at the receiver). The gap between the two main lobes is called the guard band, and a larger guard leads to less interference across signals. However, the guard band is essentially unused spectrum and reduces the overall spectral efficiency within the band. To address this, digital filtering can be applied to each baseband BPSK signal prior to IF modulation. In a later chapter, we will also discuss how orthogonal frequency division multiplexing (OFDM) can be applied to address this inefficiency. 
 
-* **NOTE:** As we start to observe the frequency characteristics of the multiplexed signal when varying IF values and symbol rate, it is interesting to view the transmitted signal in time domain (i.e., lower left figure in the image above). Since this instance is the sum of a baseband BPSK signal and a BPSK signal with 3MHz IF, we see that the Imaginary component of the signal is just the Imaginary component of the IF modulated second signal (since the Imaginary component of the baseband BPSK signal - with IF=0 - is always 0. The Real component is the Real component of the IF modulated second signal $\pm 0.25$ since the result of the first BPSK signal path is $\pm 0.25e^{j0t}$. 
+* **NOTE:** As we start to observe the frequency characteristics of the multiplexed signal when varying IF values and symbol rate, it is interesting to view the transmitted signal in time domain (i.e., lower left figure in the image above). Since this instance is the sum of a baseband BPSK signal and a BPSK signal with 3MHz IF, we see that the Imaginary component of the signal is just the Imaginary component of the IF modulated second signal (since the Imaginary component of the baseband BPSK signal, with IF=0, is always 0. The Real component is the Real component of the IF modulated second signal $\pm 0.25$ since the result of the first BPSK signal path is $\pm 0.25e^{j0t}$. 
 
 * **NOTE:** Building on the note above, the interesting oddity of this flowgraph is what occurs when you change IF1 to a non-zero value and then set it back to 0. With GNURadio's implementation of the complex sinusoid in the **Signal Source** block, returning the frequency to 0 will hold the output constant; however, it does not guarantee that the constant will be $e^{j0t} = 1$. This is another minor implementation choice of the specific block that can lead to some confusion if you are not aware of the underlying operation.
 
