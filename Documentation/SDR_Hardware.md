@@ -251,11 +251,11 @@ Functionally, the FDM implementation in the flowgraph multiplies each baseband B
 
 Mathematically, these concepts are highlighted below. For simplicity, we introduce the concepts within a continuous time framework; but the outcome is comparable with our digital (i.e., discrete time) implementation.
 
-$$ y\left(t\right) = x\left(t\right) e^{j \omega_{IF} t} \Rightarrow Y\left(f\right) = \frac{1}{2\pi} X\left(\omega\right) * \mathcal{F} \left{e^{j \omega_{IF} t}\right} $$
+$$ y\left( t \right) = x\left( t \right) e^{j \omega_{IF} t} \Rightarrow Y\left( f \right) = \frac{1}{2\pi} X\left( \omega \right) * \mathcal{F} \{ e^{j \omega_{IF} t} \} $$
 
-$$ \mathcal{F} \left{e^{j \omega_{IF} t}\right} = 2\pi \delta\left(\omega - \omega_{IF}\right) $$
+$$ \mathcal{F} \{ e^{j \omega_{IF} t} \} = 2\pi \delta \left( \omega - \omega_{IF} \right) $$
 
-$$ Y\left(f\right) = X\left(\omega\right) *  \delta\left(\omega - \omega_{IF}\right) = X\left(\omega - \omega_{IF}\right)
+$$ Y\left( \omega \right) = X\left( \omega \right) *  \delta \left( \omega - \omega_{IF} \right) = X\left( \omega - \omega_{IF} \right) $$
 
 This is seen in the default configuration when running the flowgraph and switching the source signal to the 2 BPSK w/ FDM selection. As seen below, the outcome in frequency domain shows the superposition of two BPSK signals - one centered at the Tx carrier frequency (i.e., at 915MHz) and one at 3MHz above the Tx carrier frequency (i.e., at 918MHz). This corresponds to the IF settings of 0 and 3MHz!
 
