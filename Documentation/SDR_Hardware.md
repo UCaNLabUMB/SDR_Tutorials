@@ -251,9 +251,9 @@ Functionally, the FDM implementation in the flowgraph multiplies each baseband B
 
 Mathematically, these concepts are highlighted below. For simplicity, we introduce the concepts within a continuous time framework; but the outcome is comparable with our digital (i.e., discrete time) implementation.
 
-$$ y\left( t \right) = x\left( t \right) e^{j \omega_{IF} t} \Rightarrow Y\left( f \right) = \frac{1}{2\pi} X\left( \omega \right) * \mathcal{F} \{ e^{j \omega_{IF} t} \} $$
+$$ y\left( t \right) = x\left( t \right) e^{j \omega_{IF} t} \Rightarrow Y\left( f \right) = \frac{1}{2\pi} X\left( \omega \right) * \mathcal{F} \left\{ e^{j \omega_{IF} t} \right\} $$
 
-$$ \mathcal{F} \{ e^{j \omega_{IF} t} \} = 2\pi \delta \left( \omega - \omega_{IF} \right) $$
+$$ \mathcal{F} \left\{ e^{j \omega_{IF} t} \right\} = 2\pi \delta \left( \omega - \omega_{IF} \right) $$
 
 $$ Y\left( \omega \right) = X\left( \omega \right) *  \delta \left( \omega - \omega_{IF} \right) = X\left( \omega - \omega_{IF} \right) $$
 
