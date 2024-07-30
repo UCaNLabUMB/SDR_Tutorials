@@ -9,7 +9,7 @@ In this section, we will discuss how we can interact with GNURadio flowgraphs fr
 
 ![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_03.png)
 
-In this tutorial, we will work with GNURadio's xmlrpc and ZMQ tools to build the flowgraphs shown above, along with the corresponding control script, and implement a centrally controlled automatic gain controller that adjusts Tx gain in order to keep the Rx signal power within a desired range.
+In this tutorial, we will work with GNURadio's xmlrpc and ZMQ tools to build the flowgraphs shown above, along with the corresponding control script that implements a centrally controlled automatic gain controller where Tx gain is dynamically adapted such that the Rx signal power remains within a desired range.
 
 As key learnings, we will cover
 * GNURadio's built-in tools for remote control (xmlrpc) and access (ZMQ),
@@ -30,26 +30,52 @@ As key learnings, we will cover
 * QT GUI Number Sink Block
 
 # Remote Parameter Control via XMLRPC
-The **XMLRPC Server block** in GNU Radio allows external applications to communicate with and control a running GNU Radio flowgraph over the network using xmlrpc requests.
+The **XMLRPC Server** block in GNU Radio allows external applications to communicate with and control a running GNU Radio flowgraph over the network using xmlrpc requests.
 
-Some key functions of the XMLRPC Server block:
-* Exposes methods that can be called remotely to get/set flowgraph parameters, variables, and block values.
+Some key functions of the XMLRPC Server block include:
+* Exposes variables in a GNURadio flowgraph to allow for remote access to get/set values.
 * Enables building custom controllers and dashboards to control GNU Radio remotely.
-* Allows parameter tweaking, flowgraph control without directly modifying the code.
-* Provides information like performance metrics to remote clients.
+* Allows parameter tweaking, flowgraph control without directly modifying the flowgraph code.
 * Handles concurrent xmlrpc requests from multiple clients.
-* Useful for connecting GNU Radio to higher level applications and controlling it programmatically.
+* Useful for connecting GNU Radio to higher level applications and automating dynamic configurations.
 
 In summary, it enables remote procedure call-based integration of GNU Radio with external programs and systems over a network.
-
-## Scripted Sequences
-_Describe XMLScipt01 and cycling through parameter configurations_
 
 xmlrpc is a standard python module that is also utilize within GNURadio. In a simple way xmlrpc basically exposes the Flowgraph Variables by once you put the block inside the flowgraph. You can specify the ip address along with the port number. This is how you communicate with the variables. The key two things that you can do with xmlrpc is to update the parameters in a GNURadio flowgraph and in addition you can utilize it to get the current value in a GNURadio variable. This ability become very powerfull once you utilize the variables in the GNURadio flowgraph blocks. For example lets say you have a flowgraph running and we have a variable amplitude in our signal generation block. With xmlrpc we can push a new value update to the amplitude during flowgraph operation, once the variable parameters updates the value used in the signal generation also updates. This allows us to controll and paramets we want for any GNURadio block. Its very simple how it all works, we predefine the function name syntax corrent with the variable in the flowgraph, and pass the command the the XMLRPC Server block ip and port number. The flowgraph will recieve the command and update the parameter respecfully.  In addition another benefit of xmlrpc is that its batch scriptable. For example if you have a setting of different parameter configuration's you wanted to test in your flowgraph you would utilize  batch scripting to send updated parameters to the flowgraph in bulk. This is particularly usefull for data collection purposes. For example testing different parameters for your antenea connected to your usrp, or even optical systems. 
 
 
+## Scripted Sequences
+
+_Describe the flowgraph below_
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01a.png)
+
+_Describe XMLScipt01 and cycling through parameter configurations_
+
+![XMLRPC Script](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_01.png)
+
+_Describe automated configuration script results in figure below_
+
+![XMLRPC Results](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_02.png)
+
+_After introducing sim setup, highlight that it can be run on the same USRP configuration from CH3 using the same scripts_
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01b.png)
+_Describe adjustment above to use hardware, mention cmd line call to configure USRP addresses as in CH3._
+
+
 ## User Controlled Configurations
+
 _Describe XMLScipt02 and getopt library_
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_03.png)
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_04.png)
+
+_Describe use controlled input script results in figure below_
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_05.png)
+
 
 
 # Remote Access via ZeroMQ (ZMQ)
@@ -66,10 +92,16 @@ Some key functions:
 
 In summary, it allows other programs to subscribe to real-time data streams from a GNU Radio flowgraph over efficient ZeroMQ connections and enables interfacing with external data processing systems.
 
+ZMQ is part of the standard python libary. Our usable will only involve the ZMQ PUB Sink however there are more features and its flexible in its usage in a GNURadio flowgraph. For more information contact th GNURadio Wiki, for further explaination. 
+
+
 ## Reading Flowgraph Measurements Externally
+_Describe the flowgraph below_
+
+![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_02.png)
+
 _Describe ZMQScript01 and reading measurements_
 
-ZMQ is part of the standard python libary. Our usable will only involve the ZMQ PUB Sink however there are more features and its flexible in its usage in a GNURadio flowgraph. For more information contact th GNURadio Wiki, for further explaination. 
 
 ## Automated Measurement for a Set of Configurations
 _Describe ZMQScript01 and reading measurements_
@@ -82,14 +114,14 @@ For the networking setup both xmlrpc and ZMQ utilize server for the communicatio
 After this a good thing to do is to perform a ping test to see if you can communicate with the other ip addresses for the respective flowgraph. 
 
 
-## Combined Example - AGC FlowGraph & Code
+## Example: Centralized Automatic Gain Control
 In this example we will be utilizing both xmlrpc and ZMQ in order to build an automatic gain controller in GNURadio. xmlrpc will be responsible for dispatching command to the respective server while ZMQ will be responsible for retriving the relevant information that would tie into the decision making for the amplitude controll.
 In terms of the flowgraph setup we will be utilizing 2x USRP B200 mini for this example. In our flowgrpah we start of with a signal source and a constant source both which flow into a FLoat to Complex block. From here we connect the output from this block into our USRP Sink block. This block should have the serial address of the connected USRP for this to work, as we learned from the previous tutorial. Next we add our USRP Source block again with its own respective serial address. We can then add the QT GUI sink for visualization.
 
 Next in order to set up to measure the RX power, we add in a RMS block with alpha 100u, we connect this to a decimating Fir filter with deicmation at 1k and Taps: 1. We then hook it up to our QT Time sink for visualization, as in the flowgraph we would want to visualize this. Next we will add the command and control aspect to this flowgraph. We will add the ZMQ Pub Sink connected to the FIR Filter. We can then initialize the address to a local tcp address, since we are working on the same computer environment as the flowgraph, for the code we will utilize for command and control. Another key step is to add the XMLRPC Server block with the address initilized to localhost. Another key aspect is to a variable called amplitude with your chosen defualt value, here we use 250m, and place the variable name inside the lot in the singal source where it says amplitude. Afer this flowgraph aspect is done. 
 
-## Code For flowgrpah Explanation.
 How doest the code to connect everything work?
+
 Setting Up Connections: It connects to multiple servers via xmlrpc and a ZMQ Subscriber socket. The xmlrpc servers are used to retrieve and set the 'amplitude' value, while the ZMQ connection is used to receive data, presumably from some type of data producer or sensor.
 
 Setting Up Function to Adjust Amplitude: A function (set_amplitude) is defined to set the amplitude on the xmlrpc server, which is used later in the control loop.
@@ -110,9 +142,10 @@ With this the feedback system with our python code together with the flowgraph, 
 
 
 
-## References
+# References
+_Coming Soon_
 
-## Tutorial Chapters
+# Tutorial Chapters
 
 * **Next Chapter:** [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md) 
 * **Previous Chapter:** [SDR Hardware](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/SDR_Hardware.md)
