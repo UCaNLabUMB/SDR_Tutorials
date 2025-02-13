@@ -233,7 +233,7 @@ Another observation to make with the single BPSK signal is the impact of the sig
 * **NOTE:** Observing the time domain characteristics of the transmitted signal in the lower left figure within the image obove, you see the baseband time domain signal for the BPSK signal with 4MHz symbol rate. 
   * The FDM signals have been deselected in the legend to look strictly at the BPSK signal.
   * The signal's Real component is set as either $\pm 0.25$ as expected, and the Imaginary component is always 0.
-  * By center-clicking on the figure in your running flowgraph, you can bring up a display menu. Selecting "stem plot" from this menu will change the view to allow you to look at individual samples For any signal frequency (i.e., symbol rate) setting, the minimum number of samples between points where the value changes should be equal to the corresponding number of repetitions (i.e., interpolation). In other words, the samples per symbol value calculated in the equation above.
+  * By center-clicking on the figure in your running flowgraph, you can bring up a display menu. Selecting "stem plot" from this menu will change the view to allow you to look at individual samples. For any signal frequency (i.e., symbol rate) setting, the minimum number of samples between points where the value changes should be equal to the corresponding number of repetitions (i.e., interpolation). In other words, the samples per symbol value calculated in the equation above.
 
 The final observation for our basic BPSK signal will be made using the constellation display in the Tx and Rx QT GUI Sinks. A screenshot of this output is shown below. At the Tx side, we see an idealized BPSK constellation as expected. In other words, the symbol values always show up on the real axis at either $0.25$ or $-0.25$. However, the Rx view shows a much more complicated picture that includes the channel impairments like attenuation, phase shift, frequency misalignment, and synchronization. Since we haven't accounted for any of these impairments, it is not feasible to decode this signal and get back our transmitted bits! We will discuss these impairments more in a future chapter when implementing a full system with modulation and demodulation.
 
@@ -251,7 +251,7 @@ Functionally, the FDM implementation in the flowgraph multiplies each baseband B
 
 Mathematically, these concepts are highlighted below. For simplicity, we introduce the concepts within a continuous time framework; but the outcome is comparable with our digital (i.e., discrete time) implementation.
 
-$$ y\left( t \right) = x\left( t \right) e^{j \omega_{IF} t} \Rightarrow Y\left( f \right) = \frac{1}{2\pi} X\left( \omega \right) * \mathcal{F} \left( e^{j \omega_{IF} t} \right) $$
+$$ y\left( t \right) = x\left( t \right) e^{j \omega_{IF} t} \Rightarrow Y\left( \omega \right) = \frac{1}{2\pi} X\left( \omega \right) * \mathcal{F} \left( e^{j \omega_{IF} t} \right) $$
 
 $$ \mathcal{F} \left( e^{j \omega_{IF} t} \right) = 2\pi \delta \left( \omega - \omega_{IF} \right) $$
 
