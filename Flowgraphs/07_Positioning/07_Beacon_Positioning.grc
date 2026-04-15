@@ -1,0 +1,483 @@
+options:
+  parameters:
+    author: ''
+    catch_exceptions: 'True'
+    category: '[GRC Hier Blocks]'
+    cmake_opt: ''
+    comment: ''
+    copyright: ''
+    description: ''
+    gen_cmake: 'On'
+    gen_linking: dynamic
+    generate_options: qt_gui
+    hier_block_src_path: '.:'
+    id: Beacon_Positioning
+    max_nouts: '0'
+    output_language: python
+    placement: (0,0)
+    qt_qss_theme: ''
+    realtime_scheduling: ''
+    run: 'True'
+    run_command: '{python} -u {filename}'
+    run_options: prompt
+    sizing_mode: fixed
+    thread_safe_setters: ''
+    title: 'Beacon Based Position Model '
+    window_size: (1000,1000)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [8, 12.0]
+    rotation: 0
+    state: enabled
+
+blocks:
+- name: F_select
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: (0,0,1,1)
+    label: Fingerprint Select
+    label0: ''
+    label1: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[''F0'', ''F1'', ''F2'', ''F3'', ''F4'', ''F5'']'
+    num_opts: '0'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2, 3, 4, 5]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [408, 48.0]
+    rotation: 0
+    state: enabled
+- name: P0
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Power 0
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.05'
+    stop: '10'
+    value: '1'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [352, 776.0]
+    rotation: 0
+    state: disabled
+- name: P1
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Power 1
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.05'
+    stop: '10'
+    value: '2'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [496, 776.0]
+    rotation: 0
+    state: disabled
+- name: P2
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: ''
+    label: Power 2
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: '0'
+    step: '0.05'
+    stop: '10'
+    value: '3'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [640, 776.0]
+    rotation: 0
+    state: disabled
+- name: f1_vals
+  id: variable
+  parameters:
+    comment: ''
+    value: '[0,1,2,3,4,5]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 48.0]
+    rotation: 0
+    state: enabled
+- name: f2_vals
+  id: variable
+  parameters:
+    comment: ''
+    value: '[5,4,3,2,1,0]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [664, 136.0]
+    rotation: 0
+    state: enabled
+- name: f3_vals
+  id: variable
+  parameters:
+    comment: ''
+    value: '[3,2,4,1,5,0]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [832, 48.0]
+    rotation: 0
+    state: enabled
+- name: samp_rate
+  id: variable
+  parameters:
+    comment: ''
+    value: '32000'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [232, 16.0]
+    rotation: 0
+    state: enabled
+- name: analog_const_source_x_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: f1_vals[F_select]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 292.0]
+    rotation: 0
+    state: enabled
+- name: analog_const_source_x_0_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: f3_vals[F_select]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 468.0]
+    rotation: 0
+    state: enabled
+- name: analog_const_source_x_0_0_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: P2
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 804.0]
+    rotation: 0
+    state: disabled
+- name: analog_const_source_x_0_1
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: f2_vals[F_select]
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 380.0]
+    rotation: 0
+    state: enabled
+- name: analog_const_source_x_0_1_0
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: P1
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 724.0]
+    rotation: 0
+    state: disabled
+- name: analog_const_source_x_0_2
+  id: analog_const_source_x
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    const: P0
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    type: float
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [96, 628.0]
+    rotation: 0
+    state: disabled
+- name: blocks_throttle2_0
+  id: blocks_throttle2
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samples_per_second: samp_rate
+    type: float
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [720, 312.0]
+    rotation: 0
+    state: enabled
+- name: epy_block_0
+  id: epy_block
+  parameters:
+    _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
+      \ GRC will instantiate the first class it finds\nto get ports and parameters\
+      \ of your block. The arguments to __init__  will\nbe the parameters. All of\
+      \ them are required to have default values!\n\"\"\"\n\nimport numpy as np\n\
+      from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
+      \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
+      \ - max power beacon\"\"\"\n\n    def __init__(self): #, example_param=1.0):\
+      \  # only default arguments here\n        \"\"\"arguments to this function show\
+      \ up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n         \
+      \   self,\n            name='Beacon-Based Prediction',   # will show up in GRC\n\
+      \            in_sig=[np.float32,np.float32,np.float32],\n            out_sig=[np.float32]\n\
+      \        )\n        # if an attribute with the same name as a parameter is found,\n\
+      \        # a callback is registered (properties work, too).\n        #self.example_param\
+      \ = example_param\n\n    def work(self, input_items, output_items):\n      \
+      \  \"\"\"example: multiply with constant\"\"\"\n        in0 = input_items[0]\n\
+      \        in1 = input_items[1]\n        in2 = input_items[2]\n\n        n = min(len(in0),\
+      \ len(in1), len(in2), len(output_items[0]))\n\n        for i in range(n):\n\
+      \            values = [in0[i], in1[i], in2[i]]        # values at this index\n\
+      \            output_items[0][i] = np.argmax(values)   # write directly to output\n\
+      \n        return n"
+    affinity: ''
+    alias: ''
+    comment: ''
+    maxoutbuf: '0'
+    minoutbuf: '0'
+  states:
+    _io_cache: ('Beacon-Based Prediction', 'blk', [], [('0', 'float', 1), ('1', 'float',
+      1), ('2', 'float', 1)], [('0', 'float', 1)], 'Embedded Python Block - max power
+      beacon', [])
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [408, 308.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_number_sink_0
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'False'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_HORIZ
+    gui_hint: 1,1,3,2
+    label1: Value 2
+    label10: ''
+    label2: Value 1
+    label3: Value 0
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '6'
+    min: '-1'
+    name: '"Input Values"'
+    nconnections: '3'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [464, 492.0]
+    rotation: 0
+    state: enabled
+- name: qtgui_number_sink_1
+  id: qtgui_number_sink
+  parameters:
+    affinity: ''
+    alias: ''
+    autoscale: 'False'
+    avg: '0'
+    color1: ("black", "black")
+    color10: ("black", "black")
+    color2: ("black", "black")
+    color3: ("black", "black")
+    color4: ("black", "black")
+    color5: ("black", "black")
+    color6: ("black", "black")
+    color7: ("black", "black")
+    color8: ("black", "black")
+    color9: ("black", "black")
+    comment: ''
+    factor1: '1'
+    factor10: '1'
+    factor2: '1'
+    factor3: '1'
+    factor4: '1'
+    factor5: '1'
+    factor6: '1'
+    factor7: '1'
+    factor8: '1'
+    factor9: '1'
+    graph_type: qtgui.NUM_GRAPH_VERT
+    gui_hint: (1,0,3,1)
+    label1: ''
+    label10: ''
+    label2: ''
+    label3: ''
+    label4: ''
+    label5: ''
+    label6: ''
+    label7: ''
+    label8: ''
+    label9: ''
+    max: '2.5'
+    min: '-0.5'
+    name: '"ID Selected"'
+    nconnections: '1'
+    type: float
+    unit1: ''
+    unit10: ''
+    unit2: ''
+    unit3: ''
+    unit4: ''
+    unit5: ''
+    unit6: ''
+    unit7: ''
+    unit8: ''
+    unit9: ''
+    update_time: '0.10'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [952, 276.0]
+    rotation: 0
+    state: enabled
+
+connections:
+- [analog_const_source_x_0, '0', epy_block_0, '0']
+- [analog_const_source_x_0, '0', qtgui_number_sink_0, '2']
+- [analog_const_source_x_0_0, '0', epy_block_0, '2']
+- [analog_const_source_x_0_0, '0', qtgui_number_sink_0, '0']
+- [analog_const_source_x_0_0_0, '0', epy_block_0, '2']
+- [analog_const_source_x_0_0_0, '0', qtgui_number_sink_0, '0']
+- [analog_const_source_x_0_1, '0', epy_block_0, '1']
+- [analog_const_source_x_0_1, '0', qtgui_number_sink_0, '1']
+- [analog_const_source_x_0_1_0, '0', epy_block_0, '1']
+- [analog_const_source_x_0_1_0, '0', qtgui_number_sink_0, '1']
+- [analog_const_source_x_0_2, '0', epy_block_0, '0']
+- [analog_const_source_x_0_2, '0', qtgui_number_sink_0, '2']
+- [blocks_throttle2_0, '0', qtgui_number_sink_1, '0']
+- [epy_block_0, '0', blocks_throttle2_0, '0']
+
+metadata:
+  file_format: 1
+  grc_version: 3.10.12.0
