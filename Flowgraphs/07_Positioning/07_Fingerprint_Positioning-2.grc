@@ -75,6 +75,18 @@ blocks:
     coordinate: [1424, 112.0]
     rotation: 0
     state: enabled
+- name: F_train_indices
+  id: variable
+  parameters:
+    comment: ''
+    value: '[1,2,3,4,5,6]'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1424, 208.0]
+    rotation: 0
+    state: enabled
 - name: c0_vals
   id: variable
   parameters:
@@ -719,6 +731,7 @@ blocks:
   id: epy_block
   parameters:
     F_Train: F_train
+    F_ind: F_train_indices
     _source_code: "\"\"\"\nEmbedded Python Blocks:\n\nEach time this file is saved,\
       \ GRC will instantiate the first class it finds\nto get ports and parameters\
       \ of your block. The arguments to __init__  will\nbe the parameters. All of\
@@ -726,14 +739,15 @@ blocks:
       from gnuradio import gr\n\n\nclass blk(gr.sync_block):  # other base classes\
       \ are basic_block, decim_block, interp_block\n    \"\"\"Embedded Python Block\
       \ - min distance fingerprinting\"\"\"\n\n    def __init__(self, F_Train=([[1,\
-      \ 2, 3],[3, 5, 6]])):  # default args\n        \"\"\"arguments to this function\
-      \ show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n    \
-      \        self,\n            name='Map-Based Prediction',   # will show up in\
-      \ GRC\n            in_sig=[np.float32,np.float32,np.float32],\n            out_sig=[np.float32]\n\
-      \        )\n        # if an attribute with the same name as a parameter is found,\n\
-      \        # Store the matrix as a NumPy array for convenience\n        self.F_Train\
-      \ = np.array(F_Train)\n\n        # Optional: validate it's actually 2D\n   \
-      \     if self.F_Train.ndim != 2:\n            raise ValueError(\"Input parameter\
+      \ 2, 3],[3, 5, 6]]), F_ind=([1,2])):  # default args\n        \"\"\"arguments\
+      \ to this function show up as parameters in GRC\"\"\"\n        gr.sync_block.__init__(\n\
+      \            self,\n            name='Map-Based Prediction',   # will show up\
+      \ in GRC\n            in_sig=[np.float32,np.float32,np.float32],\n         \
+      \   out_sig=[np.float32]\n        )\n        # if an attribute with the same\
+      \ name as a parameter is found,\n        # Store the matrix as a NumPy array\
+      \ for convenience\n        self.F_Train = np.array(F_Train)\n        self.F_ind\
+      \ = np.array(F_ind)\n\n        # Optional: validate it's actually 2D\n     \
+      \   if self.F_Train.ndim != 2:\n            raise ValueError(\"Input parameter\
       \ must be a 2D matrix\")\n\n        # Store shape info (often useful later)\n\
       \        self.num_rows, self.num_cols = self.F_Train.shape\n\n\n\n    def work(self,\
       \ input_items, output_items):\n        \"\"\"Fingerprint: compare with F_Train\
@@ -747,17 +761,18 @@ blocks:
       \n                # Euclidean distance \n                # (ignoring the sqrt\
       \ since it's irrelevant for dmin calc)\n                d_vals[j] = ((f0-m0)**2\
       \ + (f1 - m1)**2 + (f2 - m2)**2) #** 0.5\n\n            # Output the index of\
-      \ the closest row\n            output_items[0][i] = np.argmin(d_vals)\n\n  \
-      \      return n_items"
+      \ the closest row\n            output_items[0][i] = self.F_ind[np.argmin(d_vals)]\n\
+      \n        return n_items"
     affinity: ''
     alias: ''
     comment: ''
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
-    _io_cache: ('Map-Based Prediction', 'blk', [('F_Train', '[[1, 2, 3], [3, 5, 6]]')],
-      [('0', 'float', 1), ('1', 'float', 1), ('2', 'float', 1)], [('0', 'float', 1)],
-      'Embedded Python Block - min distance fingerprinting', ['F_Train'])
+    _io_cache: ('Map-Based Prediction', 'blk', [('F_Train', '[[1, 2, 3], [3, 5, 6]]'),
+      ('F_ind', '[1, 2]')], [('0', 'float', 1), ('1', 'float', 1), ('2', 'float',
+      1)], [('0', 'float', 1)], 'Embedded Python Block - min distance fingerprinting',
+      ['F_Train', 'F_ind'])
     bus_sink: false
     bus_source: false
     bus_structure: null
