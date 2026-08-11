@@ -139,5 +139,6 @@ where $cos(wt)$ and $cos(wt) + j0$ can be thought of as our two different repres
 |  4  | [GNURadio Remote Command and Control](GNURadio_CaC.md)  | Introduce multi-node systems with XMLRPC and ZMQ
 |  5  | [Basic Communicatons](GNURadio_Comms.md)                | Introduce simulation and over-the-air data transmission
 |  6  | [Automated Data Collection](GNURadio_Automation.md)     | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  7  | [Multi-Node Data Collection](GNURadio_Multi_Node.md)    | Utilize UCaN Lab's multi-node test architecture to distribute/deploy remote FGs
 
 

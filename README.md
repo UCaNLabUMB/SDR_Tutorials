@@ -9,10 +9,11 @@ Within the set tutorials, we will introduce:
 * The GNURadio Companion (**GRC**) tool,
 * The **QT GUI** library for creation of a graphical user interface and manual configuration of flowgraph parameters,
 * GNURadio tools for interacting with universal software radio peripheral (**USRP**) SDR hardware,
-* Basic communication tools for over-the-air (**OTA**) data transmission, and 
-* GNURadio tools that allow flowgraphs to be read from and controlled remotely (i.e., **XMLRPC** and **ZMQ**)
+* Basic communication tools for over-the-air (**OTA**) data transmission,
+* GNURadio tools that allow flowgraphs to be read from and controlled remotely (i.e., **XMLRPC** and **ZMQ**), and
+* A **multi-node testbed** architecture for running distributed SDR tests from a single central controller.
 
-Ultimately, the tutorial will work towards the creation of an automated data collection system for evaluation of a point-to-point wireless communication link based on orthogonal frequency division multiplexing (**OFDM**).
+The tutorial will first work towards the creation of an automated data collection system for evaluation of a point-to-point wireless communication link based on orthogonal frequency division multiplexing (**OFDM**). Beyond the point-to-point configuration, the tutorial will ultimately demonstrate test capabilities in controlled multi-node environments.
 
 
 ## Directory Structure
@@ -29,3 +30,4 @@ This repository is structured as follows:
 |  4  | [GNURadio Remote Command and Control](Documentation/GNURadio_CaC.md)  | (_Add Image_) | Introduce multi-node systems with XMLRPC and ZMQ
 |  5  | [Basic Communicatons](Documentation/GNURadio_Comms.md)                | (_Add Image_) | Introduce simulation and over-the-air data transmission
 |  6  | [Automated Data Collection](Documentation/GNURadio_Automation.md)     | (_Add Image_) | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  7  | [Multi-Node Data Collection](Documentation/GNURadio_Multi_Node.md)    | (_Add Image_) | Utilize UCaN Lab's multi-node test architecture to distribute/deploy remote FGs

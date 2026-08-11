@@ -83,4 +83,5 @@ QT GUI Sink: Finally, connect the output from the Cyclic Prefixer to the QT GUI 
 |  4  | [GNURadio Remote Command and Control](GNURadio_CaC.md)      | Introduce multi-node systems with XMLRPC and ZMQ
 |  5  | Basic Communicatons                                         | Introduce simulation and over-the-air data transmission
 |  6  | [Automated Data Collection](GNURadio_Automation.md)         | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  7  | [Multi-Node Data Collection](GNURadio_Multi_Node.md)        | Utilize UCaN Lab's multi-node test architecture to distribute/deploy remote FGs
 
