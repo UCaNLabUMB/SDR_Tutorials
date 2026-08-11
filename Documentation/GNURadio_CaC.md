@@ -7,7 +7,7 @@ In this section, we will discuss how we can interact with GNURadio flowgraphs fr
 
 ### Objective
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_03.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_03.png)
 
 In this tutorial, we will work with GNURadio's xmlrpc and ZMQ tools to build the flowgraphs shown above, along with the corresponding control script that implements a centrally controlled automatic gain controller where Tx gain is dynamically adapted such that the Rx signal power remains within a desired range.
 
@@ -48,19 +48,19 @@ xmlrpc is a standard python module that is also utilize within GNURadio. In a si
 
 _Describe the flowgraph below_
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01a.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_01a.png)
 
 _Describe XMLScipt01 and cycling through parameter configurations_
 
-![XMLRPC Script](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_01.png)
+![XMLRPC Script](Images/04_CaC/GR_CaC_01_01.png)
 
 _Describe automated configuration script results in figure below_
 
-![XMLRPC Results](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_02.png)
+![XMLRPC Results](Images/04_CaC/GR_CaC_01_02.png)
 
 _After introducing sim setup, highlight that it can be run on the same USRP configuration from CH3 using the same scripts_
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01b.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_01b.png)
 _Describe adjustment above to use hardware, mention cmd line call to configure USRP addresses as in CH3._
 
 
@@ -68,13 +68,13 @@ _Describe adjustment above to use hardware, mention cmd line call to configure U
 
 _Describe XMLScipt02 and getopt library_
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_03.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_01_03.png)
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_04.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_01_04.png)
 
 _Describe use controlled input script results in figure below_
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_01_05.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_01_05.png)
 
 
 
@@ -98,7 +98,7 @@ ZMQ is part of the standard python libary. Our usable will only involve the ZMQ 
 ## Reading Flowgraph Measurements Externally
 _Describe the flowgraph below_
 
-![Flowgraph Image](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/Images/04_CaC/GR_CaC_02.png)
+![Flowgraph Image](Images/04_CaC/GR_CaC_02.png)
 
 _Describe ZMQScript01 and reading measurements_
 
@@ -147,15 +147,15 @@ _Coming Soon_
 
 # Tutorial Chapters
 
-* **Next Chapter:** [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md) 
-* **Previous Chapter:** [SDR Hardware](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/SDR_Hardware.md)
+* **Next Chapter:** [Basic Communicatons](GNURadio_Comms.md)
+* **Previous Chapter:** [SDR Hardware](SDR_Hardware.md)
 
 | Chapter | Topic | Summary 
 | --- | --- | --- |
-|  1  | [GNURadio Overview](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Overview.md)                   | Introduction to Flowgraphs, source/sink blocks, and data types
-|  2  | [GNURadio Basics](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Basics.md)                       | Introduce flowgraph best practices, variables, and dynamic control
-|  3  | [SDR Hardware](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/SDR_Hardware.md)                             | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
-|  4  | GNURadio Remote Command and Control                                                                                             | Introduce multi-node systems with XMLRPC and ZMQ
-|  5  | [Basic Communicatons](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Comms.md)                    | Introduce simulation and over-the-air data transmission
-|  6  | [Automated Data Collection](https://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Documentation/GNURadio_Automation.md)         | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+|  1  | [GNURadio Overview](GNURadio_Overview.md)                   | Introduction to Flowgraphs, source/sink blocks, and data types
+|  2  | [GNURadio Basics](GNURadio_Basics.md)                       | Introduce flowgraph best practices, variables, and dynamic control
+|  3  | [SDR Hardware](SDR_Hardware.md)                             | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
+|  4  | GNURadio Remote Command and Control                         | Introduce multi-node systems with XMLRPC and ZMQ
+|  5  | [Basic Communicatons](GNURadio_Comms.md)                    | Introduce simulation and over-the-air data transmission
+|  6  | [Automated Data Collection](GNURadio_Automation.md)         | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
 

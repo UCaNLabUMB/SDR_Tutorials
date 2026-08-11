@@ -131,13 +131,13 @@ where $cos(wt)$ and $cos(wt) + j0$ can be thought of as our two different repres
 
 * **Next Chapter:** [GNURadio Basics](GNURadio_Basics.md)
 
-| Chapter | Topic | Image | Summary 
-| --- | --- | --- | --- |
-|  1  | GNURadio Overview                                       | (_Add Image_) | Introduction to Flowgraphs, source/sink blocks, and data types
-|  2  | [GNURadio Basics](GNURadio_Basics.md)                   | (_Add Image_) | Introduce flowgraph best practices, variables, and dynamic control
-|  3  | [SDR Hardware](SDR_Hardware.md)                         | (_Add Image_) | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
-|  4  | [GNURadio Remote Command and Control](GNURadio_CaC.md)  | (_Add Image_) | Introduce multi-node systems with XMLRPC and ZMQ
-|  5  | [Basic Communicatons](GNURadio_Comms.md)                | (_Add Image_) | Introduce simulation and over-the-air data transmission
-|  6  | [Automated Data Collection](GNURadio_Automation.md)     | (_Add Image_) | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
+| Chapter | Topic  | Summary 
+| --- | --- | --- |
+|  1  | GNURadio Overview                                       | Introduction to Flowgraphs, source/sink blocks, and data types
+|  2  | [GNURadio Basics](GNURadio_Basics.md)                   | Introduce flowgraph best practices, variables, and dynamic control
+|  3  | [SDR Hardware](SDR_Hardware.md)                         | Introduce USRPs, hardware addressing, and over-the-air waveform transmission
+|  4  | [GNURadio Remote Command and Control](GNURadio_CaC.md)  | Introduce multi-node systems with XMLRPC and ZMQ
+|  5  | [Basic Communicatons](GNURadio_Comms.md)                | Introduce simulation and over-the-air data transmission
+|  6  | [Automated Data Collection](GNURadio_Automation.md)     | Combine XMLRPC, ZMQ, and OFDM to automate Packet Error Rate Testing
 
 
