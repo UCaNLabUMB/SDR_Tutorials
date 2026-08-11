@@ -42,6 +42,7 @@ Handles buffering samples and threading for optimized high-speed file writing.
 
 ## Tutorial Chapters
 
+* **Next Chapter:** [Multi-Node Data Collection](GNURadio_Multi_Node.md)
 * **Previous Chapter:** [Basic Communicatons](GNURadio_Comms.md)
 
 | Chapter | Topic | Summary 

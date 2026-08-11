@@ -19,7 +19,7 @@ _Coming Soon_
 
 ## Tutorial Chapters
 
-* **Previous Chapter:** [Basic Communicatons](GNURadio_Comms.md)
+* **Previous Chapter:** [Automated Data Collection](GNURadio_Automation.md)
 
 | Chapter | Topic | Summary 
 | --- | --- | --- |
