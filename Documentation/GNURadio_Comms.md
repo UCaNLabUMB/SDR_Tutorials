@@ -46,7 +46,7 @@ Adds a cyclic prefix to OFDM symbols to mitigate inter-symbol interference.
 * Selector Block
 Dynamically routes input streams to one of several outputs based on a control signal. Acts like a switch.
 ### FLowgraph Image
-![Flowgraph Image](hhttps://github.com/UCaNLabUMB/SDR_Tutorials/blob/main/Images/GNUComms.png)
+![Flowgraph Image](Images/05_Communications/GR_Comms.png)
 
 ## OFDM Loopback Carrier Allocation 
 Random Source Block: Start by placing this block in your flowgraph. It's responsible for creating the random data samples that will act as the input source for the rest of the process.
