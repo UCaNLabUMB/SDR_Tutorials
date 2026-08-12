@@ -1,7 +1,11 @@
 # GNURadio Basics
 
 ## Overview
-In this tutorial, we will extend our knowledge of GNURadio and consider some best practices for working with modifiable flowgraphs. This includes an extended discussion about the value and usage of GNURadio variables, and an introduction to how we can enable, disable, and bypass blocks prior to execution of a flowgraph. Furthermore, we will introduce additional QT GUI blocks that allow for modification of a flowgraph's variables and signal paths while a flowgraph is running.
+In this Section, we will extend our knowledge of GNURadio and consider some best practices for working with modifiable flowgraphs. Specifically, we will:
+* Extend our discussion about the value and usage of GNURadio variables, 
+* Introduce how we can enable, disable, and bypass blocks prior to execution of a flowgraph,
+* Discuss QT GUI blocks that allow for modification of a flowgraph's variables and signal paths while a flowgraph is running, and
+* Establish the distinction between the *signal plane* and *control plane* in signal processing systems. 
 
 
 **Tutorial Video:** _Coming Soon_
@@ -113,7 +117,9 @@ The final additions for this section, in [GNURadio_Basics_03.grc](https://github
 
 ![Flowgraph Image](Images/02_Basics/GRBasics_03.png)
 
-The first thing to notice in the flowgraph above is that we have re-introduced the virtual sink/source blocks to make the signal paths more clear. In the lower portion of the signal chain, we also see that we've introduced two **Selector** blocks. These blocks simply take a set of inputs and define which input is assigned to the output (or, optionally, which inputs are assigned to which outputs). The first **Selector** block takes in both of our generated signals (i.e., the real- and complex- valued sinusoids) and passes one of the signals to the output port. Opening this block should bring up the properties below.
+The first thing to notice in the flowgraph above is that we have introduced the **Virtual Sink/Source** blocks to make the signal paths more clear. These blocks do not impact the signal, but they help to keep the flowgraph easier to read. Functionally, they they operate as if the block directly before the sink was directly connect to the block(s) after the source with the same Stream ID parameter.
+
+In the lower portion of the signal chain, we also see that we've introduced two **Selector** blocks. These blocks simply take a set of inputs and define which input is assigned to the output (or, optionally, which inputs are assigned to which outputs). The first **Selector** block takes in both of our generated signals (i.e., the real- and complex- valued sinusoids) and passes one of the signals to the output port. Opening this block should bring up the properties below.
 
 ![Selector Properties](Images/02_Basics/GRBasics_03_01.png)
 
@@ -123,7 +129,7 @@ This is where the **QT GUI Chooser** block comes in. When opening the QT GUI Cho
 
 ![QT GUI Chooser Properties](Images/02_Basics/GRBasics_03_02.png)
 
-Similar to the **QT Range** block, the **QT GUI Chooser** block creates a variable that can manually changed while the flowgraph is running. However, in this case we have a more specific set of values that can be selected (rather than simply specifying a range of values). We have defined 2 options where Option 0 is the integer value 0 and Option 1 is the integer value 1. These are the values that are assigned to the _path\_select_ variable and, accordingly, the values that get set as the input index for the selector block. For readability, we use the labels to show "Real Sine" and "Complex Sine" in the GUI as the options that the user can select from.
+Similar to the **QT Range** block, the **QT GUI Chooser** block creates a variable that can be manually changed while the flowgraph is running. However, in this case we have a more specific set of values that can be selected (rather than simply specifying a range of values). We have defined 2 options where Option 0 is the integer value 0 and Option 1 is the integer value 1. These are the values that are assigned to the _path\_select_ variable and, accordingly, the values that get set as the input index for the selector block. For readability, we use the labels to show "Real Sine" and "Complex Sine" in the GUI as the options that the user can select from.
 
 Following a similar process, we have included a **Selector** block to optionally select between the output of the **Bandpass Filter** block or the output of the **Add** block. The input index property in this block is set to _filter\_select_ and we have created another **QT GUI Chooser** block that allows the user to choose between "Enable" or "Bypass" for the Filter Selection. This ultimatley allows the user to bypass the filter while the flowgraph is running. The image below shows the GUI that is created when this flowgraph is run. 
 
@@ -135,11 +141,13 @@ The final flowgraph in this section, [GNURadio_Basics_04.grc](https://github.com
 
 ![Flowgraph Image](Images/02_Basics/GRBasics_04.png)
 
-The property settings for this **QT GUI Chooser** block, shown below, are similar to what we saw earlier; except we are calling values from the GNURadio analog library. Ultimately, this leads to integer values; however, this ensures that the values are understood correctly by the **Signal Source** blocks. 
+The property settings for this **QT GUI Chooser** block, shown below, are similar to what we saw earlier; except we are calling values from the GNURadio analog library. Ultimately, `analog.GR_COS_WAVE` and `analog.GR_SQR_WAVE` return the values 102 and 103, respectively; so, you could alternatively just type the numbers 102 and 103 directly in as the *Option* values for the **QT GUI Chooser** block. However, calling from the analog library ensures that the values are understood correctly by the **Signal Source** blocks. 
 
 ![QT GUI Chooser Propreties](Images/02_Basics/GRBasics_04_01.png)
 
-When opening the **Signal Source** blocks, we see that the variable name _Sig\_Type_ has been entered in the Waveform drop down menu. This can be somewhat confusing because you need to select whatever is initially in the drop down menu and type in the name of your variable.
+* **NOTE:** In newer versions of GNURadio, the return type of the values from the analog library are actually different. In this case, type casting is actually important in order to avoid errors. If you enter the *Option* settings as shown above and the block gives an error stating that ''Expression ... is invalid for type int'' then you can replace the block parameters with `int(analog.GR_COS_WAVE)` to align the returned value with the integer data type that the block expects.
+
+When opening the **Signal Source** blocks, we see that the variable name _Sig\_Type_ has been entered in the Waveform drop down menu. This can be somewhat confusing because you need to click on whatever is initially in the drop down menu and type in the name of your variable rather than selecting from the drop down menu.
 
 ![Signal Source Propreties](Images/02_Basics/GRBasics_04_02.png)
 
@@ -149,11 +157,11 @@ Running this flowgraph produces the results below. We now see an additional sele
 
 * **NOTE:** In the waterfall plot above, we see that we initially started with a real valued sinusoid at 100KHz. The filter was then bypassed, and the waveform was changed to a square wave (leading to the higher frequncy components at multiples of the fundamental frequency). As the frequency of the square wave is increased to 150KHz and then 200KHz, the higher frequency components are also adjusted to multiples of the fundamental frequency. When the filter is then enabled, we can still see the higher frequency components from the initial square wave; but they are significantly reduced while the fundamental frequency remains consistent.
 
-The series of snap shots below demonstrates some of this implications in the time domain. First, we see a 50KHz real-valued sinusoid with the additive noise filtered out. Comparing with the second image where the filter is bypassed, we can clearly see the noise filtering benefits of our **Band Pass Filter** block!
-
-![Time Doman Cos Filter](Images/02_Basics/GRBasics_04_04.png)
+The series of snap shots below demonstrates some of this implications in the time domain. First, we see a 50KHz real-valued sinusoid with additive noise. Comparing with the second image where the filter is enabled, we can clearly see the noise filtering benefits of our **Band Pass Filter** block!
 
 ![Time Doman Cos No Filter](Images/02_Basics/GRBasics_04_05.png)
+
+![Time Doman Cos Filter](Images/02_Basics/GRBasics_04_04.png)
 
 The next image below shows the noisy square wave signal in time domain. We can clearly see the underlying square wave, but the signal is also very noisy since we are still bypassing the filter block. 
 

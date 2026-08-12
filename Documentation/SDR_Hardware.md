@@ -1,7 +1,11 @@
 # SDR Hardware and GNURadio
 
 ## Overview
-In this section we will cover how to use GNURadio to interact with USRP SDR hardware for transmitting and receiving over-the-air signals. We will demonstrate how to obtain the USRP's hardware address, send and receive signals using USRP hardware, set command line parameters (when executing GNURadio flowgraphs outside of GRC), and observe frequency characteristics of carrier modulated waveforms. 
+In this Section we will cover how to use GNURadio to interact with USRP SDR hardware for transmitting and receiving over-the-air signals. We will demonstrate how to:
+* Obtain the USRP's hardware address,
+* Send and receive signals using USRP hardware, 
+* Set command line parameters (when executing flowgraphs outside of GRC), and 
+* Observe frequency characteristics of carrier modulated waveforms. 
 
 **Tutorial Video:** _Coming Soon_
 
