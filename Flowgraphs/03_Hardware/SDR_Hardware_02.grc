@@ -224,7 +224,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [304, 348.0]
+    coordinate: [304, 352.0]
     rotation: 180
     state: enabled
 - name: analog_sig_source_x_0
@@ -240,6 +240,7 @@ blocks:
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
+    showports: 'False'
     type: complex
     waveform: analog.GR_COS_WAVE
   states:
@@ -262,13 +263,14 @@ blocks:
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
+    showports: 'False'
     type: float
     waveform: analog.GR_COS_WAVE
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [64, 228.0]
+    coordinate: [64, 224.0]
     rotation: 0
     state: enabled
 - name: band_pass_filter_0
@@ -332,7 +334,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [272, 476.0]
+    coordinate: [272, 480.0]
     rotation: 0
     state: enabled
 - name: blocks_selector_0_0
@@ -368,7 +370,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 404.0]
+    coordinate: [576, 408.0]
     rotation: 0
     state: true
 - name: note_1_0_0
@@ -381,7 +383,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [816, 452.0]
+    coordinate: [816, 448.0]
     rotation: 0
     state: true
 - name: qtgui_sink_x_0
@@ -721,7 +723,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 444.0]
+    coordinate: [512, 456.0]
     rotation: 0
     state: enabled
 - name: uhd_usrp_source_0
@@ -1170,7 +1172,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [512, 284.0]
+    coordinate: [512, 280.0]
     rotation: 0
     state: enabled
 - name: virtual_sink_0_0
@@ -1196,7 +1198,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [48, 492.0]
+    coordinate: [48, 496.0]
     rotation: 0
     state: enabled
 - name: virtual_source_0_0
@@ -1209,7 +1211,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [32, 540.0]
+    coordinate: [32, 544.0]
     rotation: 0
     state: true
 
@@ -1228,3 +1230,4 @@ connections:
 
 metadata:
   file_format: 1
+  grc_version: 3.10.9.2

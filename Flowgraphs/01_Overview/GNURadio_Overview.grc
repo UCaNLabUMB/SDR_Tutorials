@@ -1,6 +1,7 @@
 options:
   parameters:
     author: ucanlab
+    catch_exceptions: 'True'
     category: '[GRC Hier Blocks]'
     cmake_opt: ''
     comment: ''
@@ -36,7 +37,7 @@ blocks:
   id: variable
   parameters:
     comment: ''
-    value: 5e6
+    value: '5000000'
   states:
     bus_sink: false
     bus_source: false
@@ -58,7 +59,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [368, 452.0]
+    coordinate: [368, 448.0]
     rotation: 0
     state: enabled
 - name: analog_sig_source_x_0
@@ -74,13 +75,14 @@ blocks:
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
+    showports: 'False'
     type: complex
     waveform: analog.GR_COS_WAVE
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [168, 172.0]
+    coordinate: [168, 168.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_0_0
@@ -96,13 +98,14 @@ blocks:
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
+    showports: 'False'
     type: float
     waveform: analog.GR_COS_WAVE
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [848, 172.0]
+    coordinate: [848, 176.0]
     rotation: 0
     state: true
 - name: analog_sig_source_x_1
@@ -118,13 +121,14 @@ blocks:
     offset: '0'
     phase: '0'
     samp_rate: samp_rate
+    showports: 'False'
     type: float
     waveform: analog.GR_COS_WAVE
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [184, 380.0]
+    coordinate: [184, 376.0]
     rotation: 0
     state: enabled
 - name: blocks_float_to_complex_0
@@ -143,13 +147,15 @@ blocks:
     coordinate: [616, 424.0]
     rotation: 0
     state: enabled
-- name: blocks_throttle_0
-  id: blocks_throttle
+- name: blocks_throttle2_0
+  id: blocks_throttle2
   parameters:
     affinity: ''
     alias: ''
     comment: ''
     ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
@@ -159,16 +165,18 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [824, 436.0]
+    coordinate: [392, 200.0]
     rotation: 0
-    state: true
-- name: blocks_throttle_0_0
-  id: blocks_throttle
+    state: enabled
+- name: blocks_throttle2_0_0
+  id: blocks_throttle2
   parameters:
     affinity: ''
     alias: ''
     comment: ''
     ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
@@ -178,16 +186,18 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 212.0]
+    coordinate: [816, 424.0]
     rotation: 0
-    state: true
-- name: blocks_throttle_0_0_0
-  id: blocks_throttle
+    state: enabled
+- name: blocks_throttle2_0_1
+  id: blocks_throttle2
   parameters:
     affinity: ''
     alias: ''
     comment: ''
     ignoretag: 'True'
+    limit: auto
+    maximum: '0.1'
     maxoutbuf: '0'
     minoutbuf: '0'
     samples_per_second: samp_rate
@@ -197,9 +207,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1080, 212.0]
+    coordinate: [1072, 208.0]
     rotation: 0
-    state: true
+    state: enabled
 - name: note_1
   id: note
   parameters:
@@ -291,6 +301,7 @@ blocks:
     minoutbuf: '0'
     name: '"Real Sinusoid, Complex Representation"'
     nconnections: '1'
+    norm_window: 'False'
     showports: 'False'
     tr_chan: '0'
     tr_level: '0.0'
@@ -309,7 +320,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    wintype: firdes.WIN_BLACKMAN_hARRIS
+    wintype: window.WIN_BLACKMAN_hARRIS
     ymax: '10'
     ymin: '-140'
   states:
@@ -371,6 +382,7 @@ blocks:
     minoutbuf: '0'
     name: '"Real Sinusoid - Frequency Domain"'
     nconnections: '1'
+    norm_window: 'False'
     showports: 'False'
     tr_chan: '0'
     tr_level: '0.0'
@@ -389,7 +401,7 @@ blocks:
     width7: '1'
     width8: '1'
     width9: '1'
-    wintype: firdes.WIN_BLACKMAN_hARRIS
+    wintype: window.WIN_BLACKMAN_hARRIS
     ymax: '10'
     ymin: '-140'
   states:
@@ -420,12 +432,12 @@ blocks:
     showports: 'False'
     showrf: 'False'
     type: complex
-    wintype: firdes.WIN_BLACKMAN_hARRIS
+    wintype: window.WIN_BLACKMAN_hARRIS
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 180.0]
+    coordinate: [584, 176.0]
     rotation: 0
     state: true
 - name: qtgui_time_sink_x_0
@@ -625,15 +637,16 @@ blocks:
 
 connections:
 - [analog_const_source_x_0, '0', blocks_float_to_complex_0, '1']
-- [analog_sig_source_x_0, '0', blocks_throttle_0_0, '0']
-- [analog_sig_source_x_0_0, '0', blocks_throttle_0_0_0, '0']
+- [analog_sig_source_x_0, '0', blocks_throttle2_0, '0']
+- [analog_sig_source_x_0_0, '0', blocks_throttle2_0_1, '0']
 - [analog_sig_source_x_1, '0', blocks_float_to_complex_0, '0']
-- [blocks_float_to_complex_0, '0', blocks_throttle_0, '0']
-- [blocks_throttle_0, '0', qtgui_freq_sink_x_0, '0']
-- [blocks_throttle_0, '0', qtgui_time_sink_x_0, '0']
-- [blocks_throttle_0_0, '0', qtgui_sink_x_0, '0']
-- [blocks_throttle_0_0_0, '0', qtgui_freq_sink_x_0_0, '0']
-- [blocks_throttle_0_0_0, '0', qtgui_time_sink_x_1, '0']
+- [blocks_float_to_complex_0, '0', blocks_throttle2_0_0, '0']
+- [blocks_throttle2_0, '0', qtgui_sink_x_0, '0']
+- [blocks_throttle2_0_0, '0', qtgui_freq_sink_x_0, '0']
+- [blocks_throttle2_0_0, '0', qtgui_time_sink_x_0, '0']
+- [blocks_throttle2_0_1, '0', qtgui_freq_sink_x_0_0, '0']
+- [blocks_throttle2_0_1, '0', qtgui_time_sink_x_1, '0']
 
 metadata:
   file_format: 1
+  grc_version: 3.10.9.2
