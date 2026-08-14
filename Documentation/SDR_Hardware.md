@@ -38,12 +38,12 @@ This tutorial will introduce the following GNURadio blocks:
 
 
 
-# USRP Hardware and GNURadio
+## USRP Hardware and GNURadio
 We first aim to create a simple flowgraph, shown below, that allows GNURadio to send and receive signals to/from USRP hardware. To do this, we will confirm that the computer can communicate with the USRP, then we will set appropriate parameters in the GNURadio flowgraph to enable signal transmission and reception.
 
 ![Flowgraph Image](Images/03_Hardware/GRHardware_01.png)
 
-## USRP Hardware Driver (UHD)
+### USRP Hardware Driver (UHD)
 Now that we are moving from simulation to observation of signals in the physical world, we need to add SDR hardware into our setup. In the image below, we see our Linux computer running GRC and two B200 mini USRPs connected via USB. 
 
 ![Hardware Setup](Images/03_Hardware/GRHardware_01_01.jpg)
@@ -66,7 +66,7 @@ In addition to the `uhd_find_devices` command, the UHD library has some other fu
 
 * If you are not familiar with the terminal autocomplete functionality, this is an incredibly useful trait of the terminal (and will greatly speed up the process of working with the command line). In this instance, hitting tab after typing `uhd` should show `uhd_` since there are multiple commands that start with `uhd`. Quickly hitting tab twice will provide the list of commands that can be run (with `uhd_find_devices` as one of the options). If you type `uhd_fi` and hit tab again, this will autocomplete `uhd_find_devices` since it is the only command that starts with that sequence of letters.
 
-Another useful built-in uhd command is `uhd_fft`. Running `uhd_fft -h` in the terminal will display a short help menu that indicates the command line arguments that can be used. As a simple example, you can run the command below using the address for your receiving USRP in place of `<address>`. The `-a` flag indicates the address of your USRP, and the `-f` flag is to specify the center frequency that will be set on the hardware.
+Another useful built-in uhd command is `uhd_fft`. Running `uhd_fft -h` in the terminal will display a short help menu that indicates the command line arguments that can be used. As a simple example, you can run the command below using the serial address for your receiving USRP in place of `<address>`. The `-a` flag indicates the address of your USRP, and the `-f` flag is to specify the center frequency that will be set on the hardware.
 
 * `uhd_fft -a serial=<address> -f 915000000`
 
@@ -76,7 +76,7 @@ This should open up the GUI shown below. This offers a simple way to observe the
 
 
 
-## Adding USRP Source and Sink Blocks
+### Adding USRP Source and Sink Blocks
 Once we have confirmed that our computer can communicate with the connected USRPs, we can create the GNURadio flowgraph below to actually send/receive signals to/from the USRPs.
 * **NOTE:** Compared to the simulation flowgraphs we've seen before, we should notice that this flowgraph does NOT have a Throttle block. The USRPs are clocked devices that control the rate at which samples are accepted or generated, so we do not need to include the Throttle block to manage the flow rate of samples passing through our flowgraph. 
 
@@ -113,7 +113,7 @@ Once we have added and connected the relevant blocks, we will set properties for
 At this point, you should be able to build and execute the flowgraph in GRC if you followed the steps above. However, if you attempt to run the completed [SDR_Hardware_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph from this repository you will get an error since the defined addresses should not be the same as your USRPs' addresses. We will first discuss how we've included parameter blocks to allow for user specification of the address, then we will discuss some observations about the running OTA transmission.
 
 
-## Parameter Blocks and Command Line Execution
+### Parameter Blocks and Command Line Execution
 
 To resolve the issue mentioned above, an easy solution is to open the flowgraph in GRC and change the address values in the USRP Source and Sink blocks. However, this process of manually changing the flowgraph can be unnecessarily tedious in situations where you want to specify a certain parameter value each time you run the flowgraph. With this in mind, GNURadio offers **parameter** blocks that behave similar to variables, but also allow for the value to be set when the flowgraph is started. In this example, we'll use parameter blocks for the USRP addresses so that these can be assigned when starting a flowgraph through the command line interface.
 
@@ -127,7 +127,7 @@ In the figure below, we can see the process of running the flowgraph on the comm
 
 The last line in the example above is the call to execute the flowgraph with newly specified addresses for the Tx and Rx USRPs. Running this command with the addresses found from your specific `uhd_find_devices` call should start the flowgraph discussed in the following.
 
-## Over-the-Air Transmission with GNURadio and USRPs
+### Over-the-Air Transmission with GNURadio and USRPs
 
 Once the flowgraph is running, you should see a GUI visualization similar to what is shown in the figure below. 
 
@@ -150,18 +150,18 @@ In addition to the changes above, you can also observe the physical channel's im
 * move the USRPs closer or further apart.
 
 
-# Dynamic Flowgraphs with USRP Hardware
+## Dynamic Flowgraphs with USRP Hardware
 In the [SDR_Hardware_02](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below, we merge the dynamically configurable tone generation example from the previous chapter with the hardware integration discussed above. This allows for observation of the basic tone characteristics discussed previously while considering the impact of carrier modulation / demodulation and over-the-air transmission.
 
 ![Flowgraph Image](Images/03_Hardware/GRHardware_02.png)
 
-## Flowgraph Generation
+### Flowgraph Generation
 The main structure of this flowgraph is similar to the GNURadio\_Basics\_04 flowgraph discussed in the last chapter. The main change is that we've replaced the simulated noise channel (i.e., the **Noise Source** and **Add** blocks) with an actual transmission using the **UHD: USRP Sink** and **UHD: USRP Source blocks**. As we've done above, we also added parameter blocks for the Tx and Rx USRP addresses to allow for user-specified addresses based on the connected USRPs when running the flowgraph. Lastly, we've included 4 **QT GUI Range** blocks for the Tx/Rx center frequency and gain. The ID for each of these adjustable variables is then assigned to the corresponding setting in the USRP Sink and Source blocks' RF Options tabs. This is done so that we can modify these parameter with the running flowgraph to observe the impact on the received signal characteristics.
 
 To run the flowgraph, make sure to first build the flowgraph in GRC (to generate the python file) and then run the file in a terminal with the command:
 * `python3 SDR_Hardware_02.py -t <tx_address> -r <rx_address>`
 
-## Observations
+### Observations
 Once we've run the flowgraph, we can first observe some of the same characteristics from the simulated tone generator example in the last chapter. The image below shows the waterfall plot as we vary some of the signal characteristics. From the discussion in the previous chapter, we can recognize that we started with a 100KHz real-valued sinusoid, with the key difference here being that the signal components show up at 914.9MHz and 915.1MHz, rather than +/- 0.1MHz. This again relates to the displayed RF Frequencies and the fact that our carrier frequency is set as 915MHz. Following the discussion from the previous chapter, we can also recognize the signal modifications in time as first converting to a complex-valued sinusoid (leaving only the tone at 915.1MHz), then bypassing the filter (increasing the noise floor outside the filter's range), and then increasing the signal frequency to 250KHz before switching back to a real-valued sinusoidal signal (observable through the reintroduction of the lower frequency component, now at 914.75MHz or, similarly, at fc-250KHz).
 
 ![Flowgraph Image](Images/03_Hardware/GRHardware_02_01.png)
@@ -177,7 +177,7 @@ As a final observation from this flowgraph, we can also observe the relative imp
 
 
 
-# Observing OTA Waveforms
+## Observing OTA Waveforms
 In this section, we introduce the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph, shown below. This extends our observed signals beyond the simple tones that we've been observing. More specifically, we will first look at a very basic communications signal implementing binary phase shift keying (BPSK). We will then extend the concept to a multiplexed transmit signal implementing frequency division multiplexing (FDM) in order to combine multiple BPSK signals in a single transmission. The flowgraph uses the previously introduced **Chooser** and **Selector** blocks to allow for dynamic changing of the transmitted signal while the flowgraph is running.
 
 * **NOTE:** Keep in mind that this example is purely to demonstrate basic _signal-level characteristics_ of modulated data transmissions. For practical over-the-air data transmission, additional overhead is needed in order to account for channel impairments before you can demodulate/decode the transmitted bits.
@@ -190,7 +190,7 @@ There are two Tx signal paths in this flowgraph. Specifically, these signal path
 
 
 
-## BPSK Modulator
+### BPSK Modulator
 
 The signal chain for the basic BPSK signal generation is relatively straightforward. First, a random integer stream is generated with each value as either 0 or 1 representing the desired symbol number (or equivalently bits in this instance). This is implemented using the **Random Source** block with minimum set to $0$ and maximum set to $2$.
 
@@ -220,13 +220,13 @@ Adjusting the Tx/Rx center frequency and gain settings should reiterate some of 
 * Increasing the Tx gain should start to raise the signal above the noise floor in the Rx frequency display, likely making more of the side lobes observable.
 * Increasing the Rx gain should increase the power of the signal and noise, so the relative gain should increase across all frequencies in the Rx frequency display.
 
-The carrier adjustment observations can be seen in the image below. With the Tx center frequency set to 910MHz, we can observe the Tx frequency display shows the range from 900MHz to 920MHz with the main lobe of the signal at 910MHz, as expected. Since the Rx center frequency is set to 920MHz, the Rx frequency display shows the received spectrum from 910MHz to 930MHz with our transmitted signal clearly observable in the range from 910MHz to 920MHz.
+The carrier adjustment observations can be seen in the image below. With the Tx center frequency set to 912MHz, we can observe the Tx frequency display shows the range from 902MHz to 922MHz with the main lobe of the signal centered at 912MHz, as expected. Since the Rx center frequency is set to 920MHz, the Rx frequency display shows the received spectrum from 910MHz to 930MHz with our transmitted signal clearly observable in the range from 910MHz to 922MHz.
 
 ![BPSK adjusted carriers](Images/03_Hardware/GRHardware_03_06.png)
 
-* **NOTE:** Notice that there aren't any observable side lobes beyond 920MHz in the Rx frequency display. This is related to the hardware filters in the transmitting USRP. These are implemented after upsampling to the transmitting hardware's DAC rate and before the DAC and analog upconversion. The purpose is to mitigate out-of-band interference. Similar filters are also implemented in the receiver to avoid aliasing of unwanted out-of-band received signals.
+* **NOTE:** Notice that there aren't any observable side lobes above 922MHz in the Rx frequency display. This is related to the hardware filters in the transmitting USRP. These are implemented after upsampling to the transmitting hardware's DAC rate and before the DAC and analog upconversion. The purpose is to mitigate out-of-band interference. Similar filters are also implemented in the receiver to avoid aliasing of unwanted out-of-band received signals.
 
-* **NOTE:** Notice the additional signal in the Rx frequency display near 930MHz. This is not something we are sending! Since the 900MHz ISM band operates from 902MHz through 928MHz, we are seeing an active transmission in the licensed band above 928MHz (assumedly [this](https://www.fcc.gov/wireless/bureau-divisions/mobility-division/narrowband-personal-communications-service-pcs) ).
+* **NOTE:** Notice the additional signal in the Rx frequency display near 930MHz. The spike around 929.5MHz is not something we are sending! Since the 900MHz ISM band operates from 902MHz through 928MHz, we are seeing an active transmission in the licensed band above 928MHz (assumedly, industrial radio). In addition to the spike, we can actually see some signal content related to our Tx signal between 929 and 930MHz. This is in fact the OTA signal in the 909 to 910MHz range that falls within the transition region of our Rx filter on the USRP. When sampling, the analog signal content at 909-910MHz is aliased and shows up at the higher frequencies (i.e., 929-930MHz) in the digital domain! If you adjust the Tx center frequency so that the null at fc-5MHz shows up at 910MHz, you should be able to notice the impact in the Rx spectrum at 930MHz.
 
 Another observation to make with the single BPSK signal is the impact of the signal frequency (i.e., symbol rate). As you increase the signal frequency value, the size of the main lobe and side lobes should increase accordingly. You can observe this in the frequency display as you adjust the signal frequency, but we also include the image below showing the waterfall plot of the Tx and Rx signals as the signal frequency is adjusted from 1MHz to 2Mhz and then to 4MHz. Observing the time axis in the waterfall plot, we can recognize that the switch from 2MHz to 4MHz occurred around 7.5 seconds in the past and the change from 1MHz to 2MHz occurred approximately 7.5 seconds before that.
 
@@ -244,7 +244,7 @@ The final observation for our basic BPSK signal will be made using the constella
 ![BPSK in Constellation](Images/03_Hardware/GRHardware_03_03.png)
 
 
-## Frequency Division Multiplexing (FDM)
+### Frequency Division Multiplexing (FDM)
 
 The alternative signal path in the [SDR_Hardware_03](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/03_Hardware) flowgraph demonstrates a simplistic FDM implementation where two separate BPSK signals are multiplexed in the digital domain before being upconverted in the hardware and transmitted over the air. FDM is a multiplexing method for sharing the available bandwidth across multiple data streams. Frequency division multiple access (FDMA) is one application of FDM where different frequency ranges are assigned to different users. The basic idea is that multiple signals with bandwidth much less than the sample rate can be merged at the transmit end and then filtered and decoupled at the receive end. 
 
@@ -279,10 +279,10 @@ The final result of interest in this chapter, shown below, demonstrates the impa
 
 
 
-# References
+## References
 _Coming Soon_
 
-# Tutorial Chapters
+## Tutorial Chapters
 
 * **Next Chapter:** [GNURadio Remote Command and Control](GNURadio_CaC.md) 
 * **Previous Chapter:** [GNURadio Basics](GNURadio_Basics.md)

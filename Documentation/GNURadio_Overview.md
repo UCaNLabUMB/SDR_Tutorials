@@ -39,25 +39,25 @@ This tutorial will introduce the following blocks from the core GNURadio library
 
 
 
-# Flowgraph Creation
+## Flowgraph Creation
 We assume that you already have GNURadio [installed](https://wiki.gnuradio.org/index.php/InstallingGR). Historically, we used the PyBOMBs installation method; however, there are other suggested methods for installing newer versions of GNURadio (i.e., after V3.8). Specifically, you should consider using apt-get for Linux distributions or RadioConda if you're using Windows or MacOS. 
 
 Once you have a working installation of GNURadio, we can create our first flowgraph by following the steps below.
 
-## Create Flowgraph in GRC
+### Create Flowgraph in GRC
 GNURadio is an open source software toolkit for software defined radio (SDR). While GNURadio is based in the Python programming language, many users stick to the _GNURadio Companion_ tool, or GRC, which provides a simple graphical environment for managing GNURadio flowgraphs (i.e., signal processing chains). To get started with GRC, you can simply type `gnuradio_companion` in a terminal. This will open the GRC tool for developing GNURadio flowgraphs. If this is your first time opening GRC, you should see a (mostly) blank window with two blocks: an **Options** block, where you will define various high-level flowgraph settings, and a **Variable** block with a value defined for a variable called "samp_rate".
 
 ![Flowgraph Image](Images/01_Overview/GROverview_02.png)
 
 
-## Define Flowgraph Options
+### Define Flowgraph Options
 Our first step is to define the flowgraph's high-level settings. This is done by double-clicking on the **Options** block to open the window below. Here, you see multiple settings that we can configure. 
 
 ![Options Image](Images/01_Overview/GROverview_03.png)
 
 * **NOTE:** The ID value will ultimately be the name of the python file that is created by GRC (we will revisit this later). The title is what will be displayed on the GUI when the flowgraph is run, so this should be a short human-readable description.
 
-## Adding and Connecting Blocks
+### Adding and Connecting Blocks
 GNURadio's core library consists of an extensive set of signal processing blocks that can be used "out-of-the-box." The list on the right hand side of the GRC environment shows the available blocks that can be added to your flowgraph. To find a block, you can select the search icon in GRC's menu bar and begin typing the name of the block. Once you see the desired block in the list, you can either click on the name and drag it into the main window, or double-click the name and it will be added. For our first flowgraph, we can search and add **Signal Source**, **Throttle**, and **QT GUI Sink** blocks. 
 
 ![Flowgraph Image](Images/01_Overview/GROverview_04.png)
@@ -69,16 +69,16 @@ Once the blocks have been added, you can click on the blocks and drag them aroun
 * **NOTE:** The throttle block is incredibly important for _simulation_ flowgraphs since it manages the real-time rate of samples flowing through the block (and, accordingly, through your flowgraph). The **Throttle** block is the only simulation block where the indicated sample rate actually manages the rate of samples. When sample rate is defined in other blocks (e.g., the Signal Source or QT GUI Sink blocks) the value is used for determining what values to generate at specific sample numbers or how to visualize/display the incoming signal stream. Generally speaking, most blocks are unaware of actual time and operate on digital samples, therefore we provide the _assumed_ sample rate as a parameter to these blocks so that the signal processing blocks can associate incoming samples with their relevant time characteristics. Alternatively, blocks that interact with hardware can also manage the rate of samples flowing through our flowgraphs (we will revisit this later).
 
 
-## Setting Block Parameters
+### Setting Block Parameters
 Once the blocks have been added and connected, we can change parameters of the various blocks to define how they work (e.g., how they generate, process, or display signals). For this example, we can simply double-click on the signal source to see the list of available parameters, and set the frequency to `200000` (or `2e5` if you prefer scientific notation). Click OK and the frequency will be updated in the parameters shown on the block. 
 
 In the Signal Source block's parameters, we should also notice that the Sample Rate parameter is set to `samp_rate`. This causes Sample Rate to show up as 32k in the list of parameters displayed on the block. This is because `samp_rate` is defined as a variable in the variable block that was included in our flowgraph by default. Since 32k samples/sec is not going to do a great job of showing our 200KHz sinusoid, we can update the value of `samp_rate` by double clicking the variable block and changing our value to `5e6` (i.e., 5M samples/sec). Notice that this changes the value of Sample Rate shown on your Throttle block and your QT GUI Sink block as well! This is the benefit of the **Variable** block. Since `samp_rate` is used as the Sample Rate parameter for all of our blocks, we have a single centralized location where changing the value of `samp_rate` in this Variable block will update the defined Sample Rate in all of these blocks. We will discuss more about variables in our [GNURadio Basics](GNURadio_Basics.md) tutorial.
 
 
-# Flowgraph execution
+## Flowgraph execution
 We are now ready to run our flowgraph! We will first describe how GRC generates the desired Python code for our GNURadio flowgraph, then we will discuss some observation tools available in the QT GUI Sink.
 
-## Generating Python Code
+### Generating Python Code
 Since GRC is a _tool_ for creating GNURadio flowgraphs, we can use it to generate the python code that will ultimately run our desired flowgraph. This can done by selecting the Generate option in the top menu of GRC. 
 
 ![Flowgraph Image](Images/01_Overview/GROverview_06.png)
@@ -87,7 +87,7 @@ At this point, you will be asked to provide a file name. When you give this file
 
 ![Flowgraph Image](Images/01_Overview/GROverview_07.png)
 
-## Executing Flowgraph
+### Executing Flowgraph
 If you look in the directory where you saved your `.grc` file, you should notice two different files (i.e., the `.grc` file and a `.py` file). The `.grc` file maintains the blocks, parameter settings, and connections to be displayed in GRC. The `.py` file has the actual python GNURadio flowgraph to be executed. If you open these files with a text editor, you can explore some of the characteristics of each; but for the purpose of this tutorial we are ready to execute the flowgraph. You can do this from the command line with Python:
 
 ![Flowgraph Image](Images/01_Overview/GROverview_08.png)
@@ -99,7 +99,7 @@ Or, alternatively (and more commonly), you can execute the flowgraph directly in
 * **NOTE:** The ability to initiate the flowgraph from the command line allows you to start the created flowgraph without opening GRC. This will be more important in the future when running remote scripts to initialize distributed flowgraphs. For now, it's good to try running the flowgraph using the command line at least once. In particular, if you used RadioConda to install GNURadio, you should be using the *RadioConda prompt* since the necessary libraries and dependencies won't be available if trying to run the flowgraph from the Windows command prompt.
 
 
-# Flowgraph Additions and Observations
+## Flowgraph Additions and Observations
 Now that we've created a simple flowgraph to generate and display a signal, we can extend the idea for some similar signals. We will use this opportunity to discuss a few different *data types* in GNURadio, and discuss some *basic signal characteristics* of real-valued and complex-valued sinusoids. The image below has three repetitions of the signal source and sink from our original flowgraph, with a few differences in each version. The first thing to notice is the difference in color of the various in and out ports for different blocks. The color represents different data types for the samples that flow out of or into the different blocks. There are many different data types in GNURadio, but this example shows `complex` data types in blue and `float` data types in orange. 
 
 ![Flowgraph Image](Images/01_Overview/GROverview_01.png)
@@ -130,11 +130,11 @@ where $cos(wt)$ and $cos(wt) + j0$ can be thought of as our two different repres
 
 * **NOTE:** We use using a continuous time representation in the presented notation above, but it is important to reiterate that we are observing discrete time signals in the digital signal processing world of GNURadio. Even the time domain plots we observe can be somewhat misleading since the visualization here is essentially "connecting the dots" of discrete time samples. To see this more clearly, we can change the view in these plots by setting the _Stem Plot_ property to _yes_. We will revisit this later in the tutorial series.
 
-# References
+## References
 * GNURadio: [https://www.gnuradio.org/about/](https://www.gnuradio.org/about/)
 
 
-# Tutorial Chapters
+## Tutorial Chapters
 
 * **Next Chapter:** [GNURadio Basics](GNURadio_Basics.md)
 

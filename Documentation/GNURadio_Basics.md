@@ -35,7 +35,7 @@ This tutorial will introduce the following blocks from the core GNURadio library
 
 
 
-# Modifying Flowgraphs Prior to Execution
+## Modifying Flowgraphs Prior to Execution
 This tutorial will demonstrate the value of observing impacts that come from changing a single parameter in a flowgraph (e.g., a variable, block used, presence or absence of a block, etc.). 
 We have already seen how to add and connect blocks to create a desired flowgraph. As such, we could conceivably create multiple copies of a flowgraph and make the desired changes within the copies while keeping the rest of the signal processing chain common across copies of the original flowgraph. However, multiple copies of a flowgraph can become a problem if we want to modify the section of the signal processing chain that is common across copies. 
 It can be beneficial to have a common signal processing chain where we can modify a small piece of the flowgraph for comparison, while keeping the rest of the flowgraph consistent. 
@@ -48,7 +48,7 @@ In the first flowgraph of this tutorial, [GNURadio_Basics_01.grc](https://github
 
 
 
-## Filters and Variables
+### Filters and Variables
 We first discuss the **Bandpass Filter** block and how we can use variables to make sure that the filter stays aligned with our desired signal. You can notice in the flowgraph above that we have also included a new **Variable block** to introduce a variable named sig\_freq. This variable has been used to assign the Frequency property in both of our **Signal Source** blocks. The benefit of using a variable here is that we have a single location where we can change the variable's value. In this way, we do not need to open both signal sources to change the signal frequencies separately. 
 
 * **NOTE:** While this might not seem significant in this case, the value of variables becomes much more significant as the flowgraphs scale in complexity and common values are shared across many blocks (in the same way that we use variables in conventional coding projects to avoid hard coding). 
@@ -66,7 +66,7 @@ When running the the flowgraph, we can observe the output below with the 50KHz d
 * **NOTE:** The key takeaway here is that we only need to update the single value of the sig\_freq variable, as opposed to editing the Frequency property in the signal source block _and_ the Low/High Cutoff Frequency prameters in the filter block.
 
 
-## Block Status: Enable, Disable, Bypass
+### Block Status: Enable, Disable, Bypass
 Continuing to observe the flowgraph in [GNURadio_Basics_01.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), we will now introduce GRC functionality for enabling/disabling blocks and bypassing blocks. Returning to the disabled signal path for the real-valued sinusoid, we can highlight the 3 blocks in this signal path and then select the enable icon in the menu bar. When we do this, the flowgraph will show an error since we now have two signals going into one port in the **Add** block. To resolve this, we select the complex Signal Source block and select the disable icon in the menu bar. 
 
 ![Enable Block](Images/02_Basics/GRBasics_01_04.png)
@@ -93,10 +93,10 @@ Running the flowgraph as shown above will now give the results below. In the abs
 
 
 
-# Dynamic Flowgraphs
+## Dynamic Flowgraphs
 The ability to enable/disable/bypass blocks allows for realtively quick changes to a flowgraph in an offline manner. However, we also look to modify flowgraph parameters and characteristics while the flowgraph is running. In this section, we will observe the [GNURadio_Basics_02.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), [GNURadio_Basics_03.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), and [GNURadio_Basics_04.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) flowgraphs to demonstrate how we can incorporate GUI tools that allow users to manually control the flowgraph while the flowgraph is running.
 
-## Dynamic Variable Modifications
+### Dynamic Variable Modifications
 Beginning with [GNURadio_Basics_02.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), shown below, we can notice that the only significant change in this flowgraph is that we've removed the **Variable** block where _sig\_source_ was set previously, and replaced it with a **GT GUI Range** block. 
 
 ![Flowgraph Image](Images/02_Basics/GRBasics_02.png)
@@ -112,7 +112,7 @@ When this flowgraph is run, we can see the slider bar and counter labeled "Signa
 * **NOTE:** The variable _sig\_freq_ is still associated with the signal frequency in the Signal Source block AND the high/low frequencies of the Band Pass filter block, so the filter is moving along with the signal in this scenario.
 
 
-## Dynamic Path Selection
+### Dynamic Path Selection
 The final additions for this section, in [GNURadio_Basics_03.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics) and [GNURadio_Basics_04.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), give an additional GUI option to include manual selection of configuration parameters from a list of options. In particular, we introduce the ability to dynamically make the changes that we had previously done by enabling/disabling/bypassing blocks in the offline manner. 
 
 ![Flowgraph Image](Images/02_Basics/GRBasics_03.png)
@@ -137,6 +137,7 @@ Following a similar process, we have included a **Selector** block to optionally
 
 * **NOTE:** In the waterfall plot above, we can see that we have started with a 100KHz real-valued sinusoid. After a few seconds, we changed the frequency to 150KHz and then changed the signal source to the complex sine. Shortly after, we selected the option to bypass the filter and then set the signal source back to a real sine. Finally, we increased the signal frequency to 200KHz and then, finally, to 350KHz.
 
+### Dynamic Block Parameters
 The final flowgraph in this section, [GNURadio_Basics_04.grc](https://github.com/UCaNLabUMB/SDR_Tutorials/tree/main/Flowgraphs/02_Basics), is a copy of the previous example with the addition of one more **QT GUI Chooser** block. This last block allows the user to select the waveform (i.e., Cosine or Square wave) while the flowgraph is running.
 
 ![Flowgraph Image](Images/02_Basics/GRBasics_04.png)
@@ -175,10 +176,10 @@ When we re-enable the filter, we see the noise reduce as desired, but we have al
 
 
 
-# References
+## References
 * [GNURadio Tutorials](https://wiki.gnuradio.org/index.php?title=Tutorials): General tutorials on building flowgraphs in GNU Radio.
 
-# Tutorial Chapters
+## Tutorial Chapters
 
 * **Next Chapter:** [SDR Hardware](SDR_Hardware.md) 
 * **Previous Chapter:** [GNURadio Overview](GNURadio_Overview.md)
