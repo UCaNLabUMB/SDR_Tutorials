@@ -340,9 +340,9 @@ blocks:
     factor9: '1'
     graph_type: qtgui.NUM_GRAPH_NONE
     gui_hint: ''
-    label1: Calculated Power
+    label1: Observed Power
     label10: ''
-    label2: Observed Power
+    label2: Calculated Power
     label3: ''
     label4: ''
     label5: ''

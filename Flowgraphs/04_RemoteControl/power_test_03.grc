@@ -22,7 +22,7 @@ options:
     run_options: prompt
     sizing_mode: fixed
     thread_safe_setters: ''
-    title: Power Test with Parameters
+    title: Power Test with Filter
     window_size: (1000,1000)
   states:
     bus_sink: false
@@ -33,17 +33,113 @@ options:
     state: enabled
 
 blocks:
+- name: P_n
+  id: variable
+  parameters:
+    comment: ''
+    value: noise_amp**2
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1936, 568.0]
+    rotation: 0
+    state: enabled
+- name: P_n_filtered
+  id: variable
+  parameters:
+    comment: ''
+    value: noise_amp**2 * (2*f_width/samp_rate)
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [2048, 568.0]
+    rotation: 0
+    state: enabled
+- name: f_width
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 1,2,1,2
+    label: Filter Width
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: 2.5e4
+    step: 5e3
+    stop: 2.5e5
+    value: 5e4
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1560, 16.0]
+    rotation: 0
+    state: true
+- name: filter_select
+  id: variable_qtgui_chooser
+  parameters:
+    comment: ''
+    gui_hint: 1,0,1,1
+    label: Filter Selection
+    label0: Enable
+    label1: Bypass
+    label2: ''
+    label3: ''
+    label4: ''
+    labels: '[]'
+    num_opts: '2'
+    option0: '0'
+    option1: '1'
+    option2: '2'
+    option3: '3'
+    option4: '4'
+    options: '[0, 1, 2]'
+    orient: Qt.QVBoxLayout
+    type: int
+    value: '0'
+    widget: combo_box
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [960, 20.0]
+    rotation: 0
+    state: true
+- name: ma_len
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 1,1,1,1
+    label: Moving Average Length
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: int
+    start: '500'
+    step: '500'
+    stop: '10000'
+    value: '1000'
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1136, 16.0]
+    rotation: 0
+    state: enabled
 - name: noise_amp
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,3,1,1
     label: Noise Amplitude
     min_len: '200'
     orient: QtCore.Qt.Horizontal
     rangeType: float
     start: '0'
-    step: '0.05'
+    step: '0.1'
     stop: '10'
     value: '0.5'
     widget: counter_slider
@@ -51,9 +147,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [584, 16.0]
+    coordinate: [584, 24.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: samp_rate
   id: variable
   parameters:
@@ -70,7 +166,7 @@ blocks:
   id: variable_qtgui_range
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,2,1,1
     label: Signal Amplitude
     min_len: '200'
     orient: QtCore.Qt.Horizontal
@@ -84,14 +180,35 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [400, 16.0]
+    coordinate: [400, 24.0]
     rotation: 0
-    state: disabled
+    state: enabled
+- name: sig_freq
+  id: variable_qtgui_range
+  parameters:
+    comment: ''
+    gui_hint: 0,1,1,1
+    label: Signal Frequency
+    min_len: '200'
+    orient: QtCore.Qt.Horizontal
+    rangeType: float
+    start: 1.5e5
+    step: 2.5e4
+    stop: 3.5e5
+    value: 2e5
+    widget: counter_slider
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1360, 16.0]
+    rotation: 0
+    state: true
 - name: sig_select
   id: variable_qtgui_chooser
   parameters:
     comment: ''
-    gui_hint: ''
+    gui_hint: 0,0,1,1
     label: Signal Select
     label0: Real Sine
     label1: Complex Sine
@@ -114,9 +231,9 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [776, 16.0]
+    coordinate: [776, 20.0]
     rotation: 0
-    state: disabled
+    state: enabled
 - name: analog_const_source_x_0
   id: analog_const_source_x
   parameters:
@@ -140,7 +257,7 @@ blocks:
     affinity: ''
     alias: ''
     comment: ''
-    const: sig_amp**2/2 + sig_select*sig_amp**2/2 + noise_amp**2
+    const: sig_amp**2/2 + sig_select*sig_amp**2/2 + filter_select*P_n + (1-filter_select)*P_n_filtered
     maxoutbuf: '0'
     minoutbuf: '0'
     type: float
@@ -148,7 +265,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1408, 612.0]
+    coordinate: [1960, 492.0]
     rotation: 0
     state: enabled
 - name: analog_noise_source_x_0
@@ -177,7 +294,7 @@ blocks:
     alias: ''
     amp: sig_amp
     comment: ''
-    freq: '1000'
+    freq: sig_freq
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -200,7 +317,7 @@ blocks:
     alias: ''
     amp: sig_amp
     comment: ''
-    freq: '10000'
+    freq: sig_freq
     maxoutbuf: '0'
     minoutbuf: '0'
     offset: '0'
@@ -214,6 +331,31 @@ blocks:
     bus_source: false
     bus_structure: null
     coordinate: [72, 328.0]
+    rotation: 0
+    state: enabled
+- name: band_pass_filter_0
+  id: band_pass_filter
+  parameters:
+    affinity: ''
+    alias: ''
+    beta: '6.76'
+    comment: ''
+    decim: '1'
+    gain: '1'
+    high_cutoff_freq: sig_freq + f_width/2
+    interp: '1'
+    low_cutoff_freq: sig_freq - f_width/2
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    samp_rate: samp_rate
+    type: fir_filter_ccf
+    width: 5e3
+    win: window.WIN_HAMMING
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1304, 240.0]
     rotation: 0
     state: enabled
 - name: blocks_add_xx_0
@@ -273,6 +415,29 @@ blocks:
     coordinate: [664, 380.0]
     rotation: 0
     state: enabled
+- name: blocks_selector_0_0
+  id: blocks_selector
+  parameters:
+    affinity: ''
+    alias: ''
+    comment: ''
+    enabled: 'True'
+    input_index: filter_select
+    maxoutbuf: '0'
+    minoutbuf: '0'
+    num_inputs: '2'
+    num_outputs: '1'
+    output_index: '0'
+    showports: 'True'
+    type: complex
+    vlen: '1'
+  states:
+    bus_sink: false
+    bus_source: false
+    bus_structure: null
+    coordinate: [1600, 348.0]
+    rotation: 0
+    state: enabled
 - name: blocks_throttle2_0
   id: blocks_throttle2
   parameters:
@@ -294,37 +459,20 @@ blocks:
     coordinate: [1096, 400.0]
     rotation: 0
     state: enabled
-- name: noise_amp
-  id: parameter
-  parameters:
-    alias: ''
-    comment: ''
-    hide: none
-    label: Noise Amplitude
-    short_id: n
-    type: eng_float
-    value: '0.5'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [584, 92.0]
-    rotation: 0
-    state: enabled
 - name: power_calc_HB_0
   id: power_calc_HB
   parameters:
     affinity: ''
     alias: ''
     comment: ''
-    ma_len: '1000'
+    ma_len: ma_len
     maxoutbuf: '0'
     minoutbuf: '0'
   states:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1336, 516.0]
+    coordinate: [1888, 396.0]
     rotation: 0
     state: enabled
 - name: qtgui_number_sink_0
@@ -355,11 +503,11 @@ blocks:
     factor7: '1'
     factor8: '1'
     factor9: '1'
-    graph_type: qtgui.NUM_GRAPH_NONE
-    gui_hint: ''
-    label1: Calculated Power
+    graph_type: qtgui.NUM_GRAPH_VERT
+    gui_hint: 2,3,3,1
+    label1: Observed Power
     label10: ''
-    label2: Observed Power
+    label2: Calculated Power
     label3: ''
     label4: ''
     label5: ''
@@ -367,8 +515,8 @@ blocks:
     label7: ''
     label8: ''
     label9: ''
-    max: '1'
-    min: '-1'
+    max: '10'
+    min: '0'
     name: '"Power"'
     nconnections: '2'
     type: float
@@ -387,7 +535,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1664, 508.0]
+    coordinate: [2216, 388.0]
     rotation: 0
     state: enabled
 - name: qtgui_sink_x_0
@@ -399,7 +547,7 @@ blocks:
     comment: ''
     fc: '0'
     fftsize: '1024'
-    gui_hint: ''
+    gui_hint: 2,0,3,3
     maxoutbuf: '0'
     minoutbuf: '0'
     name: '""'
@@ -416,41 +564,7 @@ blocks:
     bus_sink: false
     bus_source: false
     bus_structure: null
-    coordinate: [1328, 316.0]
-    rotation: 0
-    state: enabled
-- name: sig_amp
-  id: parameter
-  parameters:
-    alias: ''
-    comment: ''
-    hide: none
-    label: Signal Amplitude
-    short_id: a
-    type: eng_float
-    value: '1'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [400, 92.0]
-    rotation: 0
-    state: enabled
-- name: sig_select
-  id: parameter
-  parameters:
-    alias: ''
-    comment: ''
-    hide: none
-    label: Signal Select
-    short_id: s
-    type: intx
-    value: '0'
-  states:
-    bus_sink: false
-    bus_source: false
-    bus_structure: null
-    coordinate: [776, 92.0]
+    coordinate: [1872, 196.0]
     rotation: 0
     state: enabled
 
@@ -460,11 +574,14 @@ connections:
 - [analog_noise_source_x_0, '0', blocks_add_xx_0, '0']
 - [analog_sig_source_x_0, '0', blocks_selector_0, '1']
 - [analog_sig_source_x_0_0, '0', blocks_float_to_complex_0, '0']
+- [band_pass_filter_0, '0', blocks_selector_0_0, '0']
 - [blocks_add_xx_0, '0', blocks_throttle2_0, '0']
 - [blocks_float_to_complex_0, '0', blocks_selector_0, '0']
 - [blocks_selector_0, '0', blocks_add_xx_0, '1']
-- [blocks_throttle2_0, '0', power_calc_HB_0, '0']
-- [blocks_throttle2_0, '0', qtgui_sink_x_0, '0']
+- [blocks_selector_0_0, '0', power_calc_HB_0, '0']
+- [blocks_selector_0_0, '0', qtgui_sink_x_0, '0']
+- [blocks_throttle2_0, '0', band_pass_filter_0, '0']
+- [blocks_throttle2_0, '0', blocks_selector_0_0, '1']
 - [power_calc_HB_0, '0', qtgui_number_sink_0, '0']
 
 metadata:
